@@ -14,25 +14,27 @@ class ScoringClass:
 		if ScoringClass.clueword == None:
 			ScoringClass.clueword = {}
 			# データベースを読み込む(ClueWord)->data
-			with open(filename,"rb") as f:
+			with open(filename,"rt") as f:
 				reader = csv.reader(f)
 				#ヘッダ行の読み飛ばし
 				next(reader)
 				#dataの表現部分：重み辞書を作成
 				for row in reader:
-					ScoringClass.clueword[row[0]] = int(row[2])
+					if isinstance(row,unicode):
+						print "hoge"
+					ScoringClass.clueword[row[0].decode("utf-8")] = int(row[2].decode("utf-8"))
 		return
 
 	def openSentenceExpression(self,filename="SentenceExpression_List.csv"):
 		if ScoringClass.keysentence == None:
 			ScoringClass.keysentence = {}
 			#データベース読み込む(SentenceExpression)->dataC
-			with open(filename,"rb") as f:
+			with open(filename,"rt") as f:
 				reader = csv.reader(f)
 				next(reader)
 				#dataCの表現部分：重み辞書を作成
 				for row in reader:
-					ScoringClass.keysentence[row[0].replace("~","")] = int(row[2])
+					ScoringClass.keysentence[row[0].decode("utf-8").replace(u"~",u"*")] = int(row[2].decode("utf-8"))
 		return
 
 	#分割する文章を読み込む
@@ -41,6 +43,9 @@ class ScoringClass:
 		m = MeCab.Tagger("-Owakati")
 		node = m.parseToNode(text)
 		ans = ""
+		print map(lambda t:t,self.clueword.keys())
+		print "メッセージ".decode("utf-8")
+		node = node.next
 		while node:
 			ans += "%s %s\n"%(node.surface,node.feature)
 			if node.surface in self.clueword.keys():
@@ -48,6 +53,7 @@ class ScoringClass:
 				print"%s %d"%(node.surface.decode("utf-8"),self.clueword[node.surface])
 			node = node.next
 		print point
+		print ans
 		return point
 
 	def scoreSentenceList(self,textList):
