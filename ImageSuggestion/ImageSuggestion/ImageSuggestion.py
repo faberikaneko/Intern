@@ -128,7 +128,7 @@ if __name__ == "__main__":
     this.splitSentences("墾田永年私財法於いて亜亞唖".decode("utf-8"))
     score = this.estimateDifficulty()
     print score
-    this.splitSentences("この文章の難易度を判定して下さい。".decode("utf-8"))
+    this.splitSentences("このさい、この際、この文章の難易度を判定して下さい。".decode("utf-8"))
     score = this.estimateDifficulty()
     print score
     this.close()
