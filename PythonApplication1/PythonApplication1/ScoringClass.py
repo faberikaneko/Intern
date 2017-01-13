@@ -20,8 +20,7 @@ class ScoringClass:
 				next(reader)
 				#dataの表現部分：重み辞書を作成
 				for row in reader:
-					if isinstance(row,unicode):
-						print "hoge"
+					print row[0].decode("utf-8")
 					ScoringClass.clueword[row[0].decode("utf-8")] = int(row[2].decode("utf-8"))
 		return
 
@@ -34,7 +33,8 @@ class ScoringClass:
 				next(reader)
 				#dataCの表現部分：重み辞書を作成
 				for row in reader:
-					ScoringClass.keysentence[row[0].decode("utf-8").replace(u"~",u"*")] = int(row[2].decode("utf-8"))
+					print row[0].decode("utf-8").replace(u"～",u"*")
+					ScoringClass.keysentence[row[0].replace("～","*").decode("utf-8")] = int(row[2].decode("utf-8"))
 		return
 
 	#分割する文章を読み込む
@@ -43,17 +43,15 @@ class ScoringClass:
 		m = MeCab.Tagger("-Owakati")
 		node = m.parseToNode(text)
 		ans = ""
-		print map(lambda t:t,self.clueword.keys())
-		print "メッセージ".decode("utf-8")
 		node = node.next
-		while node:
-			ans += "%s %s\n"%(node.surface,node.feature)
-			if node.surface in self.clueword.keys():
-				point += self.clueword[node.surface]
-				print"%s %d"%(node.surface.decode("utf-8"),self.clueword[node.surface])
+		while node.next:
+			word = (node.surface.decode("utf-8"),node.feature.decode("utf-8"))
+			ans += "%s %s\n"%word
+			if word[0] in ScoringClass.clueword.keys():
+				point += ScoringClass.clueword[word[0]]
+				print"%s %d"%(node.surface.decode("utf-8"),ScoringClass.clueword[word[0]])
 			node = node.next
 		print point
-		print ans
 		return point
 
 	def scoreSentenceList(self,textList):
