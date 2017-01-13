@@ -15,28 +15,27 @@ class ScoringClass:
 
 	def readClueWord(self,filename="ClueWord_List.csv"):
 		# データベースを読み込む(ClueWord)->data
-		data = []
-		with open(filename,"rb") as f:
-			reader = csv.DictReader(f)
-			for row in reader:
-				data.append(row)
-		#dataの表現部分：重み辞書を作成
 		self.clueword = {}
-		for d in data:
-			self.clueword[d[ScoringClass.key[0]]] = int(d[ScoringClass.key[2]])
+		with open(filename,"rb") as f:
+			reader = csv.reader(f)
+			#ヘッダ行の読み飛ばし
+			next(reader)
+			#dataの表現部分：重み辞書を作成
+			for row in reader:
+				self.clueword[row[0]] = int(row[2])
 		return
 
 	def readSentenceExpression(self,filename="SentenceExpression_List.csv"):
 		#データベース読み込む(SentenceExpression)->dataC
 		dataC = []
 		with open(filename,"rb") as f:
-			reader = csv.DictReader(f)
+			reader = csv.reader(f)
+			next(reader)
+			self.keysentence = {}
+			#dataCの表現部分：重み辞書を作成
 			for row in reader:
-				dataC.append(row)
-		#dataCの表現部分：重み辞書を作成
-		self.keysentence = {}
-		for d in dataC:
-			self.keysentence[d[ScoringClass.key[0]].replace("~","")] = int(d[ScoringClass.key[2]])
+				self.keysentence[row[0].replace("~","")] = int(row[2])
+		return
 
 	#分割する文章を読み込む
 	def scoringSentence(self,text):
