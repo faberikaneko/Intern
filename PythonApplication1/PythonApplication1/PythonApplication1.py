@@ -3,11 +3,8 @@
 import MeCab
 import sys
 import codecs
-
-m = MeCab.Tagger("-Owakati")
-
 import csv
-##document
+
 class ScoringClass:
 	"""scoring sentense"""
 	clueword = None
@@ -71,7 +68,7 @@ if __name__ == "__main__":
 	textList = []
 	filename = "text.txt"
 	with open(filename,"rt") as f:
-		textList = f.read().split("\n")
+		textList = f.readlines()
 	scores = this.scoreSentenceList(textList)
 	filename = "output.txt"
 	with open(filename,"wt") as f:
