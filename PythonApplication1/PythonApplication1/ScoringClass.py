@@ -20,7 +20,6 @@ class ScoringClass:
 				next(reader)
 				#dataの表現部分：重み辞書を作成
 				for row in reader:
-					print row[0].decode("utf-8")
 					ScoringClass.clueword[row[0].decode("utf-8")] = int(row[2].decode("utf-8"))
 		return
 
@@ -33,7 +32,6 @@ class ScoringClass:
 				next(reader)
 				#dataCの表現部分：重み辞書を作成
 				for row in reader:
-					print row[0].decode("utf-8").replace(u"～",u"*")
 					ScoringClass.keysentence[row[0].replace("～","*").decode("utf-8")] = int(row[2].decode("utf-8"))
 		return
 
@@ -49,7 +47,7 @@ class ScoringClass:
 			ans += "%s %s\n"%word
 			if word[0] in ScoringClass.clueword.keys():
 				point += ScoringClass.clueword[word[0]]
-				print"%s %d"%(node.surface.decode("utf-8"),ScoringClass.clueword[word[0]])
+#				print"%s %d"%(node.surface.decode("utf-8"),ScoringClass.clueword[word[0]])
 			node = node.next
 		print point
 		return point
