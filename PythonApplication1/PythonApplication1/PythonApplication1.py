@@ -1,68 +1,76 @@
-#coding:utf-8
+# -*- coding:utf-8 -*-
 
 import MeCab
 import sys
 import codecs
 
-import csv
-
 m = MeCab.Tagger("-Owakati")
 
-f1 = open("hoge.txt","r")
-t = f1.read().decode("utf-8")
-f1.close()
-f2 = open("huga.txt","w")
-f2.write(m.parse(t.encode("utf-8")))
-f2.close()
+import csv
+##document
+class ScoringClass:
+	"""scoring sentense"""
 
-data = []
+	key = ['\xef\xbb\xbfkeyword', 'type', 'importance', 'list1', 'list3', 'list2']
 
-with open("ClueWord_List.csv","rb") as f:
-	reader = csv.DictReader(f)
-	for row in reader:
-		data.append(row)
+	def readClueWord(self,filename="ClueWord_List.csv"):
+		# データベースを読み込む(ClueWord)->data
+		data = []
+		with open(filename,"rb") as f:
+			reader = csv.DictReader(f)
+			for row in reader:
+				data.append(row)
+		#dataの表現部分：重み辞書を作成
+		self.clueword = {}
+		for d in data:
+			self.clueword[d[ScoringClass.key[0]]] = int(d[ScoringClass.key[2]])
+		return
 
-keyword = {}
-for d in data:
-	keyword[d['\xef\xbb\xbfkeyword']] = int(d['importance'])
+	def readSentenceExpression(self,filename="SentenceExpression_List.csv"):
+		#データベース読み込む(SentenceExpression)->dataC
+		dataC = []
+		with open(filename,"rb") as f:
+			reader = csv.DictReader(f)
+			for row in reader:
+				dataC.append(row)
+		#dataCの表現部分：重み辞書を作成
+		self.keysentence = {}
+		for d in dataC:
+			self.keysentence[d[ScoringClass.key[0]].replace("~","")] = int(d[ScoringClass.key[2]])
 
-dataC = []
-with open("SentenceExpression_List.csv","rb") as f:
-	reader = csv.DictReader(f)
-	for row in reader:
-		dataC.append(row)
+	#分割する文章を読み込む
+	def scoringSentence(self,text):
+		point = 0
+		m = MeCab.Tagger("-Owakati")
+		node = m.parseToNode(text)
+		ans = ""
+		while node:
+			ans += "%s %s\n"%(node.surface,node.feature)
+			if node.surface in self.clueword.keys():
+				point += self.clueword[node.surface]
+				print"%s %d"%(node.surface.decode("utf-8"),self.clueword[node.surface])
+			node = node.next
+		print point
+		return point
 
-keysentence = {}
-for d in dataC:
-	keyword[d['\xef\xbb\xbfkeyword'].replace("~","")] = int(d['importance'])
+	def __init__(self):
+		self.readClueWord()
+		self.readSentenceExpression()
 
-point = 0#
-text = "のし袋の使用量は３年間に１５％減少している。"
-node = m.parseToNode(text)
-ans = ""
-while node:
-	ans += "%s %s\n"%(node.surface,node.feature)
-	if node.surface in keyword.keys():
-		point += keyword[node.surface]
-		print"%s %d"%(node.surface.decode("utf-8"),keyword[node.surface])
-	node = node.next
-print point
-		
-f = open("node.txt","w")
-f.write(ans)
-f.close()
-
+#てすとプログラム
 if __name__ == "__main__":
-	print "hoge"
+	print "start main"
+	this = ScoringClass()
+	this.scoringSentence("のし袋の使用量は３年間に１５％減少している。")
+		
 
-#key = ['\xef\xbb\xbfkeyword', 'type', 'importance', 'list1', 'list3', 'list2']
-#print(key)
+	#print(key)
 
-#with open("Output.csv","wb") as f:
-#	writer = csv.DictWriter(f,key)
-#	key_row = {}
-#	for k in key:
-#		key_row[k] = k
-#	writer.writerow(key_row)
-#	for row in data:
-#		writer.writerow(row)
+	#with open("Output.csv","wb") as f:
+	#	writer = csv.DictWriter(f,key)
+	#	key_row = {}
+	#	for k in key:
+	#		key_row[k] = k
+	#	writer.writerow(key_row)
+	#	for row in data:
+	#		writer.writerow(row)
