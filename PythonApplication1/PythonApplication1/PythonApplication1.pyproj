@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>1a816be6-9d07-4817-ad5e-e36391176356</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>mainclass.py</StartupFile>
+    <StartupFile>scoringclass.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>

@@ -71,12 +71,11 @@ if __name__ == "__main__":
 	filename = "text.txt"
 	with open(filename,"rt") as f:
 		textList = f.readlines()
-	scores = this.scoreSentenceList(textList)
+	scores = this.scoreSentenceList(map(lambda t : t.replace("\n","") , textList))
 	filename = "output.txt"
 	with open(filename,"wt") as f:
 		for score in scores:
-			f.write(score[0])
-			f.write(str(score[1]))
+			f.write(score[0] + ":" + str(score[1]) + "\n")
 	
 
 	#print(key)
