@@ -3,8 +3,7 @@
 import sys
 import re
 
-import scoringclass
-from scoringclass import ScoringClass
+import ScoringClass
 
 class MainClass:
 	"""message"""
@@ -23,7 +22,7 @@ class MainClass:
 			self.sectionList.append(filter(lambda t:len(t) > 0,pre.split(text)))
 		return
 	def do(self):
-		sc = ScoringClass()
+		sc = ScoringClass
 		scores = []
 		for section in filter(lambda s : len(s) > 3,self.sectionList):
 			print "yes"
