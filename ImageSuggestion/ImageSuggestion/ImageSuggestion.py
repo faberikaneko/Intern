@@ -4,11 +4,13 @@
 
 import sys
 import csv
+import codecs
+import itertools
 
 class DifficultyEstimation:
 
     fcorpus = [ ]
-    keyword = 12*[ { } ]
+    keyword = [ { } ]
     
     hitcount = 0
     difficulty = [ ]
@@ -17,7 +19,7 @@ class DifficultyEstimation:
 
     def openInputFile(self, filename='./input.txt'):
         # Open input file
-        self.fin = open(filename,'r')
+        self.fin = open(filename,'rb')
 
     def closeInputFile(self):
          #Close input file
@@ -26,7 +28,7 @@ class DifficultyEstimation:
     def openCorpusFile(self):
         # Open corpus file
         for i in range(1,13):
-            self.fcorpus.append(open('./corpus/kanji_level'+str(i)+'.csv',"r"))
+            self.fcorpus.append(open('./corpus/kanji_level'+str(i)+'.csv',"rb"))
 
     def closeCorpusFile(self):
         # Close corpus files
@@ -54,52 +56,54 @@ class DifficultyEstimation:
         count = 0
         for fc in self.fcorpus:
             reader = csv.reader(fc)
+            next(reader)
+            codec = "utf-8"
+            leveldict = {}
             for row in reader:
-               self.keyword[count][row[0]] = row[1]
-#               print row[0] + " : " + self.keyword[count][row[0]]
-            count += 1
+                try:
+                    row[0].decode(codec)
+                except UnicodeDecodeError:
+                    codec = "shift-jis"
+                leveldict[row[0].decode(codec)] = row[1]
+            self.keyword.append(leveldict)
         print "END MAKING DICTIONARY"
-        
+        """
         # Test
         samplechar = "一"
         sam = samplechar.decode('utf-8')
         count = 0
         for i in self.keyword:
-#            print self.keyword[count].keys()
-            for s in self.keyword[count].keys():
-                print isinstance(samplechar,str)
-                print s + "  " + samplechar
-                if s==samplechar:
-                    print "HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH"
-#                print "HIT"
-            count += 1
+            for s in i.keys():
+#                print s + "  " + samplechar
+                if s==sam:
+                    print "Hit:" + s + str(i[s])
+                    count += 1
+        """
 
-    def splitSentences(self):
+    def splitSentences(self,textList):
         # Split sentences to character
-        word = [ ]
-        for line in self.fin.read().decode('utf-8'):
-            for i in line:
-                word.append(i)#.encode('utf-8'))
-                self.fout.write(i.encode('utf-8')+" ")
+        self.word = [ ]
+        for line in textList:
+            for i in list(line):
+                self.word.append(i)#.encode('utf-8'))
     
     def estimateDifficulty(self):
         # Start Checking
         print "CHECK"
 
-        for w in word:
-            for fc in fcorpus:
-        #        print i
-                reader = csv.reader(fc)
-        #        header = next(reader)
-                for row in reader:
-        #            print row[0]
-        #            print w
-                    if w==row[0]:
-                        hitcount+=1
-                        difficulty.append(row[2])
-                        print "HIT"
+        count = 0
+        score = 0
+        for w in self.word:
+            print w.encode("shift-jis")
+            for i in self.keyword:
+                for s in i.keys():
+                    if w==s:
+                        print "Hit:" + s + str(i[s])
+                        score += int(i[s])
+                        count += 1
             print "END CORPUS"
         print "END SENTENCE"
+        return score,count
     
 
     def open(self):
@@ -121,7 +125,9 @@ if __name__ == "__main__":
     this = DifficultyEstimation()
     this.open()
     this.makeDictionary()
-    this.splitSentences()
+    this.splitSentences(u"漢字の文字列での文章表現")
+    score ,count = this.estimateDifficulty()
+    print float(score)/count
     this.close()
     print "THE END"
 
