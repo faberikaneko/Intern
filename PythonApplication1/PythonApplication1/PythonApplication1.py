@@ -31,7 +31,6 @@ with open("SentenceExpression_List.csv","rb") as f:
 	reader = csv.DictReader(f)
 	for row in reader:
 		dataC.append(row)
-		print row
 
 keysentence = {}
 for d in dataC:
@@ -52,6 +51,9 @@ print point
 f = open("node.txt","w")
 f.write(ans)
 f.close()
+
+if __name__ == "main":
+	print "hoge"
 
 #key = ['\xef\xbb\xbfkeyword', 'type', 'importance', 'list1', 'list3', 'list2']
 #print(key)
