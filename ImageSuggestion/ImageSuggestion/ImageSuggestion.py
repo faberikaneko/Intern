@@ -66,19 +66,18 @@ class DifficultyEstimation:
                     codec = "shift-jis"
                 leveldict[row[0].decode(codec)] = row[1]
             self.keyword.append(leveldict)
-        print "END MAKING DICTIONARY"
-        """
-        # Test
-        samplechar = "一"
-        sam = samplechar.decode('utf-8')
-        count = 0
-        for i in self.keyword:
-            for s in i.keys():
-#                print s + "  " + samplechar
-                if s==sam:
-                    print "Hit:" + s + str(i[s])
-                    count += 1
-        """
+#        print "END MAKING DICTIONARY"
+        
+#        # Test
+#        samplechar = "一"
+#        sam = samplechar.decode('utf-8')
+#        count = 0
+#        for i in self.keyword:
+#            for s in i.keys():
+##                print s + "  " + samplechar
+#                if s==sam:
+#                    print "Hit:" + s + str(i[s])
+#                    count += 1
 
     def splitSentences(self,textList):
         # Split sentences to character
@@ -94,16 +93,17 @@ class DifficultyEstimation:
         count = 0
         score = 0
         for w in self.word:
-            print w.encode("shift-jis")
+            scorein = 0
             for i in self.keyword:
                 for s in i.keys():
                     if w==s:
-                        print "Hit:" + s + str(i[s])
-                        score += int(i[s])
-                        count += 1
-            print "END CORPUS"
+                        scorein = int(i[s])
+            
+            score += scorein if scorein!=0 else 0.1
+            print w.encode("shift-jis") + ":" + str(scorein if scorein != 0 else 0.1)
+            count += 1
         print "END SENTENCE"
-        return score,count
+        return float(score)/count
     
 
     def open(self):
@@ -125,9 +125,12 @@ if __name__ == "__main__":
     this = DifficultyEstimation()
     this.open()
     this.makeDictionary()
-    this.splitSentences(u"漢字の文字列での文章表現")
-    score ,count = this.estimateDifficulty()
-    print float(score)/count
+    this.splitSentences("墾田永年私財法於いて亜亞唖".decode("utf-8"))
+    score = this.estimateDifficulty()
+    print score
+    this.splitSentences("この文章の難易度を判定して下さい。".decode("utf-8"))
+    score = this.estimateDifficulty()
+    print score
     this.close()
     print "THE END"
 
