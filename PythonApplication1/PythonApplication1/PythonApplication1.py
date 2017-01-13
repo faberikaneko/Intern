@@ -52,7 +52,7 @@ f = open("node.txt","w")
 f.write(ans)
 f.close()
 
-if __name__ == "main":
+if __name__ == "__main__":
 	print "hoge"
 
 #key = ['\xef\xbb\xbfkeyword', 'type', 'importance', 'list1', 'list3', 'list2']
