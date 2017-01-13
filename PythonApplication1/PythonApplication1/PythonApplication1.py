@@ -11,7 +11,7 @@ import csv
 class ScoringClass:
 	"""scoring sentense"""
 
-	def readClueWord(self,filename="ClueWord_List.csv"):
+	def openClueWord(self,filename="ClueWord_List.csv"):
 		# データベースを読み込む(ClueWord)->data
 		self.clueword = {}
 		with open(filename,"rb") as f:
@@ -23,7 +23,7 @@ class ScoringClass:
 				self.clueword[row[0]] = int(row[2])
 		return
 
-	def readSentenceExpression(self,filename="SentenceExpression_List.csv"):
+	def openSentenceExpression(self,filename="SentenceExpression_List.csv"):
 		#データベース読み込む(SentenceExpression)->dataC
 		dataC = []
 		with open(filename,"rb") as f:
@@ -51,8 +51,8 @@ class ScoringClass:
 		return point
 
 	def __init__(self):
-		self.readClueWord()
-		self.readSentenceExpression()
+		self.oepnClueWord()
+		self.openSentenceExpression()
 
 #てすとプログラム
 if __name__ == "__main__":
