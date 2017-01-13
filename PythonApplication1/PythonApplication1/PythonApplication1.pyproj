@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>1a816be6-9d07-4817-ad5e-e36391176356</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>ScoringClass.py</StartupFile>
+    <StartupFile>MainClass.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -26,6 +26,11 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ScoringClass.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="input_main.txt" />
+    <Content Include="output.txt" />
+    <Content Include="text.txt" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
