@@ -11,8 +11,6 @@ import csv
 class ScoringClass:
 	"""scoring sentense"""
 
-	key = ['\xef\xbb\xbfkeyword', 'type', 'importance', 'list1', 'list3', 'list2']
-
 	def readClueWord(self,filename="ClueWord_List.csv"):
 		# データベースを読み込む(ClueWord)->data
 		self.clueword = {}
@@ -58,9 +56,9 @@ class ScoringClass:
 
 #てすとプログラム
 if __name__ == "__main__":
-	print "start main"
+	print "Start ScorinClass"
 	this = ScoringClass()
-	this.scoringSentence("のし袋の使用量は３年間に１５％減少している。")
+	score = this.scoringSentence("のし袋の使用量は３年間に１５％減少している。")
 		
 
 	#print(key)
