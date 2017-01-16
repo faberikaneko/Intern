@@ -47,21 +47,22 @@ class DifficultyEstimationClass:
 		reload(sys)
 		# デフォルトの文字コードを変更する．
 		sys.setdefaultencoding('utf-8')
-		# デフォルトの文字コードを出力する．
-		print 'defaultencoding:', sys.getdefaultencoding()
+
+		self.openCorpusFile()
 
 		# Set corpus character and difficulty to keyword
 		for fc in self.fcorpus:
 			reader = csv.reader(fc)
 			codec = "utf-8"
+			reader.next()
 			for row in reader:
 				try:
-					DifficultyEstimationClass.keyword[row[0].decode(codec)] = row[1].decode(codec)
+					DifficultyEstimationClass.keyword[row[0].decode(codec)] = int(row[1].decode(codec))
 				except UnicodeDecodeError:
 					codec = "shift-jis"
-					DifficultyEstimationClass.keyword[row[0].decode(codec)] = row[1].decode(codec)
-#			print row[0] + " : " + self.keyword[count][row[0]]
-		print "END MAKING DICTIONARY"
+					DifficultyEstimationClass.keyword[row[0].decode(codec)] = int(row[1].decode(codec))
+		
+		self.closeCorpusFile()
 		
 #		# Test
 #		samplechar = "一"
@@ -76,31 +77,23 @@ class DifficultyEstimationClass:
 #					print "HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH"
 ##				print "HIT"
 #			count += 1
-
-	def splitSentences(self,sentence):
-		# Split sentences to character
-		self.word = list(sentence)
-		#for char in sentence:
-		#	self.word.append(char)
 	
-	def estimateDifficulty(self):
+	def estimateDifficulty(self,sentence):
+		difficulty = 0.0
+		count = 0
+		chars = filter(lambda t:t != "",list(sentence))
 		# Start Checking
-		print "CHECK"
 
-		for w in self.word:
-			for fc in fcorpus:
-		#		print i
-				reader = csv.reader(fc)
-		#		header = next(reader)
-				for row in reader:
-		#			print row[0]
-		#			print w
-					if w==row[0]:
-						hitcount+=1
-						difficulty.append(row[2])
-						print "HIT"
-			print "END CORPUS"
-		print "END SENTENCE"
+		for char in chars:
+			if char in DifficultyEstimationClass.keyword.keys():
+				difficulty += DifficultyEstimationClass.keyword[char]
+				count += 1
+				print char + ":" + str(DifficultyEstimationClass.keyword[char])
+			else :
+				difficulty += 1
+				count += 1
+		print str(difficulty) + "/" + str(count)
+		return difficulty/count if count != 0 else 0
 	
 
 	def open(self):
