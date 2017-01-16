@@ -5,7 +5,7 @@
 import sys
 import csv
 
-class DifficultyEstimation:
+class DifficultyEstimationClass:
 
     fcorpus = [ ]
     keyword = 12*[ { } ]
@@ -115,7 +115,7 @@ class DifficultyEstimation:
 
 
 
-
+"""
 if __name__ == "__main__":
     print "start DifficultyEstimation"
     this = DifficultyEstimation()
@@ -124,5 +124,5 @@ if __name__ == "__main__":
     this.splitSentences()
     this.close()
     print "THE END"
-
+    """
     

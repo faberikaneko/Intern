@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>bebe9ed9-b16a-42dd-ac0e-fea80ddae05e</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>ImageSuggestion.py</StartupFile>
+    <StartupFile>MainClass.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -22,7 +22,9 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="ImageSuggestion.py" />
+    <Compile Include="DifficultyEstimationClass.py" />
+    <Compile Include="MainClass.py" />
+    <Compile Include="ScoringClass.py" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
