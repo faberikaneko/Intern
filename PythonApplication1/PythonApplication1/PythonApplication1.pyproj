@@ -28,9 +28,8 @@
     <Compile Include="scoringclass.py" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="imput_scoring.txt" />
     <Content Include="input_main.txt" />
-    <Content Include="output.txt" />
-    <Content Include="text.txt" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

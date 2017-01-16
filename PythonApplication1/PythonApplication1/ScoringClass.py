@@ -13,12 +13,12 @@ class ScoringClass:
 	def openClueWord(self,filename="ClueWord_List.csv"):
 		if ScoringClass.clueword == None:
 			ScoringClass.clueword = {}
-			# データベースを読み込む(ClueWord)->data
+			# read database(ClueWord)->data
 			with open(filename,"rt") as f:
 				reader = csv.reader(f)
-				#ヘッダ行の読み飛ばし
+				#readout header
 				next(reader)
-				#dataの表現部分：重み辞書を作成
+				#make data word:importance dict
 				for row in reader:
 					ScoringClass.clueword[row[0].decode("utf-8")] = int(row[2].decode("utf-8"))
 		return
@@ -39,7 +39,7 @@ class ScoringClass:
 	def scoreSentence(self,text):
 		point = 0
 		m = MeCab.Tagger("-Owakati")
-		node = m.parseToNode(text)
+		node = m.parseToNode(text.encode("utf-8"))
 		ans = ""
 		node = node.next
 		while node.next:
@@ -60,6 +60,8 @@ class ScoringClass:
 		return scoreList
 
 	def __init__(self):
+		reload(sys)
+		sys.setdefaultencoding('utf-8')
 		self.openClueWord()
 		self.openSentenceExpression()
 
@@ -68,11 +70,11 @@ if __name__ == "__main__":
 	print "Start ScorinClass"
 	this = ScoringClass()
 	textList = []
-	filename = "text.txt"
-	with open(filename,"rt") as f:
-		textList = f.readlines()
-	scores = this.scoreSentenceList(map(lambda t : t.replace("\n","") , textList))
-	filename = "output.txt"
+	filename = "imput_scoring.txt"
+	with open(filename,"rt") as file:
+		textList = file.readlines()
+	scores = this.scoreSentenceList(map(lambda t : t.replace("\n","").decode("utf-8") , textList))
+	filename = "output_scorig.txt"
 	with open(filename,"wt") as f:
 		for score in scores:
 			f.write(score[0] + ":" + str(score[1]) + "\n")
