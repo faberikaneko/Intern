@@ -23,18 +23,20 @@ class MainClass:
 		"""read imput file from imputfilename(file) to rawFile and sectionList and sentenceList"""
 		with open(imputfilename,"rt") as file:
 			# Set sentences encoded 'utf-8' from input file to textList
-			self.rawFile = file.read().decode("utf-8")
+			try:
+				self.rawFile = file.read().decode("utf-8")
+			except UnicodeDecodeError:
+				self.rawFile = file.read().decode("shift-jis")
 			# split rawFile to sectionList[] by "\n" 
-			self.sectionList = filter(lambda t:len(t) > 0,map(lambda t:t.replace("\n",""),self.rawFile.split(u"\n")))
+			self.sectionList = filter(lambda t:len(t) > 0,map(lambda t:t.replace(u"\n",u""),self.rawFile.split(u"\n")))
 			# split foreach sectionList[] to sentenceList by "。\.．"
 			self.sentenceList = []
 			pre = re.compile(ur'[。\.．]')
 			for sentence in self.sectionList:
 				self.sentenceList.append(filter(lambda t:len(t) > 0,pre.split(sentence)))
-		return
 
 	def writefile(self,outputfilename):
-		return
+		None
 
 	def do(self):
 		sc = ScoringClass
@@ -60,6 +62,7 @@ if __name__ == "__main__":
 	dec.makeDictionary()
 	sentenceDifficultyDict = dec
 
+	print main.sentenceList
     # Scoring to section
 	scores = main.do()
 

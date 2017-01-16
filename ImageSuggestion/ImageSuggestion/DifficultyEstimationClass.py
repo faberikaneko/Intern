@@ -79,16 +79,15 @@ class DifficultyEstimationClass:
 
 	def splitSentences(self,sentence):
 		# Split sentences to character
-		self.word = [ ]
-		for char in sentence:
-			word.append(char)
-			word
+		self.word = list(sentence)
+		#for char in sentence:
+		#	self.word.append(char)
 	
 	def estimateDifficulty(self):
 		# Start Checking
 		print "CHECK"
 
-		for w in word:
+		for w in self.word:
 			for fc in fcorpus:
 		#		print i
 				reader = csv.reader(fc)
