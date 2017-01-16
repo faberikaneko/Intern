@@ -49,13 +49,19 @@ class ScoringClass:
 		node = node.next
 		nodeList = []
 		while node.next:
-			surface = node.surface.decode("utf-8")
+			try:
+				surface = node.surface.decode("utf-8")
+			except UnicodeDecodeError:
+				try:
+					surface = node.surface.decode("shift-jis")
+				except UnicodeDecodeError:
+					surface = node.surface.decode("utf-16")
 			nodeList.append(surface)
 #			nodeList.append(nono.feature.decode("utf-8"))
 #			word = (node.surface.decode("utf-8"),node.feature.decode("utf-8"))
 #			ans += "%s %s\n"%word
 			if surface in ScoringClass.clueword.keys():
-				point.append(ScoringClass.clueword[surface])
+				point.append(surface)
 			node = node.next
 		return point
 
@@ -72,7 +78,7 @@ class ScoringClass:
 		for text in textList:
 			scoreWord = self.scoreSentenceByWord(text)
 			scoreExp = self.scoreSentenceByExp(text)
-			scoreList.append((text,scoreWord,scoreExp))
+			scoreList.append((textList.index(text),scoreWord,scoreExp))
 		return scoreList
 
 	def __init__(self):
@@ -99,7 +105,8 @@ if __name__ == "__main__":
 	filename = "output_scorig.txt"
 	with open(filename,"wt") as file:
 		for score in scores:
-			file.write("%s:%d/%d,%d/%d\n"%(score[0],sum(score[1]),len(score[1]),sum(score[2]),len(score[2])))
+			file.write(textList[score[0]])
+			file.write("%d/%d,%d/%d\n"%(sum(score[1]),len(score[1]),sum(score[2]),len(score[2])))
 	
 
 	#print(key)
