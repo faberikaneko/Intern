@@ -60,19 +60,19 @@ class DifficultyEstimationClass:
             count += 1
         print "END MAKING DICTIONARY"
         
-        # Test
-        samplechar = "一"
-        sam = samplechar.decode('utf-8')
-        count = 0
-        for i in self.keyword:
-#            print self.keyword[count].keys()
-            for s in self.keyword[count].keys():
-                print isinstance(samplechar,str)
-                print s + "  " + samplechar
-                if s==samplechar:
-                    print "HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH"
-#                print "HIT"
-            count += 1
+#        # Test
+#        samplechar = "一"
+#        sam = samplechar.decode('utf-8')
+#        count = 0
+#        for i in self.keyword:
+##            print self.keyword[count].keys()
+#            for s in self.keyword[count].keys():
+#                print isinstance(samplechar,str)
+#                print s + "  " + samplechar
+#                if s==samplechar:
+#                    print "HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH"
+##                print "HIT"
+#            count += 1
 
     def splitSentences(self):
         # Split sentences to character
