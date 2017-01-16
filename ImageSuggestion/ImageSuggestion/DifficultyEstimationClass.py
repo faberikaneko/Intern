@@ -7,11 +7,11 @@ import csv
 
 class DifficultyEstimationClass:
 
-    fcorpus = [ ]
-    keyword = 12*[ { } ]
+    fcorpus = []
+    keyword = {}
     
     hitcount = 0
-    difficulty = [ ]
+    difficulty = []
 
     word = [ ]
 
@@ -55,7 +55,7 @@ class DifficultyEstimationClass:
         for fc in self.fcorpus:
             reader = csv.reader(fc)
             for row in reader:
-               self.keyword[count][row[0]] = row[1]
+               DifficultyEstimationClass.keyword[row[0]] = row[1]
 #               print row[0] + " : " + self.keyword[count][row[0]]
             count += 1
         print "END MAKING DICTIONARY"
