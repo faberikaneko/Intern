@@ -73,5 +73,5 @@ if __name__ == "__main__":
 
     # 
 	with codecs.open(outputfilename,"w",encoding="utf-8-sig") as file:
-		for line in difficultySectionDict:
+		for line in main.sectionList:
 			file.write((line + ":" +str(difficultySectionDict[line]) +u"\n").encode("utf-8-sig"))

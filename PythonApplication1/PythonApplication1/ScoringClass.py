@@ -15,7 +15,7 @@ class ScoringClass:
 		if ScoringClass.clueword == None:
 			ScoringClass.clueword = {}
 			# read database(ClueWord)->data
-			with open(filename,"rt") as f:
+			with codecs.open(filename,"r",encoding="utf-8-sig") as f:
 				reader = csv.reader(f)
 				#readout header
 				next(reader)
@@ -42,7 +42,9 @@ class ScoringClass:
 
 	#分割する文章を読み込む
 	def scoreSentenceByWord(self,text):
-		point = []
+		""" in > text (one sentence)
+			out> matching word list[]"""
+		matching = []
 		m = MeCab.Tagger("-Owakati")
 		node = m.parseToNode(text.encode("utf-8"))
 		ans = ""
@@ -61,25 +63,26 @@ class ScoringClass:
 #			word = (node.surface.decode("utf-8"),node.feature.decode("utf-8"))
 #			ans += "%s %s\n"%word
 			if surface in ScoringClass.clueword.keys():
-				point.append(surface)
+				matching.append(surface)
 			node = node.next
-		return point
+		return matching
 
 	def scoreSentenceByExp(self,text):
-		point = []
+		""" in > text (one sentence)
+			out> matching word list[]"""
+		matching = []
 		for sentence in ScoringClass.keysentence.keys():
 			if re.match(sentence,text):
-				print "match!"
-				point.append(ScoringClass.keysentence[sentence])
-		return point
+				matching.append(sentence)
+		return matching
 
 	def scoreSentenceList(self,textList):
-		scoreList = []
+		matchList = []
 		for text in textList:
-			scoreWord = self.scoreSentenceByWord(text)
-			scoreExp = self.scoreSentenceByExp(text)
-			scoreList.append((textList.index(text),scoreWord,scoreExp))
-		return scoreList
+			matchWordList = self.scoreSentenceByWord(text)
+			matchExpList = self.scoreSentenceByExp(text)
+			matchList.append((textList.index(text),matchWordList+matchExpList))
+		return matchList
 
 	def __init__(self):
 		reload(sys)
@@ -106,7 +109,11 @@ if __name__ == "__main__":
 	with open(filename,"wt") as file:
 		for score in scores:
 			file.write(textList[score[0]])
-			file.write("%d/%d,%d/%d\n"%(sum(score[1]),len(score[1]),sum(score[2]),len(score[2])))
+			file.write("\nmatch:" + str(len(score[1])) + "\n")
+			for match in score[1]:
+				file.write("\t" + match + ":" + str(ScoringClass.clueword[match] if match in ScoringClass.clueword else ScoringClass.keysentence[match]))
+				file.write("\n")
+				
 	
 
 	#print(key)

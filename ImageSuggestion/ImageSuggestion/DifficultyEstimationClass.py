@@ -27,6 +27,12 @@ class DifficultyEstimationClass:
 		# Open corpus file
 		for i in range(1,13):
 			self.fcorpus.append(open('./corpus/kanji_level'+str(i)+'.csv',"r"))
+		self.fcorpus.append(open('./corpus/alpha.txt',"r"))
+		self.fcorpus.append(open('./corpus/hira.txt',"r"))
+		self.fcorpus.append(open('./corpus/hkata.txt',"r"))
+		self.fcorpus.append(open('./corpus/kata.txt',"r"))
+		self.fcorpus.append(open('./corpus/symbol.txt',"r"))
+		print "yattaze"
 
 	def closeCorpusFile(self):
 		# Close corpus files
@@ -61,7 +67,7 @@ class DifficultyEstimationClass:
 				except UnicodeDecodeError:
 					codec = "shift-jis"
 					DifficultyEstimationClass.keyword[row[0].decode(codec)] = int(row[1].decode(codec))
-		
+		print "hane"
 		self.closeCorpusFile()
 		
 #		# Test
