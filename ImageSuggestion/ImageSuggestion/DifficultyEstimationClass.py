@@ -32,7 +32,6 @@ class DifficultyEstimationClass:
 		self.fcorpus.append(open('./corpus/hkata.txt',"r"))
 		self.fcorpus.append(open('./corpus/kata.txt',"r"))
 		self.fcorpus.append(open('./corpus/symbol.txt',"r"))
-		print "yattaze"
 
 	def closeCorpusFile(self):
 		# Close corpus files
@@ -67,7 +66,6 @@ class DifficultyEstimationClass:
 				except UnicodeDecodeError:
 					codec = "shift-jis"
 					DifficultyEstimationClass.keyword[row[0].decode(codec)] = int(row[1].decode(codec))
-		print "hane"
 		self.closeCorpusFile()
 		
 #		# Test
@@ -94,11 +92,11 @@ class DifficultyEstimationClass:
 			if char in DifficultyEstimationClass.keyword.keys():
 				difficulty += DifficultyEstimationClass.keyword[char]
 				count += 1
-				print char + ":" + str(DifficultyEstimationClass.keyword[char])
+#				print char + ":" + str(DifficultyEstimationClass.keyword[char])
 			else :
 				difficulty += 1
 				count += 1
-		print str(difficulty) + "/" + str(count)
+#		print str(difficulty) + "/" + str(count)
 		return difficulty/count if count != 0 else 0
 	
 

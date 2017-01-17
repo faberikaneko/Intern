@@ -24,20 +24,24 @@ class MainClass:
 	def readfile(self,imputfilename):
 		"""read imput file from imputfilename(file) to rawText"""
 		try:
-			ans = codecs.open(imputfilename,"r",encoding="utf-8-sig").read().decode("utf-8")
+			self.rawText = Text(codecs.open(imputfilename,"r",encoding="utf-8-sig").read().decode("utf-8"))
 		except UnicodeDecodeError:
-			ans = codecs.open(imputfilename,"r",encoding="shift-jis").read().deoced("shift-jis")
-		return ans
+			try:
+				self.rawText = Text(codecs.open(imputfilename,"r",encoding="shift-jis").read().deoced("shift-jis"))
+			except UnicodeDecodeError:
+				sys.exit("error! codecs is not supported.")
 
-	def split(self):
-		"""rawFile to sectionList and sentenceList"""
+	def splitSection(self):
+		"""split rawFile to sectionList and sentenceList"""
 		# split rawFile by "\n" and set to sectionList 
-		self.sectionList = filter(lambda t:len(t) > 0,map(lambda t:t.replace(u"\r\n" or u"\n" or u"\r" ,u""),self.rawText.split(u"\r\n" or u"\n" or u"\r")))
+		self.sectionList = [Text(t) for t in self.rawText.text.split(u"\r\n" or u"\n" or u"\r")]
+
+	def splitSentence(self):
 		# split foreach sectionList[] to sentenceList by "。\.．"
-		self.sentenceList = []
 		pre = re.compile(ur'[。\.．]')
-		for sentence in self.sectionList:
-			self.sentenceList.append(filter(lambda t:len(t) > 0,pre.split(sentence)))
+		self.sentenceList = [[]]
+		for section in self.sectionList:
+			section.sentenceList = filter(lambda t:len(t.text) > 0,[Text(t) for t in pre.split(section.text)])
 
 	def writefile(self,outputfilename):
 		None
@@ -49,6 +53,10 @@ class MainClass:
 			scores.append(sc.scoreSentenceList(section))
 		return scores
 
+class Text:
+	def __init__(self,text):
+		self.text = unicode(text)
+
 if __name__ == "__main__":
 	print "start main class"
 	imputfilename = "input_main.txt"
@@ -56,22 +64,29 @@ if __name__ == "__main__":
 
     # Initialize MainClass and make sectionList
 	main = MainClass()
-	main.rawText = main.readfile(imputfilename)
-	main.split()
+	main.readfile(imputfilename)
+	main.splitSection()
+	main.splitSentence()
 
     # TODO: Difficulty Estimation
 
 	dec = DifficultyEstimationClass()
 	dec.makeDictionary()
-	difficultySectionDict = {}
-	for section in main.sectionList:
-		difList = [dec.estimateDifficulty(s) for s in main.sentenceList[main.sectionList.index(section)]]
-		difficultySectionDict[section] = sum(difList)/len(difList)
+	for section in main.sectionList[:]:
+		section.difficultyList = [dec.estimateDifficulty(s.text) for s in section.sentenceList]
+		a = lambda x:max(x)
+		b = lambda x:sum(x)/len(x) if len(x) > 0 else 0
+		section.difficulty = a(section.difficultyList)
+
+	difsortedSectionList = sorted(main.sectionList,key=lambda section:section.difficulty,reverse=True)
+	print [section.text.encode("utf-8") for section in main.sectionList]
+
+		
 
     # Scoring to section
 	#scores = main.do()
 
     # 
 	with codecs.open(outputfilename,"w",encoding="utf-8-sig") as file:
-		for line in main.sectionList:
-			file.write((line + ":" +str(difficultySectionDict[line]) +u"\n").encode("utf-8-sig"))
+		for section in main.sectionList[:]:
+			file.write((section.text + ":" +str(section.difficulty) +u"\n").encode("utf-8-sig"))
