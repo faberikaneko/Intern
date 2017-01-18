@@ -2,12 +2,20 @@
 
 import sys
 import re
+import regex as re
+
+import platform
 
 import codecs
 
 import ScoringClass
+from ScoringClass import ScoringClass
 import DifficultyEstimationClass
 from DifficultyEstimationClass import DifficultyEstimationClass
+
+import chardet
+
+from operator import add
 
 class MainClass:
 	"""message"""
@@ -18,18 +26,18 @@ class MainClass:
 		# Change default character encoding
 		reload(sys)                                        #Reload module
 		sys.setdefaultencoding('utf-8')     #Set character encoding to 'utf-8'
+		MainClass.sc = ScoringClass()
 
 		return
 
 	def readfile(self,imputfilename):
 		"""read imput file from imputfilename(file) to rawText"""
+		with open(imputfilename,mode="r") as file:
+			encode = chardet.detect(file.read())[u"encoding"]
 		try:
-			self.rawText = Text(codecs.open(imputfilename,"r",encoding="utf-8-sig").read().decode("utf-8"))
+			self.rawText = Text(codecs.open(imputfilename,"r",encoding=encode).read().decode(encode))
 		except UnicodeDecodeError:
-			try:
-				self.rawText = Text(codecs.open(imputfilename,"r",encoding="shift-jis").read().deoced("shift-jis"))
-			except UnicodeDecodeError:
-				sys.exit("error! codecs is not supported.")
+			sys.exit("error! codecs is not supported.")
 
 	def splitSection(self):
 		"""split rawFile to sectionList and sentenceList"""
@@ -38,20 +46,23 @@ class MainClass:
 
 	def splitSentence(self):
 		# split foreach sectionList[] to sentenceList by "。\.．"
-		pre = re.compile(ur'[。\.．]')
-		self.sentenceList = [[]]
-		for section in self.sectionList:
-			section.sentenceList = filter(lambda t:len(t.text) > 0,[Text(t) for t in pre.split(section.text)])
+		pre = re.compile(u"。\.．")
+		for section in self.sectionList[:]:
+			section.sentenceList = [Text(t) for t in pre.split(section.text) if len(t) > 0]
 
 	def writefile(self,outputfilename):
 		None
 
-	def do(self):
-		sc = ScoringClass
-		scores = []
-		for section in filter(lambda s : len(s) > MainClass.minLineNumber,self.sectionList):
-			scores.append(sc.scoreSentenceList(section))
-		return scores
+	def scoringSentence(self):
+		for section in [sec for sec in self.defficultySortedSectionList if len(sec.sentenceList)>=MainClass.minLineNumber]:
+			section.keywords = MainClass.sc.scoreSentenceList([sea.text for sea in section.sentenceList])
+
+	def scoringSection(self):
+		for section in self.sectionList:
+			section.score = sum([MainClass.sc.clueword.get(key) or MainClass.sc.keysentence.get(key) for key in reduce(add,section.keywords)])
+
+	def sort(self):
+		self.defficultySortedSectionList = sorted(self.sectionList,key=lambda section:section.difficulty,reverse=True)
 
 class Text:
 	def __init__(self,text):
@@ -77,16 +88,19 @@ if __name__ == "__main__":
 		a = lambda x:max(x)
 		b = lambda x:sum(x)/len(x) if len(x) > 0 else 0
 		section.difficulty = a(section.difficultyList)
+	
+	main.sort()
 
-	difsortedSectionList = sorted(main.sectionList,key=lambda section:section.difficulty,reverse=True)
-	print [section.text.encode("utf-8") for section in main.sectionList]
-
-		
+	main.sectionList
 
     # Scoring to section
-	#scores = main.do()
+	main.scoringSentence()
+
+	main.scoringSection()
+
+	print re.sub(ur"[^\p{Hira}\p{Kana}\p{Han}ーﾟﾞ\p{P}\p{ms}]",u"",ur"/*-+hoge,ひらがな。サービス業．区切り文字、ｼﾞｬﾝｸﾞﾙﾎﾟｹｯﾄですか？どうですか")
 
     # 
 	with codecs.open(outputfilename,"w",encoding="utf-8-sig") as file:
-		for section in main.sectionList[:]:
-			file.write((section.text + ":" +str(section.difficulty) +u"\n").encode("utf-8-sig"))
+		for section in main.sectionList:
+			file.write((section.text + u"\n:diff=" +unicode(section.difficulty) + u",score="+unicode(section.score) +u"\n").encode("utf-8-sig"))
