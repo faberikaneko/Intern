@@ -68,20 +68,6 @@ class DifficultyEstimationClass:
 					DifficultyEstimationClass.keyword[row[0].decode(codec)] = int(row[1].decode(codec))
 		self.closeCorpusFile()
 		
-#		# Test
-#		samplechar = "一"
-#		sam = samplechar.decode('utf-8')
-#		count = 0
-#		for i in self.keyword:
-##			print self.keyword[count].keys()
-#			for s in self.keyword[count].keys():
-#				print isinstance(samplechar,str)
-#				print s + "  " + samplechar
-#				if s==samplechar:
-#					print "HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH"
-##				print "HIT"
-#			count += 1
-	
 	def estimateDifficulty(self,sentence):
 		difficulty = 0.0
 		count = 0

@@ -46,7 +46,7 @@ class MainClass:
 
 	def splitSentence(self):
 		# split foreach sectionList[] to sentenceList by "。\.．"
-		pre = re.compile(u"。\.．")
+		pre = re.compile(ur"[。\.．]")
 		for section in self.sectionList[:]:
 			section.sentenceList = [Text(t) for t in pre.split(section.text) if len(t) > 0]
 
