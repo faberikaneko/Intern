@@ -98,8 +98,6 @@ if __name__ == "__main__":
 
 	main.scoringSection()
 
-	print re.sub(ur"[^\p{Hira}\p{Kana}\p{Han}ーﾟﾞ\p{P}\p{ms}]",u"",ur"/*-+hoge,ひらがな。サービス業．区切り文字、ｼﾞｬﾝｸﾞﾙﾎﾟｹｯﾄですか？どうですか")
-
     # 
 	with codecs.open(outputfilename,"w",encoding="utf-8-sig") as file:
 		for section in main.sectionList:
