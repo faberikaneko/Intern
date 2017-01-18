@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>bebe9ed9-b16a-42dd-ac0e-fea80ddae05e</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>MainClass.py</StartupFile>
+    <StartupFile>sunabamodule.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -28,6 +28,9 @@
     <Compile Include="DifficultyEstimationClass.py" />
     <Compile Include="MainClass.py" />
     <Compile Include="ScoringClass.py" />
+    <Compile Include="sunabamodule.py">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <InterpreterReference Include="{9a7a9026-48c1-4688-9d5d-e5699d47d074}\2.7" />
