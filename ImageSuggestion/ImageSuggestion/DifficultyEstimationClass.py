@@ -5,6 +5,8 @@
 import sys
 import csv
 
+import chardet
+
 class DifficultyEstimationClass:
 
 	fcorpus = []
@@ -58,14 +60,13 @@ class DifficultyEstimationClass:
 		# Set corpus character and difficulty to keyword
 		for fc in self.fcorpus:
 			reader = csv.reader(fc)
-			codec = "utf-8"
-			reader.next()
+			header = reader.next()
+			codec = chardet.detect(header[0]).get("encode","utf-8")
 			for row in reader:
 				try:
 					DifficultyEstimationClass.keyword[row[0].decode(codec)] = int(row[1].decode(codec))
 				except UnicodeDecodeError:
-					codec = "shift-jis"
-					DifficultyEstimationClass.keyword[row[0].decode(codec)] = int(row[1].decode(codec))
+					exit("error!")
 		self.closeCorpusFile()
 		
 	def estimateDifficulty(self,sentence):
