@@ -19,18 +19,19 @@ import unicodedata
 
 from operator import add
 
+
+# Change default character encoding
+reload(sys)                         #Reload module
+sys.setdefaultencoding('utf-8')     #Set character encoding to 'utf-8'
+
 class MainClass:
 	"""message"""
 
+	# config number (ninimum sentence in secsion)
 	minLineNumber = 1
 
 	def __init__(self):
-		# Change default character encoding
-		reload(sys)                                        #Reload module
-		sys.setdefaultencoding('utf-8')     #Set character encoding to 'utf-8'
 		MainClass.sc = ScoringClass()
-
-		return
 
 	def readfile(self,imputfilename):
 		"""read imput file from imputfilename(file) to rawText"""
@@ -54,8 +55,12 @@ class MainClass:
 
 	def writefile(self,outputfilename):
 		with codecs.open(outputfilename,"w",encoding="utf-8-sig") as file:
-			for section in main.sectionList:
-				file.write((section.text + u"\n:diff=" +unicode(section.difficulty) + u",score="+unicode(section.score) +u"\n").encode("utf-8-sig"))
+			for section in main.defficultySortedSectionList:
+				file.write((unicode(main.sectionList.index(section)) + section.text + u"\n:diff=" +unicode(section.difficulty) + u",score="+unicode(section.score) +u"\n").encode("utf-8-sig"))
+				keylist = reduce(add,section.keywords)
+				for match in keylist:
+					file.write("\t" + match + ":" + str(ScoringClass.clueword[match] if match in ScoringClass.clueword else ScoringClass.keysentence[match]))
+					file.write("\n")
 
 	def scoringSentence(self):
 		for section in [sec for sec in self.defficultySortedSectionList if len(sec.sentenceList)>=MainClass.minLineNumber]:
@@ -94,8 +99,6 @@ if __name__ == "__main__":
 		section.difficulty = a(section.difficultyList)
 	
 	main.sort()
-
-	main.sectionList
 
     # Scoring to section
 	main.scoringSentence()
