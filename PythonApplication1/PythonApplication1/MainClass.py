@@ -2,8 +2,8 @@
 
 import sys
 import re
-
-import ScoringClass
+import scoringclass
+from scoringclass import ScoringClass
 
 class MainClass:
 	"""message"""
