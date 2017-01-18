@@ -15,6 +15,8 @@ from DifficultyEstimationClass import DifficultyEstimationClass
 
 import chardet
 
+import unicodedata
+
 from operator import add
 
 class MainClass:
@@ -46,12 +48,14 @@ class MainClass:
 
 	def splitSentence(self):
 		# split foreach sectionList[] to sentenceList by "。\.．"
-		pre = re.compile(ur"[。\.．]")
+		pre = re.compile(ur"[。]")
 		for section in self.sectionList[:]:
 			section.sentenceList = [Text(t) for t in pre.split(section.text) if len(t) > 0]
 
 	def writefile(self,outputfilename):
-		None
+		with codecs.open(outputfilename,"w",encoding="utf-8-sig") as file:
+			for section in main.sectionList:
+				file.write((section.text + u"\n:diff=" +unicode(section.difficulty) + u",score="+unicode(section.score) +u"\n").encode("utf-8-sig"))
 
 	def scoringSentence(self):
 		for section in [sec for sec in self.defficultySortedSectionList if len(sec.sentenceList)>=MainClass.minLineNumber]:
@@ -69,7 +73,7 @@ class Text:
 		self.text = unicode(text)
 
 if __name__ == "__main__":
-	print "start main class"
+	print "start main class as main"
 	imputfilename = "input_main.txt"
 	outputfilename = "output_main.txt"
 
@@ -98,7 +102,5 @@ if __name__ == "__main__":
 
 	main.scoringSection()
 
-    # 
-	with codecs.open(outputfilename,"w",encoding="utf-8-sig") as file:
-		for section in main.sectionList:
-			file.write((section.text + u"\n:diff=" +unicode(section.difficulty) + u",score="+unicode(section.score) +u"\n").encode("utf-8-sig"))
+    # write file 
+	main.writefile(outputfilename)

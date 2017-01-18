@@ -69,7 +69,6 @@ class DifficultyEstimationClass:
 				while True:
 					bynary = fc.readline()
 					if bynary == b"":#read to end
-						print "read file to endfile "
 						break
 					detector.feed(bynary)
 					if detector.done:
