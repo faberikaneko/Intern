@@ -4,10 +4,12 @@ import urllib2
 import sys
 import re
 from MyHTMLParser import MyHTMLParser
+from KeyClass import KeyClass
 from Queue import Queue
 import threading
 import ssl
 import time
+import codecs
 
 
 class MainClass(threading.Thread):
@@ -48,54 +50,94 @@ class MainClass(threading.Thread):
         self.parser.hrefCount = 0
         self.parser.feed(self.htmlText.read())
  #       main.pickAltAndHref()
-        print "END thre "
+#        print "END thre "
 
+    def openImputUrl(self,filename):
+        buf = Queue()
+        text = self.readfile(filename)
+        lines = text.split('\n')
+        for url in lines:
+            print str(url)
+            buf.put(str(url))
+        return buf       
+
+    def readfile(self,imputfilename):
+        """read imput file from imputfilename(file) to rawText"""
+        try:
+            ans = codecs.open(imputfilename,"r",encoding="utf-8-sig").read()
+        except UnicodeDecodeError:
+            ans = codecs.open(imputfilename,"r",encoding="shift-jis").read()
+        
+        return ans
 
 
 if __name__ == "__main__":
-    imputUrl = Queue()
-    imputUrl.put(u'http://viral-community.com/blog/google-analytics-cv-7693/')
+    
     main = MainClass()
+
+    imputUrl = Queue()
+    imputUrl = main.openImputUrl('./imputUrls.txt')
+    
     main.parser = MyHTMLParser()
     main.parser.delFiles()
     main.parser.openFiles()
+    for j in range(0,2):
+        for i in range(0,imputUrl.qsize()):
+            print "----------------------------------------------START " + str(i) + " ----------------------------------------------"
+            print "----------------------------------------------START " + str(i) + " ----------------------------------------------"
+            print "----------------------------------------------START " + str(i) + " ----------------------------------------------"
+            for j in range(0,imputUrl.qsize()):
+                url = imputUrl.get()
+                main.th1 = threading.Thread(target=main.checkUrl, args=(url,))
+                main.th1.setDaemon(True)
+                main.th1.start()
+            main.th1.join()
+            print "th 1 JOIN!!!"
 
-    for i in range(0,5):
-        for j in range(0,imputUrl.qsize()):
-            url = imputUrl.get()
-            main.th1 = threading.Thread(target=main.checkUrl, args=(url,))
-            main.th1.setDaemon(True)
-            main.th1.start()
-        main.th1.join()
-        print "th 1 JOIN!!!"
-
-        while main.th1.isAlive():
-            time.sleep(100)
+            while main.th1.isAlive():
+                time.sleep(100)
         
-        print "request : " + str(len(main.request))
+            print "request : " + str(len(main.request))
 
 
-        for req in main.request:
-            main.th2 = threading.Thread(target=main.thre, args=(req,))
-            main.th2.setDaemon(True)
-            main.th2.start()
-        main.th2.join(1000)
-        print "th2 JOIN!!!"
+            for req in main.request:
+                main.th2 = threading.Thread(target=main.thre, args=(req,))
+                main.th2.setDaemon(True)
+                main.th2.start()
+            main.th2.join()
+            print "th2 JOIN!!!"
 
-        while main.th2.isAlive():
-            time.sleep(100)
+            while main.th2.isAlive():
+                time.sleep(100)
+
+        imputUrl = main.openImputUrl('./hrefList.txt')
+
+        main.parser.closeFiles()
+
+
+        keyClass = KeyClass()
+    
+        rawText = keyClass.readfile('./altList.txt')
+
+        keys = keyClass.keitaiso(rawText)
+
+#        main.parser.openFiles()
+        
+            #main.hrefList = main.parser.returnHrefList()
+
+            #for href in main.hrefList:
+            #    imputUrl.put(href)
+            #print href
+
+            #main.parser.resetList() 
+
+            
+
         
     
-        main.hrefList = main.parser.returnHrefList()
+    
+    #TODO : 1要素ごとにけいたいそかいせき　
 
-        for href in main.hrefList:
-            imputUrl.put(href)
-        print href
-
-        main.parser.resetList() 
-
-
-    print "haha"
-#    main.parser.closeFiles()
+    
 
     

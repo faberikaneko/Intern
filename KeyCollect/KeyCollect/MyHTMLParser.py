@@ -16,6 +16,10 @@ class MyHTMLParser(HTMLParser):
 
     startHTTP = re.compile(r'http://')
     startHTTPS = re.compile(r'https://')
+    jpgHTTP = re.compile(r'.jpg')
+    gifHTTP = re.compile(r'.gif')
+    pngHTTP = re.compile(r'.png')
+    bmpHTTP = re.compile(r'.bmp')
 
     count = 5
 
@@ -42,12 +46,16 @@ class MyHTMLParser(HTMLParser):
         if tag.lower() == 'img':
             for i in attrs:
                 if i[0].lower() == 'alt':
-                    if i[1]!="":
+                    alt = re.sub(ur"[^\p{Alphabetic}]",'',i[1])
+                    if alt!="":
                         self.global_lock.acquire()
                         self.imgCount += 1
 #                        self.altList.append(i[1].encode('utf-8'))
-                        self.falt.write(str(self.imgCount) + " : " + i[1].encode('utf-8') + '\n')
-                        print i[1].encode('utf-8')
+                        try:
+                            self.falt.write(str(self.imgCount) + " : " + i[1].encode('utf-8') + '\n')
+                            print "HIT"
+                        except UnicodeDecodeError as e:
+                           print "ERROR : " + str(e.reason)
                         self.global_lock.release()
 
         if tag.lower() == 'a':
@@ -55,13 +63,18 @@ class MyHTMLParser(HTMLParser):
                 if i[0].lower() == 'href':
                     if i[1]!="":
                         if (self.startHTTP.match(i[1].decode('utf-8'))!=None) or (self.startHTTPS.match(i[1].decode('utf-8'))!=None):
-                            if self.hrefCount < self.count:
-                                if random.randint(1,5)%2 == 0:
-                                    self.global_lock.acquire()
-                                    self.hrefList.append(i[1].encode('utf-8'))
-                                    self.fhref.write(i[1].encode('utf-8') + '\n')
-                                    self.hrefCount += 1
-                                    self.global_lock.release()
+                            if (self.jpgHTTP.findall(i[1].decode('utf-8'))!=None)or(self.gifHTTP.findall(i[1].decode('utf-8'))!=None)or(self.pngHTTP.findall(i[1].decode('utf-8'))!=None)or(self.bmpHTTP.findall(i[1].decode('utf-8'))!=None):
+                                if self.hrefCount < self.count:
+                                    if random.randint(1,5)%2 == 0:
+                                        if i[1]!="":
+                                            self.global_lock.acquire()
+#                                            self.hrefList.append(i[1].encode('utf-8'))
+                                            try:
+                                                self.fhref.write(i[1].encode('utf-8') + '\n')
+                                            except UnicodeDecodeError as e:
+                                                print "ERROR : " + str(e.reason)
+                                            self.hrefCount += 1
+                                            self.global_lock.release()
     
     def returnAltList(self):
         return self.altList
