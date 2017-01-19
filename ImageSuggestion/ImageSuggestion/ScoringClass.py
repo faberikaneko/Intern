@@ -2,13 +2,9 @@
 
 import MeCab
 import sys
-import io
-from io import open
 import codecs
 import csv
-import re
-
-import os.path
+import regex as re
 
 import chardet
 from chardet.universaldetector import UniversalDetector
@@ -58,7 +54,7 @@ class ScoringClass:
 		if ScoringClass.keysentence == None:
 			ScoringClass.keysentence = {}
 			#read database(SentenceExpression)->dataC
-			with io.open(filename,"rt",encoding="utf-8-sig") as file:
+			with codecs.open(filename,"rt",encoding="utf-8-sig") as file:
 				reader = csv.reader(file)
 				#readout header
 				next(reader)
