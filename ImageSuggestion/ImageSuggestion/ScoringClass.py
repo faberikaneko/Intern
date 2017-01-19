@@ -69,9 +69,6 @@ class ScoringClass:
 			except UnicodeDecodeError:
 				surface = ""
 				exit("error! unicode decode error!")
-	#			nodeList.append(nono.feature.decode("utf-8"))
-	#			word = (node.surface.decode("utf-8"),node.feature.decode("utf-8"))
-	#			ans += "%s %s\n"%word
 			if surface in ScoringClass.clueword.keys():
 				matching.append(surface)
 		return matching
