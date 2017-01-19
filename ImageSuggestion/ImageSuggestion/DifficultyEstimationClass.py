@@ -5,7 +5,14 @@
 import sys
 import csv
 
+import chardet
+from chardet.universaldetector import UniversalDetector
+
+import regex as re
+
 class DifficultyEstimationClass:
+
+	difficultyNormal = 1
 
 	fcorpus = []
 	keyword = {}
@@ -26,13 +33,12 @@ class DifficultyEstimationClass:
 	def openCorpusFile(self):
 		# Open corpus file
 		for i in range(1,13):
-			self.fcorpus.append(open('./corpus/kanji_level'+str(i)+'.csv',"r"))
-		self.fcorpus.append(open('./corpus/alpha.txt',"r"))
-		self.fcorpus.append(open('./corpus/hira.txt',"r"))
-		self.fcorpus.append(open('./corpus/hkata.txt',"r"))
-		self.fcorpus.append(open('./corpus/kata.txt',"r"))
-		self.fcorpus.append(open('./corpus/symbol.txt',"r"))
-		print "yattaze"
+			self.fcorpus.append(open('./corpus/kanji_level'+str(i)+'.csv',"rb"))
+		self.fcorpus.append(open('./corpus/alpha.txt',"rb"))
+#		self.fcorpus.append(open('./corpus/hira.txt',"rb"))
+#		self.fcorpus.append(open('./corpus/hkata.txt',"rb"))
+#		self.fcorpus.append(open('./corpus/kata.txt',"rb"))
+		self.fcorpus.append(open('./corpus/symbol.txt',"rb"))
 
 	def closeCorpusFile(self):
 		# Close corpus files
@@ -58,48 +64,50 @@ class DifficultyEstimationClass:
 
 		# Set corpus character and difficulty to keyword
 		for fc in self.fcorpus:
+			detector = UniversalDetector()
+			try:
+				while True:
+					bynary = fc.readline()
+					if bynary == b"":#read to end
+						break
+					detector.feed(bynary)
+					if detector.done:
+						break
+			finally:
+				detector.close()
+
+			codec = detector.result
+			fc.seek(0)
 			reader = csv.reader(fc)
-			codec = "utf-8"
-			reader.next()
+			header = reader.next()
+			if codec.get("encoding") == None:
+				codec["encoding"] = "shift-jis"######  Z  U  R  U  I  !
 			for row in reader:
 				try:
-					DifficultyEstimationClass.keyword[row[0].decode(codec)] = int(row[1].decode(codec))
+					DifficultyEstimationClass.keyword[row[0].decode(codec.get("encoding"))] = int(row[1].decode(codec.get("encoding")))
 				except UnicodeDecodeError:
-					codec = "shift-jis"
-					DifficultyEstimationClass.keyword[row[0].decode(codec)] = int(row[1].decode(codec))
-		print "hane"
+					exit("error!")
 		self.closeCorpusFile()
 		
-#		# Test
-#		samplechar = "一"
-#		sam = samplechar.decode('utf-8')
-#		count = 0
-#		for i in self.keyword:
-##			print self.keyword[count].keys()
-#			for s in self.keyword[count].keys():
-#				print isinstance(samplechar,str)
-#				print s + "  " + samplechar
-#				if s==samplechar:
-#					print "HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH"
-##				print "HIT"
-#			count += 1
-	
 	def estimateDifficulty(self,sentence):
 		difficulty = 0.0
 		count = 0
-		chars = filter(lambda t:t != "",list(sentence))
+		# all alphabet (include "hiragana,katakana,kanji")
+		chars = re.findall(ur"[\p{Alphabetic}]",sentence)
 		# Start Checking
 
+		#matching hiragana and katakana
+		reHiraKata = re.compile(ur"[\p{Hiragana}\p{Katakana]")
+		#matching kanji
+		reHan = re.compile(ur"[\p{Han}]")
 		for char in chars:
-			if char in DifficultyEstimationClass.keyword.keys():
-				difficulty += DifficultyEstimationClass.keyword[char]
-				count += 1
-				print char + ":" + str(DifficultyEstimationClass.keyword[char])
-			else :
-				difficulty += 1
-				count += 1
-		print str(difficulty) + "/" + str(count)
-		return difficulty/count if count != 0 else 0
+			if reHiraKata.match(char):
+				difficulty += DifficultyEstimationClass.difficultyNormal
+			elif reHan.match(char):
+				#if not memoried kanji, it's difficulty is 12
+				difficulty += DifficultyEstimationClass.keyword.get(char,12)
+		#null string has no difficulty
+		return difficulty/len(chars) if len(chars) != 0 else 0
 	
 
 	def open(self):

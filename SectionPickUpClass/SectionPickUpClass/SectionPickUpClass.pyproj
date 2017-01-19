@@ -3,18 +3,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>bebe9ed9-b16a-42dd-ac0e-fea80ddae05e</ProjectGuid>
+    <ProjectGuid>c9ca318b-d0a0-4712-82b4-b81d55706ee3</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>MainClass.py</StartupFile>
+    <StartupFile>SectionPickUpClass.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
-    <Name>ImageSuggestion</Name>
-    <RootNamespace>ImageSuggestion</RootNamespace>
-    <IsWindowsApplication>False</IsWindowsApplication>
-    <InterpreterId>{9a7a9026-48c1-4688-9d5d-e5699d47d074}</InterpreterId>
-    <InterpreterVersion>2.7</InterpreterVersion>
+    <Name>SectionPickUpClass</Name>
+    <RootNamespace>SectionPickUpClass</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -25,15 +22,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="DifficultyEstimationClass.py" />
-    <Compile Include="MainClass.py" />
-    <Compile Include="ScoringClass.py" />
-    <Compile Include="sunabamodule.py">
-      <SubType>Code</SubType>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <InterpreterReference Include="{9a7a9026-48c1-4688-9d5d-e5699d47d074}\2.7" />
+    <Compile Include="SectionPickUpClass.py" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
