@@ -55,7 +55,7 @@ class MainClass:
 
 	def writefile(self,outputfilename):
 		with codecs.open(outputfilename,"w",encoding="utf-8-sig") as file:
-			for section in main.defficultySortedSectionList:
+			for section in self.defficultySortedSectionList:
 				file.write((unicode(main.sectionList.index(section)) + section.text + u"\n:diff=" +unicode(section.difficulty) + u",score="+unicode(section.score) +u"\n").encode("utf-8-sig"))
 				keylist = reduce(add,section.keywords)
 				for match in keylist:
