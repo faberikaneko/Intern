@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>bebe9ed9-b16a-42dd-ac0e-fea80ddae05e</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>MainClass.py</StartupFile>
+    <StartupFile>sunabamodule.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -25,6 +25,9 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="dbmanage.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DifficultyEstimationClass.py" />
     <Compile Include="MainClass.py" />
     <Compile Include="ScoringClass.py" />
