@@ -17,6 +17,9 @@ class ScoringClass:
 	keysentence = None
 
 	def openClueWord(self,filename="ClueWord_List.csv"):
+		'''	<- filename : filename to read default = ClueWord_List.csv
+			 ->No return
+			read ClueWord.csv into dict(clueword)'''
 		if ScoringClass.clueword == None:
 			ScoringClass.clueword = {}
 			# read database(ClueWord)->data
@@ -29,7 +32,12 @@ class ScoringClass:
 					ScoringClass.clueword[row[0].decode("utf-8-sig")] = int(row[2].decode("utf-8-sig"))
 		return
 
-	def openClueWordDB(self,dbName=u"Wordb.sqlite3",tableName=u"clueword"):
+	def openClueWordDB(self,dbName=u"WordDB.sqlite3",tableName=u"clueword"):
+		'''	<- dbname : filename to read default = WordDB.sqlite3
+			<- tableName : tablename to read/write default = clueword
+			 ->No return
+			read clueword table in Database into dict(clueword)
+			if no table or dbfile, read csvfile and save it'''
 		if ScoringClass.clueword == None:
 			try:
 				conn = sqlite3.connect(dbName)
@@ -51,6 +59,9 @@ class ScoringClass:
 				print e.message
 
 	def openSentenceExpression(self,filename="SentenceExpression_List.csv"):
+		'''	<- filename : filename to read default = SentenceExpression_List.csv
+			 ->No return
+			read SentenceExpression_List.csv into dict(keysentence)'''
 		if ScoringClass.keysentence == None:
 			ScoringClass.keysentence = {}
 			#read database(SentenceExpression)->dataC
