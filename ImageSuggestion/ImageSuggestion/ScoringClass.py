@@ -2,14 +2,14 @@
 
 import MeCab
 import sys
-import io
-from io import open
 import codecs
 import csv
-import re
+import regex as re
 
 import chardet
 from chardet.universaldetector import UniversalDetector
+
+import sqlite3
 
 class ScoringClass:
 	"""scoring sentense"""
@@ -17,6 +17,9 @@ class ScoringClass:
 	keysentence = None
 
 	def openClueWord(self,filename="ClueWord_List.csv"):
+		'''	<- filename : filename to read default = ClueWord_List.csv
+			 ->No return
+			read ClueWord.csv into dict(clueword)'''
 		if ScoringClass.clueword == None:
 			ScoringClass.clueword = {}
 			# read database(ClueWord)->data
@@ -29,11 +32,40 @@ class ScoringClass:
 					ScoringClass.clueword[row[0].decode("utf-8-sig")] = int(row[2].decode("utf-8-sig"))
 		return
 
+	def openClueWordDB(self,dbName=u"WordDB.sqlite3",tableName=u"clueword"):
+		'''	<- dbname : filename to read default = WordDB.sqlite3
+			<- tableName : tablename to read/write default = clueword
+			 ->No return
+			read clueword table in Database into dict(clueword)
+			if no table or dbfile, read csvfile and save it'''
+		if ScoringClass.clueword == None:
+			try:
+				conn = sqlite3.connect(dbName)
+				with conn:
+					cr = conn.cursor()
+					if cr.execute(u"select count(*) from sqlite_master where type=\"table\" and name=?;",(tableName,)).fetchone()[0] == 0:
+						cr.execute(u"create table clueword (word ntext,importance real);")
+						self.openClueWord()
+						message = u"insert into "+tableName+" values (:key,:value)"
+						cr.executemany(message,self.clueword.iteritems())
+					else :
+						ScoringClass.clueword = {}
+						message = u"select * from "+tableName
+						for row in cr.execute(message):
+							ScoringClass.clueword[row[0]] = row[1]
+			except sqlite3.Error as e:
+				print e.message
+			except Exception as e:
+				print e.message
+
 	def openSentenceExpression(self,filename="SentenceExpression_List.csv"):
+		'''	<- filename : filename to read default = SentenceExpression_List.csv
+			 ->No return
+			read SentenceExpression_List.csv into dict(keysentence)'''
 		if ScoringClass.keysentence == None:
 			ScoringClass.keysentence = {}
 			#read database(SentenceExpression)->dataC
-			with io.open(filename,"rt",encoding="utf-8-sig") as file:
+			with codecs.open(filename,"rt",encoding="utf-8-sig") as file:
 				reader = csv.reader(file)
 				#readout header
 				next(reader)
@@ -47,6 +79,28 @@ class ScoringClass:
 					print "%s,%d"%(key,ScoringClass.keysentence[key])
 		return
 
+	def openSentenceExpressionDB(self,dbName=u"Wordb.sqlite3",tableName=u"SenExp"):
+		if ScoringClass.keysentence == None:
+			try:
+				conn = sqlite3.connect(dbName)
+				with conn:
+					cr = conn.cursor()
+					if cr.execute(u"select count(*) from sqlite_master where type=\"table\" and name=?;",(tableName,)).fetchone()[0] == 0:
+						cr.execute(u"create table "+tableName+" (word ntext,importance real);")
+						self.openSentenceExpression()
+						message = u"insert into "+tableName+" values (:key,:value)"
+						cr.executemany(message,self.keysentence.iteritems())
+					else :
+						ScoringClass.keysentence = {}
+						message = u"select * from "+tableName
+						for row in cr.execute(message):
+							ScoringClass.keysentence[row[0]] = row[1]
+			except sqlite3.Error as e:
+				print e.message
+			except Exception as e:
+				print e.message
+			finally:
+				conn.close()
 	#read text
 	def scoreSentenceByWord(self,text):
 		""" in > text (one sentence)
@@ -69,9 +123,7 @@ class ScoringClass:
 			except UnicodeDecodeError:
 				surface = ""
 				exit("error! unicode decode error!")
-	#			nodeList.append(nono.feature.decode("utf-8"))
-	#			word = (node.surface.decode("utf-8"),node.feature.decode("utf-8"))
-	#			ans += "%s %s\n"%word
+			#searching word
 			if surface in ScoringClass.clueword.keys():
 				matching.append(surface)
 		return matching
@@ -96,8 +148,10 @@ class ScoringClass:
 	def __init__(self):
 		reload(sys)
 		sys.setdefaultencoding('utf-8')
-		self.openClueWord()
-		self.openSentenceExpression()
+		#self.openClueWord()
+		self.openClueWordDB(u"WordDB.sqlite3")
+		#self.openSentenceExpression()
+		self.openSentenceExpressionDB(u"WordDB.sqlite3")
 
 #てすとプログラム
 if __name__ == "__main__":
@@ -106,119 +160,16 @@ if __name__ == "__main__":
 	textList = []
 	filename = "input_main.txt"
 	textList = list()
-	with io.open(filename,mode="rt",buffering=-1,encoding="utf-8-sig") as file:
+	with codecs.open(filename,mode="r",buffering=-1,encoding="utf-8-sig") as file:
 		for line in file.readlines():
 			textList.append(re.sub(ur"[\n\r]",u"",line))
 	scores = this.scoreSentenceList(textList)
 	filename = "output_scorig.txt"
-	with open(filename,"wt") as file:
-		for score in scores:
-			file.write(textList)
-			file.write("\nmatch:" + str(len(score[1])) + "\n")
-			for match in score[1]:
-				file.write("\t" + match + ":" + str(ScoringClass.clueword[match] if match in ScoringClass.clueword else ScoringClass.keysentence[match]))
-				file.write("\n")
-				
-	
-
-	#print(key)
-
-	#with open("Output.csv","wb") as f:
-	#	writer = csv.DictWriter(f,key)
-	#	key_row = {}
-	#	for k in key:
-	#		key_row[k] = k
-	#	writer.writerow(key_row)
-	#	for row in data:
-	#		writer.writerow(row)
-
-## -*- coding:utf-8 -*-
-
-#import MeCab
-#import sys
-#import codecs
-#import csv
-
-#class ScoringClass:
-#	"""scoring sentense"""
-#	clueword = None
-#	keysentence = None
-
-#	def openClueWord(self,filename="ClueWord_List.csv"):
-#		if ScoringClass.clueword == None:
-#			ScoringClass.clueword = {}
-#			# データベースを読み込む(ClueWord)->data
-#			with open(filename,"rt") as file:
-#				reader = csv.reader(file)
-#				#ヘッダ行の読み飛ばし
-#				next(reader)
-#				#dataの表現部分：重み辞書を作成
-#				for row in reader:
-#					ScoringClass.clueword[row[0].decode("utf-8")] = int(row[2].decode("utf-8"))
-#		return
-
-#	def openSentenceExpression(self,filename="SentenceExpression_List.csv"):
-#		if ScoringClass.keysentence == None:
-#			ScoringClass.keysentence = {}
-#			#データベース読み込む(SentenceExpression)->dataC
-#			with open(filename,"rt") as file:
-#				reader = csv.reader(file)
-#				next(reader)
-#				#dataCの表現部分：重み辞書を作成
-#				for row in reader:
-#					ScoringClass.keysentence[row[0].replace("～","*").decode("utf-8")] = int(row[2].decode("utf-8"))
-#		return
-
-#	#分割する文章を読み込む
-#	def scoreSentence(self,text):
-#		point = 0
-#		m = MeCab.Tagger("-Owakati")
-#		node = m.parseToNode(text)
-#		ans = ""
-#		node = node.next
-#		while node.next:
-#			word = (node.surface.decode("utf-8"),node.feature.decode("utf-8"))
-#			ans += "%s %s\n"%word
-#			if word[0] in ScoringClass.clueword.keys():
-#				point += ScoringClass.clueword[word[0]]
-##				print"%s %d"%(node.surface.decode("utf-8"),ScoringClass.clueword[word[0]])
-#			node = node.next
-#		print point
-#		return point
-
-#	def scoreSentenceList(self,textList):
-#		scoreList = []
-#		for text in textList:
-#			score = self.scoreSentence(text)
-#			scoreList.append((text,score))
-#		return scoreList
-
-#	def __init__(self):
-#		self.openClueWord()
-#		self.openSentenceExpression()
-
-##てすとプログラム
-#if __name__ == "__main__":
-#	print "Start ScorinClass"
-#	this = ScoringClass()
-#	textList = []
-#	filename = "text.txt"
-#	with open(filename,"rt") as f:
-#		textList = f.readlines()
-#	scores = this.scoreSentenceList(map(lambda t : t.replace("\n","") , textList))
-#	filename = "output.txt"
-#	with open(filename,"wt") as f:
-#		for score in scores:
-#			f.write(score[0] + ":" + str(score[1]) + "\n")
-	
-
-#	#print(key)
-
-#	#with open("Output.csv","wb") as f:
-#	#	writer = csv.DictWriter(f,key)
-#	#	key_row = {}
-#	#	for k in key:
-#	#		key_row[k] = k
-#	#	writer.writerow(key_row)
-#	#	for row in data:
-#	#		writer.writerow(row)
+	with codecs.open(filename,"w",encoding="utf-8") as file:
+		for tap in zip(textList,scores):
+			file.write(tap[0])
+			score = tap[1]
+			file.write(u"\nmatch:" + unicode(len(score)) + u"\n")
+			for match in score:
+				file.write(u"\t" + match + ":" + str(ScoringClass.clueword[match] if match in ScoringClass.clueword else ScoringClass.keysentence[match]))
+				file.write(u"\n")

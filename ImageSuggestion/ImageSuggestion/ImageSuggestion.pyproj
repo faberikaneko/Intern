@@ -25,6 +25,9 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="dbmanage.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="DifficultyEstimationClass.py" />
     <Compile Include="MainClass.py" />
     <Compile Include="ScoringClass.py" />

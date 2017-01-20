@@ -55,7 +55,7 @@ class MainClass:
 
 	def writefile(self,outputfilename):
 		with codecs.open(outputfilename,"w",encoding="utf-8-sig") as file:
-			for section in main.defficultySortedSectionList:
+			for section in self.defficultySortedSectionList:
 				file.write((unicode(main.sectionList.index(section)) + section.text + u"\n:diff=" +unicode(section.difficulty) + u",score="+unicode(section.score) +u"\n").encode("utf-8-sig"))
 				keylist = reduce(add,section.keywords)
 				for match in keylist:
@@ -63,12 +63,18 @@ class MainClass:
 					file.write("\n")
 
 	def scoringSentence(self):
-		for section in [sec for sec in self.defficultySortedSectionList if len(sec.sentenceList)>=MainClass.minLineNumber]:
-			section.keywords = MainClass.sc.scoreSentenceList([sea.text for sea in section.sentenceList])
+		for section in [sec for sec in self.defficultySortedSectionList]:
+			if len(section.sentenceList)>=MainClass.minLineNumber:
+				section.keywords = MainClass.sc.scoreSentenceList([sea.text for sea in section.sentenceList])
+			else:
+				section.keywords = [[]]
 
 	def scoringSection(self):
 		for section in self.sectionList:
 			section.score = sum([MainClass.sc.clueword.get(key) or MainClass.sc.keysentence.get(key) for key in reduce(add,section.keywords)])
+			#if hasattr(section,u"keywords"):
+			#	keylist = reduce(add,section.keywords)
+			#	section.score = sum([MainClass.sc.clueword.get(key) or MainClass.sc.keysentence.get(key) for key in reduce(add,section.keywords)])
 
 	def sort(self):
 		self.defficultySortedSectionList = sorted(self.sectionList,key=lambda section:section.difficulty,reverse=True)
@@ -94,9 +100,9 @@ if __name__ == "__main__":
 	dec.makeDictionary()
 	for section in main.sectionList[:]:
 		section.difficultyList = [dec.estimateDifficulty(s.text) for s in section.sentenceList]
-		a = lambda x:max(x)
+		a = lambda x:max(x) if len(x) > 0 else 0
 		b = lambda x:sum(x)/len(x) if len(x) > 0 else 0
-		section.difficulty = a(section.difficultyList)
+		section.difficulty = a(section.difficultyList)*len(section.sentenceList)
 	
 	main.sort()
 
