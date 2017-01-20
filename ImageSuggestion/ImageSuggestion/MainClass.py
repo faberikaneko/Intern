@@ -1,4 +1,4 @@
-# coding: utf-8
+# encoding: utf-8
 
 import sys
 import re
@@ -26,7 +26,7 @@ sys.setdefaultencoding('utf-8')     #Set character encoding to 'utf-8'
 
 class MainClass:
 	"""message"""
-
+	sentenceFindRe = ur"(?P<all>(?:[^]{「《【『［〈≪（＜｛{()}｝＞）≫〉］』】》」。]*(?P<rec>[[「《【『［〈≪（＜｛[{(](?:[^]{「《【『［〈≪（＜｛{()}｝＞）≫〉］』】》」]*|(?P&rec))*[])}｝＞）≫〉］』】》」]))+.*?。)"
 	# config number (ninimum sentence in secsion)
 	minLineNumber = 1
 
@@ -49,9 +49,12 @@ class MainClass:
 
 	def splitSentence(self):
 		# split foreach sectionList[] to sentenceList by "。\.．"
-		pre = re.compile(ur"[。]")
+		pre = re.compile(MainClass.sentenceFindRe)
 		for section in self.sectionList[:]:
-			section.sentenceList = [Text(t) for t in pre.split(section.text) if len(t) > 0]
+			if(section.text.endswith(u"。")):
+				section.sentenceList = [Text(t.group()) for t in pre.finditer(section.text) if len(t) > 0]
+			else:
+				section.sentenceList = [Text(section.text)]
 
 	def writefile(self,outputfilename):
 		with codecs.open(outputfilename,"w",encoding="utf-8-sig") as file:
