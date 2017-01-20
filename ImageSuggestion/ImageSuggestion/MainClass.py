@@ -102,7 +102,7 @@ if __name__ == "__main__":
 		section.difficultyList = [dec.estimateDifficulty(s.text) for s in section.sentenceList]
 		a = lambda x:max(x) if len(x) > 0 else 0
 		b = lambda x:sum(x)/len(x) if len(x) > 0 else 0
-		section.difficulty = a(section.difficultyList)
+		section.difficulty = a(section.difficultyList)*len(section.sentenceList)
 	
 	main.sort()
 
