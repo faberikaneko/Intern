@@ -1,24 +1,20 @@
 # encoding: utf-8
 
 import sys
-import re
-import regex as re
-
-import platform
-
 import codecs
+import unicodedata
+from operator import add
 
 import ScoringClass
 from ScoringClass import ScoringClass
 import DifficultyEstimationClass
 from DifficultyEstimationClass import DifficultyEstimationClass
 
+#outhor import package to check encoding of file
 import chardet
 
-import unicodedata
-
-from operator import add
-
+#External import package to check Unicode parameter
+import regex as re
 
 # Change default character encoding
 reload(sys)                         #Reload module
@@ -80,8 +76,8 @@ class MainClass:
         for section in self.sectionList:
             section.score = sum([MainClass.sc.clueword.get(key) or MainClass.sc.keysentence.get(key) for key in reduce(add,section.keywords)])
             #if hasattr(section,u"keywords"):
-            #    keylist = reduce(add,section.keywords)
-            #    section.score = sum([MainClass.sc.clueword.get(key) or MainClass.sc.keysentence.get(key) for key in reduce(add,section.keywords)])
+            #   keylist = reduce(add,section.keywords)
+            #   section.score = sum([MainClass.sc.clueword.get(key) or MainClass.sc.keysentence.get(key) for key in reduce(add,section.keywords)])
 
     def sort(self):
         self.defficultySortedSectionList = sorted(self.sectionList,key=lambda section:section.difficulty,reverse=True)

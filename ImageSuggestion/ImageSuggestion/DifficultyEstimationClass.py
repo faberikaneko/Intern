@@ -1,16 +1,17 @@
 # Difficulty Estimation Kaneko
 # encoding: utf-8
-# import MeCab
 
 import sys
 import csv
 
+#outhor import package to check encoding of file
 import chardet
 from chardet.universaldetector import UniversalDetector
 
-import codecs
-
+#External import package to check Unicode parameter
 import regex as re
+
+import codecs
 
 class DifficultyEstimationClass:
 

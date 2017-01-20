@@ -1,15 +1,19 @@
 # -*- coding:utf-8 -*-
 
-import MeCab
 import sys
 import codecs
 import csv
+import sqlite3
+
+#External import package to check Unicode parameter
 import regex as re
 
+#External import package to check encoding of file
 import chardet
 from chardet.universaldetector import UniversalDetector
 
-import sqlite3
+#External import package to Morphological Analysis
+import MeCab
 
 class ScoringClass:
 	"""scoring sentense"""
