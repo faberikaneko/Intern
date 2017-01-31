@@ -55,8 +55,6 @@ def select_dependency_structure(line):
         mini = MiniBunsetsu(id,norm)
         mini.tag = mini.fstring_to_tag(bnst.fstring)
         mini.tag[u"depend"] = unicode(bnst.dpndtype)
-        #if is_noun(bnst.fstring):
-        #    mini.tag[u"体言"] = True
         miniList[id] = mini
 
     for bnst in bnst_list:
@@ -64,7 +62,11 @@ def select_dependency_structure(line):
             cmini = miniList[cbnst.bnst_id]
             miniList[bnst.bnst_id].childList.append(miniList[cbnst.bnst_id])
         if bnst.parent != None:
-            miniList[bnst.bnst_id].parent = miniList[bnst.parent.bnst_id]
+            #部分並列は係り先を変更しておく
+            if miniList[bnst.bnst_id].tag.get(u"depend") == u"I":
+                miniList[bnst.bnst_id].parent = miniList[bnst.bnst_id + 1]
+            else:
+                miniList[bnst.bnst_id].parent = miniList[bnst.parent.bnst_id]
     return miniList
 
 def get_root(mini):
@@ -106,6 +108,13 @@ class MiniBunsetsu:
             else:
                 ans[tagst] = True
         return ans
+    def getallchilds(self):
+        l = []
+        for child in self.childList:
+            l.extend(child.getallchilds())
+        l.extend(self.childList)
+
+        return l
 
 def parseSentences(section):#->sectionlist
     answerlist = []
@@ -173,7 +182,7 @@ if __name__ == '__main__' :
 
         #has done?
         if os.path.exists(outputFileName):
-            print("already done")
+            print(inputFileName + " has already done.")
             continue
 
         #read file into lines
@@ -253,40 +262,49 @@ if __name__ == '__main__' :
                     paralist = []
                     miniList = sentence.getchilds()
                     already = set()
-                    for mini in miniList.itervalues():
-                        if mini in already:
-                            pass
-                        else:
-                            if mini.isparalell():
-                                plist = []
-                                cur = mini
-                                while cur != None and cur.isparalell():
-                                    plist.append(cur)
-                                    already.add(cur)
-                                    cur = cur.parent
-                                plist.append(cur)
-                                proot = cur
+                    for item in miniList.iteritems():
+                        if item[1] in already:
+                            continue
+                        id = item[0]
+                        mini = item[1]
+                        if mini.isparalell():
+                            plist = {}
+                            cur = mini
+                            while cur != None and cur.isparalell():
+                                plist[cur] = []
+                                already.add(cur)
+                                cur = cur.parent
+                            for pc in plist:
+                                for ps in pc.getallchilds():
+                                    plist.get(pc).append(ps)
+                            plist[cur] = []
+                            for ps in cur.getallchilds():
+                                if ps.id > id and not ps in plist:
+                                    plist[cur].append(ps)
+                            proot = cur
                                 
-                                toroot = []
-                                cur = proot
-                                while cur.parent != None:
-                                    toroot.append(cur.parent)
-                                    cur = cur.parent
+                            toroot = []
+                            cur = proot.parent
+                            while cur != None:
+                                toroot.append(cur)
+                                cur = cur.parent
 
-                                allchild = []
-                                cur = proot
-                                def repool(c,l):
-                                    if not c.isparalell():
-                                        for cc in c.childList:
-                                            repool(cc,l)
-                                        l.append(c)
-                                    return None
-                                repool(cur,allchild)
-                                allchild.pop()
-                                paralist.append((plist,toroot,allchild))
+                            allchild = []
+                            if len(plist[mini]) > 0:
+                                id = min([i.id for i in plist[mini]])
+                            for ps in proot.getallchilds():
+                                if ps.id <id:
+                                    allchild.append(ps)
+                            paralist.append((plist,toroot,allchild))
                     for paraitem in paralist:
                         output_texts.append(u"list\n")
-                        output_texts.append(u"  [" + u", ".join([p.word for p in paraitem[0]]) + u"]\n")
+                        if any(map(lambda a:len(a) > 0,paraitem[0].itervalues())):
+                            for item in paraitem[0].iteritems():
+                                output_texts.append(item[0].word + u":")
+                                wordlist = [s.word for s in item[1]]
+                                output_texts.append(",".join(wordlist) + u"\n")
+                        else:
+                            output_texts.append(u"  [" + u", ".join([p.word for p in paraitem[0]]) + u"]\n")
                         output_texts.append(u"to root\n")
                         output_texts.append(u"  [" + u", ".join([p.word for p in paraitem[1]]) + u"]\n")
                         output_texts.append(u"to reaf\n")
