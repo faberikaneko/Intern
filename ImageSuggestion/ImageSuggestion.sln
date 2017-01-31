@@ -5,7 +5,7 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "ImageSuggestion", "ImageSuggestion\ImageSuggestion.pyproj", "{BEBE9ED9-B16A-42DD-AC0E-FEA80DDAE05E}"
 EndProject
-Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Sunaba", "..\..\SandBox1\Sunaba\Sunaba.pyproj", "{C07707AA-6FD9-499A-B04C-2B8D84E754EE}"
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Sunaba", "Sunaba\Sunaba.pyproj", "{C07707AA-6FD9-499A-B04C-2B8D84E754EE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

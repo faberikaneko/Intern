@@ -240,3 +240,5 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+/ImageSuggestion/Sunaba/input
+/ImageSuggestion/Sunaba/output
