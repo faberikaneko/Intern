@@ -4,13 +4,14 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>c07707aa-6fd9-499a-b04c-2b8d84e754ee</ProjectGuid>
-    <ProjectHome>.</ProjectHome>
-    <StartupFile>Sunaba.py</StartupFile>
+    <ProjectHome>
+    </ProjectHome>
+    <StartupFile>ParalellFinder.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
-    <Name>Sunaba</Name>
+    <Name>ParalellFinder</Name>
     <RootNamespace>Sunaba</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -22,7 +23,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Sunaba.py" />
+    <Compile Include="ParalellFinder.py" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

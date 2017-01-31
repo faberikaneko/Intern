@@ -17,6 +17,7 @@ def selectNorm(fstring):
     return fstring[begin + len(ur'正規化代表表記:') : end]
 
 def is_noun(fstring):
+    """ return True if it is noun, else return false."""
     return not re.search(ur"体言",fstring) == None
 
 def select_dependency_structure(line):
@@ -28,17 +29,20 @@ def select_dependency_structure(line):
     knp = KNP(option = '-tab -anaphora')
 
     # 解析
-    #url escape
+    #escape
     escapelist = [
+        #url escape
         (ur"https?://[\w/:%#\$&\?\(\)~\.=\+\-]+",u"(urls)"),
+        #blanket escape
         (ur"<",ur"＜"),
         (ur">",ur"＞"),
+        #coron escape
         (ur":",ur"：")
     ]
     for escape in escapelist:
         line = re.sub(escape[0],escape[1],line)
 
-
+    #kaiseki
     result = knp.parse(line)
 
     # 文節リスト
@@ -49,9 +53,10 @@ def select_dependency_structure(line):
         id = bnst.bnst_id
         norm = selectNorm(bnst.fstring)
         mini = MiniBunsetsu(id,norm)
-        mini.addFlag(u"depend",unicode(bnst.dpndtype))
-        if is_noun(bnst.fstring):
-            mini.addFlag(u"norn",True)
+        mini.tag = mini.fstring_to_tag(bnst.fstring)
+        mini.tag[u"depend"] = unicode(bnst.dpndtype)
+        #if is_noun(bnst.fstring):
+        #    mini.tag[u"体言"] = True
         miniList[id] = mini
 
     for bnst in bnst_list:
@@ -62,37 +67,45 @@ def select_dependency_structure(line):
             miniList[bnst.bnst_id].parent = miniList[bnst.parent.bnst_id]
     return miniList
 
-def getRoot(miniList):
-    if len(miniList) == 0 or not isinstance(miniList[0],MiniBunsetsu):
-        return None
-    return miniList[filter(lambda b:miniList[b].parent == None,miniList)[0]]
+def get_root(mini):
+    """ get minibunsetsu root """
+    while mini.parent:
+        mini = mini.parent
+    return mini
 
 def miniListToTexts(miniList):
     anslist = {}
     for mini in miniList.itervalues():
         if mini.isparalell():
-            childName = unicode(mini.getID()) + u":"+ mini.word
-            parentName = unicode(mini.parent.getID()) +u":" + mini.parent.word
+            childName = unicode(mini.id) + u":"+ mini.word
+            parentName = unicode(mini.parent.id) +u":" + mini.parent.word
             anslist[childName] = parentName
     return anslist
 
 class MiniBunsetsu:
     def __init__(self,id,word,parent = None):
-        self._id = id
+        self.id = id
         self.word = word
         self.parent = parent
         self.childList = []
-        self._flags = {}
-    def getID(self):
-        return self._id
-    def addFlag(self,key,value=True):
-        self._flags[key] = value
-    def getFlag(self,key):
-        return self._flags.get(key)
+        self.tag = {}
     def isparalell(self):
-        return self.getFlag(u"depend") == u"P" and self.getFlag(u"norn")
+        return self.tag.get(u"depend") == (u"P" or u"A") and self.tag.get(u"体言")
     def __str__(self):
         return self.word
+
+    def fstring_to_tag(self,fstring):
+        """fstring:unicode -> tags:dict(unicode:unicode,bool)"""
+        ans = {}
+        tagstre = re.compile(ur"<(.*?)>")
+        keystre = re.compile(ur"(?P<key>.*):(?P<data>.*)")
+        for tagst in tagstre.findall(fstring):
+            mat = keystre.match(tagst)
+            if mat:
+                ans[mat.group(ur"key")] = mat.group(ur"data")
+            else:
+                ans[tagst] = True
+        return ans
 
 def parseSentences(section):#->sectionlist
     answerlist = []
