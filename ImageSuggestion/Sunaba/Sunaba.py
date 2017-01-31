@@ -16,11 +16,8 @@ def selectNorm(fstring):
     end = fstring.find(ur'>', begin + 1)
     return fstring[begin + len(ur'正規化代表表記:') : end]
 
-def isNorm(fstring):
-    ans = re.search(ur"体言",fstring)
-    if not ans == None:
-        pass
-    return not ans == None
+def is_noun(fstring):
+    return not re.search(ur"体言",fstring) == None
 
 def select_dependency_structure(line):
     """係り受け構造を抽出します
@@ -53,8 +50,8 @@ def select_dependency_structure(line):
         norm = selectNorm(bnst.fstring)
         mini = MiniBunsetsu(id,norm)
         mini.addFlag(u"depend",unicode(bnst.dpndtype))
-        if isNorm(bnst.fstring):
-            mini.addFlag(u"体言",True)
+        if is_noun(bnst.fstring):
+            mini.addFlag(u"norn",True)
         miniList[id] = mini
 
     for bnst in bnst_list:
@@ -93,7 +90,7 @@ class MiniBunsetsu:
     def getFlag(self,key):
         return self._flags.get(key)
     def isparalell(self):
-        return self.getFlag(u"depend") == u"P" and self.getFlag(u"体言")
+        return self.getFlag(u"depend") == u"P" and self.getFlag(u"norn")
     def __str__(self):
         return self.word
 
