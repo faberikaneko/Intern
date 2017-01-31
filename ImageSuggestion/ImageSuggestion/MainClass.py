@@ -22,16 +22,18 @@ sys.setdefaultencoding('utf-8')     #Set character encoding to 'utf-8'
 
 class MainClass:
     """message"""
+    #sentence finder regular expression
     sentenceFindRe = \
         ur"(?P<all>(?:[^]{「《【『［〈≪（＜｛{()}｝＞）≫〉］』】》」。]*(?P<rec>[[「《【『［〈≪（＜｛[{(](?:[^]{「《【『［〈≪（＜｛{()}｝＞）≫〉］』】》」]*|(?P&rec))*[])}｝＞）≫〉］』】》」]))+.*?。)"
     # config number (ninimum sentence in secsion)
     minLineNumber = 1
 
     def __init__(self):
+        #bind scoringclass as cs
         MainClass.sc = ScoringClass()
 
     def readfile(self,imputfilename):
-        """read imput file from imputfilename(file) to rawText"""
+        """read imput file from imputfilename(file) into rawText"""
         with open(imputfilename,mode="r") as file:
             encode = chardet.detect(file.read())[u"encoding"]
         try:
