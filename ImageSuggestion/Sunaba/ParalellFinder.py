@@ -9,6 +9,8 @@ import regex as re
 
 from janome.tokenizer import Tokenizer
 
+knp = None
+
 def selectNorm(fstring):
     """ 正規化代表表記を抽出します
     """
@@ -26,7 +28,9 @@ def select_dependency_structure(line):
 
     # KNP
     #knp = KNP(option = u"-tab")
-    knp = KNP(option = '-tab -anaphora')
+    global knp
+    if knp == None:
+        knp = KNP(option = '-tab -anaphora')
 
     # 解析
     #escape
@@ -37,8 +41,15 @@ def select_dependency_structure(line):
         (ur"<",ur"＜"),
         (ur">",ur"＞"),
         #coron escape
-        (ur":",ur"：")
+        (ur":",ur"："),
+        #cdot escape
+        (u'•|·|･','・'),
+        #dot and comma
+        (u",",u"，"),
+        (u"\.",u"．"),
+        (u"/",u"／")
     ]
+
     for escape in escapelist:
         line = re.sub(escape[0],escape[1],line)
 
@@ -276,7 +287,8 @@ if __name__ == '__main__' :
                                 cur = cur.parent
                             for pc in plist:
                                 for ps in pc.getallchilds():
-                                    plist.get(pc).append(ps)
+                                    if not ps in plist:
+                                        plist.get(pc).append(ps)
                             plist[cur] = []
                             for ps in cur.getallchilds():
                                 if ps.id > id and not ps in plist:
