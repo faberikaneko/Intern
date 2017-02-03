@@ -41,6 +41,7 @@
             "name": "Python Module",
             "type": "python",
             "request": "launch",
+            "program":"${file}",
             "stopOnEntry": true,
             "pythonPath": "${config.python.pythonPath}",
             "module": "module.name",
