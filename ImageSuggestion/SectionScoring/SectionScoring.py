@@ -2,14 +2,8 @@
 
 import sys
 import codecs
-
-import functools
-
 import regex as re
-
 import unicodedata
-
-#from html.parser import HTMLParser
 from sptext import SpText
 
 PARA_GRAPH_SCORE = 1
@@ -20,6 +14,7 @@ TAGLIST = [
 ]
 
 def parseHTML(htmltext):
+    """html: unicode -> parsedHTML: type is not determined"""
     print(u"parse html")
     #lxml? BeautifulSoup? HTMLparser? You can use you want.
     #htmlparser = HTMLParser()
@@ -27,6 +22,7 @@ def parseHTML(htmltext):
     return u"parsed html"
 
 def html2text(parsedhtml):
+    """parsedhtml: unicode -> text: unicode"""
     print(u"get raw text")
     #If you want, do Unicode Nomalize
     #unicodedata.nomalize(parsedhtml)
@@ -35,6 +31,7 @@ def html2text(parsedhtml):
     return u"raw text"
 
 def text_normalizer(rawtext):
+    """rawtext: unicode -> normalized_text: unicode"""
     #normalize text
     normalized_text = unicodedata.normalize(u"NFKD",rawtext)
 
@@ -45,8 +42,8 @@ def text_normalizer(rawtext):
     # -> ！”＃＄％＆’＝～｜？＿‐￥・／；：＋＊
     return normalized_text
 
-
 def split_sections(text):
+    """text: SpText -> list[SpText]"""
     sections = []
 
     #split by "\n\n" or "\n\n\n" or "\n\n\n\n" ...
@@ -55,9 +52,10 @@ def split_sections(text):
     return sections
 
 def split_sentences(section):
+    """section: SpText -> list[SpText]"""
     answerlist = []
     st = section.text.strip()
-    sentenceRe = re.compile(ur"(?P<all>(?:[^「」()（）。]*(?P<rec>[「(（](?:[^「」()（）]*|(?P&rec))*[」)）]))*.*?(。|\Z))")
+    sentenceRe = re.compile(ur"(?P<all>(?:[^「」（）。]*(?P<rec>[「（](?:[^「」（）]*|(?P&rec))*[」）]))*.*?(?:。|\Z))")
     for line in st.split(ur"\n"):
         sentencelist = [SpText(i[0]) for i in sentenceRe.findall(line.strip())]
         sentencelist = list(filter(lambda s:len(s.text) > 0,sentencelist))
@@ -65,17 +63,22 @@ def split_sentences(section):
     return answerlist
 
 def get_paralell(text):
-    return []
+    """sentence: unicode -> list[list[unicode]]?"""
+    #maybe use Paralell Finder
+    return [[u"para1",u"para2",u"para3"],[u"paraA",u"paraB"]]
 
 def is_numerical(para):
+    """return True is para has description about values"""
     return True
 
 def scoring_clueword(text):
+    """maybe use ScoringClass"""
     ans = dict.fromkeys(TAGLIST,0.0)
     #sun score
     return ans
 
 def scoring_keyexp(text):
+    """maybe use ScoringClass"""
     ans = dict.fromkeys(TAGLIST,0.0)
     #sun score
     return ans
