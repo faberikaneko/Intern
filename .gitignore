@@ -242,3 +242,4 @@ ModelManifest.xml
 .fake/
 /ImageSuggestion/Sunaba/input
 /ImageSuggestion/Sunaba/output
+/.vscode
