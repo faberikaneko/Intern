@@ -133,6 +133,6 @@ if __name__==u"__main__":
         print("Score:" + str(section.score))
         print(section.text)
         for item in section.scores.items():
-            print(item[0] +""+ str(item[1]))
+            print(item[0] +":"+ str(item[1]))
 
     # F I N I S H ! ( O S H I M A I ! )
