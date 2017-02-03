@@ -7,6 +7,8 @@ Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "ImageSuggestion", "ImageSug
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "ParalellFinder", "Sunaba\ParalellFinder.pyproj", "{C07707AA-6FD9-499A-B04C-2B8D84E754EE}"
 EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "SectionScoring", "SectionScoring\SectionScoring.pyproj", "{512EFE75-17D8-4748-83E5-60D06D67E37E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,6 +19,8 @@ Global
 		{BEBE9ED9-B16A-42DD-AC0E-FEA80DDAE05E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C07707AA-6FD9-499A-B04C-2B8D84E754EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C07707AA-6FD9-499A-B04C-2B8D84E754EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{512EFE75-17D8-4748-83E5-60D06D67E37E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{512EFE75-17D8-4748-83E5-60D06D67E37E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
