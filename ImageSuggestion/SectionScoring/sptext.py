@@ -3,8 +3,6 @@
 class SpText(object):
     """splited text class"""
     def __init__(self,text,childs = None):
-        if not isinstance(text,unicode):
-            raise ValueError(text + " is not unicode")
         self.text = text
         self.childs = childs if childs != None else []
         return

@@ -1,14 +1,18 @@
 ﻿# -*- encoding:utf-8-sig -*-
-import sys
 import codecs
+import functools
+import glob
+import os
+import sys
+from functools import reduce
+from os import path
+
+import regex as re
+
+import functools
+
 #from html.parser import HTMLParser
 from sptext import SpText
-import functools
-from functools import reduce
-import regex as re
-import os
-from os import path
-import glob
 
 PARA_GRAPH_SCORE = 1
 PARA_TABLE_SCORE = 1
@@ -30,23 +34,22 @@ def html2text(parsedhtml):
     #How?
     return "raw text"
 
-def split_sections(rawText):
+def split_sections(text):
     """hogehoge"""
     sections = []
 
     #split by "\n\n" or "\n\n\n" or "\n\n\n\n" ...
-    for line in re.split(r"\n{2,}",rawText):
+    for line in re.split(r"\n{2,}",text):
         sections.append(SpText(line))
     return sections
 
 def split_sentences(section):
     answerlist = []
     st = section.text.strip()
-    #asre = ur"(?P<all>(?:[^?u?v?B]*(?P<rec>[?u](?:[^?u?v]*|(?P&rec))*[?v]))*.*?(\Z))"
-    sentenceRe = re.compile("")
+    sentenceRe = re.compile("(?P<all>(?:[^「」。]*(?P<rec>[「](?:[^「」]*|(?P&rec))*[」]))*.*?(。|\Z))")
     for line in st.split("\n"):
         sentencelist = [SpText(i[0]) for i in sentenceRe.findall(line.strip())]
-        sentencelist = filter(lambda s:len(s.text) > 0,sentencelist)
+        sentencelist = list(filter(lambda s:len(s.text) > 0,sentencelist))
         answerlist.extend(sentencelist if len(sentencelist) else [SpText(line.strip())])
     return answerlist
 
@@ -90,10 +93,12 @@ if __name__==u"__main__":
 
         #scoring
         scores = dict.fromkeys(TAGLIST,0.0) #score[tagname] -> score
+        allpara = set()
         for sentence in sentences:
             #*has Paralell?
             paras = get_paralell(sentence.text)
             if len(paras) > 0:
+                allpara = allpara + set(paras)
                 for para in paras:
                     #is about numerical? or sentential?
                     if is_numerical(para):
