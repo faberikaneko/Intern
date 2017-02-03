@@ -19,7 +19,13 @@ def parseHTML(htmltext):
     #lxml? BeautifulSoup? HTMLparser? You can use you want.
     #htmlparser = HTMLParser()
     #parsedhtml = htmlparser.feed(htmltext)
-    return u"parsed html"
+    ans = u""
+    body = re.search(ur"<body.*>(?<body>(?:.|\n|\r)*)</body>",htmltext,flags=re.IGNORECASE|re.MULTILINE)
+    if body:
+        pstrs = re.findall(ur"<p>(.*)</p>",body.group("body"),flags=re.IGNORECASE|re.MULTILINE)
+        for pstr in pstrs:
+            ans += pstr + u"\n"
+    return ans[:-1]
 
 def html2text(parsedhtml):
     """parsedhtml: unicode -> text: unicode"""
@@ -28,12 +34,12 @@ def html2text(parsedhtml):
     #unicodedata.nomalize(parsedhtml)
 
     #How?
-    return u"raw text"
+    return re.sub(ur"<.*?>","",parsedhtml)
 
 def text_normalizer(rawtext):
     """rawtext: unicode -> normalized_text: unicode"""
     #normalize text
-    normalized_text = unicodedata.normalize(u"NFKD",rawtext)
+    normalized_text = unicodedata.normalize(u"NFKC",rawtext)
 
     #half charactor -> full charactor
     #., -> ，．(without number point)
@@ -64,31 +70,49 @@ def split_sentences(section):
 
 def get_paralell(text):
     """sentence: unicode -> list[list[unicode]]?"""
-    #maybe use Paralell Finder
-    return [[u"para1",u"para2",u"para3"],[u"paraA",u"paraB"]]
 
-def is_numerical(para):
+    #maybe use Paralell Finder
+    return [text.split()]
+
+def is_numerical(paras):
     """return True is para has description about values"""
-    return True
+    numre = re.compile("[0-9０-９]")
+    nums = 0
+    for para in paras:
+        if len(numre.findall(para)) > 0:
+            nums += len(numre.findall(para))
+    return True if nums >= len(paras) else False
 
 def scoring_clueword(text):
     """maybe use ScoringClass"""
     ans = dict.fromkeys(TAGLIST,0.0)
-    #sun score
+    #sum score
+    for clueword in {u"para":{u"table":0.0,u"picture":1.0,u"graph":0.0,u"flow":0.0}}.items():
+        if text.find(clueword[0]) >= 0:
+            for key in clueword[1]:
+                ans[key] += clueword[1][key]
     return ans
 
 def scoring_keyexp(text):
     """maybe use ScoringClass"""
     ans = dict.fromkeys(TAGLIST,0.0)
-    #sun score
+    #sum score
     return ans
+
+def is_description(text,word):
+    """text: list[bunsetsu], word: unicode -> bool
+        return True if text descript about word."""
+    if text.find(word) >= 0:
+        return True
+    return False
+
 
 if __name__==u"__main__":
     #HTMLFile:unicode
     htmlfile_name = u"sample.html"
     try:
         with codecs.open(htmlfile_name,u"r",u"utf-8-sig") as htmlfile:
-            htmltext = str(htmlfile.read())
+            htmltext = unicode(htmlfile.read())
     except IOError as e:
         print(u"in:"+e.filename)
         print(e)
@@ -115,7 +139,7 @@ if __name__==u"__main__":
             #*has Paralell?
             paras = get_paralell(sentence.text)
             if len(paras) > 0:
-                allpara = allpara + set(paras)
+                allpara = allpara.union(set(reduce(lambda a,b:a+b,paras)))
                 for para in paras:
                     #is about numerical? or sentential?
                     if is_numerical(para):

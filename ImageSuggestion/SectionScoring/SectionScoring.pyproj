@@ -25,6 +25,9 @@
     <Compile Include="SectionScoring.py" />
     <Compile Include="sptext.py" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="sample.html" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <PtvsTargetsFile>$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets</PtvsTargetsFile>
