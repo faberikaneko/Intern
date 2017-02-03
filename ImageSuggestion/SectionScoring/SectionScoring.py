@@ -1,15 +1,13 @@
 ﻿# -*- encoding:utf-8-sig -*-
-import codecs
-import functools
-import glob
-import os
+
 import sys
-from functools import reduce
-from os import path
+import codecs
+
+import functools
 
 import regex as re
 
-import functools
+import unicodedata
 
 #from html.parser import HTMLParser
 from sptext import SpText
@@ -18,36 +16,49 @@ PARA_GRAPH_SCORE = 1
 PARA_TABLE_SCORE = 1
 DESCRIPTION_SCORE = 1
 TAGLIST = [
-    "table","picture","graph","flow"
+    u"table",u"picture",u"graph",u"flow"
 ]
 
 def parseHTML(htmltext):
-    #lxml? BeautifulSoup? HTMLparser? You use you want.
+    print(u"parse html")
+    #lxml? BeautifulSoup? HTMLparser? You can use you want.
     #htmlparser = HTMLParser()
     #parsedhtml = htmlparser.feed(htmltext)
-    return "parsed html"
+    return u"parsed html"
 
 def html2text(parsedhtml):
+    print(u"get raw text")
     #If you want, do Unicode Nomalize
     #unicodedata.nomalize(parsedhtml)
 
     #How?
-    return "raw text"
+    return u"raw text"
+
+def text_normalizer(rawtext):
+    #normalize text
+    normalized_text = unicodedata.normalize(u"NFKD",rawtext)
+
+    #half charactor -> full charactor
+    #., -> ，．(without number point)
+    #<>[]{} ()-> ＜＞［］｛｝（）
+    #!"#$%&'=~|?_-^\/;:+*
+    # -> ！”＃＄％＆’＝～｜？＿‐￥・／；：＋＊
+    return normalized_text
+
 
 def split_sections(text):
-    """hogehoge"""
     sections = []
 
     #split by "\n\n" or "\n\n\n" or "\n\n\n\n" ...
-    for line in re.split(r"\n{2,}",text):
+    for line in re.split(ur"\n{2,}",text):
         sections.append(SpText(line))
     return sections
 
 def split_sentences(section):
     answerlist = []
     st = section.text.strip()
-    sentenceRe = re.compile("(?P<all>(?:[^「」。]*(?P<rec>[「](?:[^「」]*|(?P&rec))*[」]))*.*?(。|\Z))")
-    for line in st.split("\n"):
+    sentenceRe = re.compile(ur"(?P<all>(?:[^「」()（）。]*(?P<rec>[「(（](?:[^「」()（）]*|(?P&rec))*[」)）]))*.*?(。|\Z))")
+    for line in st.split(ur"\n"):
         sentencelist = [SpText(i[0]) for i in sentenceRe.findall(line.strip())]
         sentencelist = list(filter(lambda s:len(s.text) > 0,sentencelist))
         answerlist.extend(sentencelist if len(sentencelist) else [SpText(line.strip())])
@@ -71,12 +82,12 @@ def scoring_keyexp(text):
 
 if __name__==u"__main__":
     #HTMLFile:unicode
-    htmlfile_name = "sample.html"
+    htmlfile_name = u"sample.html"
     try:
-        with codecs.open(htmlfile_name,"r","utf-8-sig") as htmlfile:
+        with codecs.open(htmlfile_name,u"r",u"utf-8-sig") as htmlfile:
             htmltext = str(htmlfile.read())
     except IOError as e:
-        print("in:"+e.filename)
+        print(u"in:"+e.filename)
         print(e)
         raise
 
@@ -84,8 +95,11 @@ if __name__==u"__main__":
     parsedhtml = parseHTML(htmltext)
     rawtext = html2text(parsedhtml)
 
+    #normalize text 
+    normal_text = text_normalizer(rawtext)
+
     #RawText:unicode:list(sptext?unicode)
-    sections = split_sections(rawtext)
+    sections = split_sections(normal_text)
 
     for section in sections:
         #Section(sptext?unicode):list(sptext?unicode)
@@ -102,9 +116,9 @@ if __name__==u"__main__":
                 for para in paras:
                     #is about numerical? or sentential?
                     if is_numerical(para):
-                        scores["graph"] += PARA_GRAPH_SCORE
+                        scores[u"graph"] += PARA_GRAPH_SCORE
                     else:
-                        scores["table"] += PARA_TABLE_SCORE
+                        scores[u"table"] += PARA_TABLE_SCORE
 
             #*has ClueWord?
             clueword_score = scoring_clueword(sentence.text)
@@ -119,7 +133,7 @@ if __name__==u"__main__":
             #*is Description about paralell word?
             for para in allpara:
                 if is_description(sentence.text,para):
-                    scores["table"] += DESCRIPTION_SCORE
+                    scores[u"table"] += DESCRIPTION_SCORE
 
         #sum score and set in Section
         section.scores = scores
@@ -130,9 +144,9 @@ if __name__==u"__main__":
 
     #show answer and...
     for section in sorted_section:
-        print("Score:" + str(section.score))
+        print(u"Score:" + str(section.score))
         print(section.text)
         for item in section.scores.items():
-            print(item[0] +":"+ str(item[1]))
+            print(item[0] +u":"+ str(item[1]))
 
     # F I N I S H ! ( O S H I M A I ! )
