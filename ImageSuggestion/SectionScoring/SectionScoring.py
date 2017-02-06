@@ -49,35 +49,39 @@ def text_normalizer(rawtext):
     #!"#$%&'=~|?_-^\/;:+*
     # -> ！”＃＄％＆’＝～｜？＿‐￥・／；：＋＊
     replace_halfres = [
+        #piriod and comma
         (ur"(?:(?<!\d)|\A)\.(?!\d)",u"．"),
-        (ur",",u"，")
+        (ur",",u"，"),
+        #bracket
         (ur"<",u"＜"),
         (ur">",u"＞"),
-        (ur"[[]",u"［"),
-        (ur"[]]",u"］"),
         (ur"{",u"｛"),
         (ur"}",u"｝"),
+        (ur"\[",u"［"),
+        (ur"\]",u"］"),
         (ur"\(",u"（"),
         (ur"\)",u"）"),
+        #other marks
         (ur"!",u"！"),
-        (ur"\"",u"”"),
         (ur"#",u"＃"),
-        (ur"$",u"＄"),
         (ur"%",u"％"),
         (ur"'",u"’"),
         (ur"=",u"＝"),
         (ur"~",u"～"),
-        (ur"\|",u"｜"),
-        (ur"\?",u"？"),
         (ur"_",u"＿"),
         (ur"-",u"－"),
-        (ur"^",u"＾"),
-        (ur"\\",u"￥"),
         (ur"/",u"／"),
         (ur";",u"；"),
         (ur":",u"："),
-        (ur"+",u"＋"),
-        (ur"*",u"＊"),
+        #special marks
+        (ur"\"",u"”"),
+        (ur"\|",u"｜"),
+        (ur"\?",u"？"),
+        (ur"\$",u"＄"),
+        (ur"\+",u"＋"),
+        (ur"\*",u"＊"),
+        (ur"\^",u"＾"),
+        (ur"\\",u"￥"),
     ]
     for replace_halfre in replace_halfres:
         fromre = replace_halfre[0]
@@ -143,10 +147,10 @@ def is_description(text,word):
         return True
     return False
 
-
-if __name__==u"__main__":
+def section_scoring(fromfilename,tofilename):
     #HTMLFile:unicode
-    htmlfile_name = u"sample.html"
+    htmlfile_name = fromfilename
+    answerfilen_name = tofilename
     try:
         with codecs.open(htmlfile_name,u"r",u"utf-8-sig") as htmlfile:
             htmltext = unicode(htmlfile.read())
@@ -201,16 +205,32 @@ if __name__==u"__main__":
 
         #sum score and set in Section
         section.scores = scores
-        section.score = reduce(lambda a,b:a+b,scores.values())
+        section.score = float(reduce(lambda a,b:a+b,scores.values()))
 
     #sort Sections by score
     sorted_section = sorted(sections,key=lambda section:section.score,reverse=True)
 
     #show answer and...
-    for section in sorted_section:
-        print(u"Score:" + str(section.score))
-        print(section.text)
-        for item in section.scores.items():
-            print(item[0] +u":"+ str(item[1]))
+    with codecs.open(answerfilen_name,u"w",encoding=u"utf-8-sig")\
+    as answerfile:
+        stflag = True
+        for section in sorted_section:
+            if stflag:
+                stflag = False
+            else:
+                print(u"\n")
+                answerfile.write(u"\n")
+            print(u"Score:" + unicode(section.score))
+            print(section.text)
+            answerfile.write(u"Score:" + unicode(section.score))
+            answerfile.write(section.text)
+            for item in section.scores.items():
+                print(item[0] +u":"+ unicode(item[1]))
+                answerfile.write(item[0]+u" : "+unicode(item[1]))
 
     # F I N I S H ! ( O S H I M A I ! )
+
+
+
+if __name__==u"__main__":
+    section_scoring(u"sample.html",u"answer.txt")
