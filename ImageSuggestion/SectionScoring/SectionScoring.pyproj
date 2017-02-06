@@ -24,6 +24,7 @@
   <ItemGroup>
     <Compile Include="mini_bunsetsu.py" />
     <Compile Include="ParalellFinder.py" />
+    <Compile Include="ScoringClass.py" />
     <Compile Include="SectionScoring.py" />
     <Compile Include="sptext.py" />
   </ItemGroup>
