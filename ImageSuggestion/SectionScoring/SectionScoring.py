@@ -9,36 +9,15 @@ from HTMLParser import HTMLParser,HTMLParseError
 from ParalellFinder import sentence_paralell_finder as parafinder
 import os
 import threading
+from imagescore import ImageScore
+import ScoringClass
 
-PARA_GRAPH_SCORE = 1
-PARA_TABLE_SCORE = 1
-DESCRIPTION_SCORE = 1
-TAGLIST = [
-    u"table",u"picture",u"graph",u"flow"
-]
+import logging
 
-class MyHTMLparser(HTMLParser):
-    def __init__(self):
-        self.datalist = []
-        self.tagstack = []
-        return HTMLParser.__init__(self)
-    def handle_data(self,data):
-        if len(self.tagstack) > 0 and self.tagstack[-1] == u"p" or u"div":
-            self.datalist.append(data)
-    def handle_starttag(self, tag, attrs):
-        self.tagstack.append(tag)
-    def handle_endtag(self, tag):
-        while self.tagstack.pop() != tag:
-            pass
-
-def html2text(parsedhtml):
-    """parsedhtml: unicode -> text: unicode"""
-    print(u"get raw text")
-    #If you want, do Unicode Nomalize
-    #unicodedata.nomalize(parsedhtml)
-
-    #How?
-    return re.sub(ur"<.*?>","",parsedhtml)
+PARA_GRAPH_SCORE = 0.05
+PARA_TABLE_SCORE = 0.05
+DESCRIPTION_SCORE = 0.05
+TAGLIST = ImageScore.taglist
 
 def text_normalizer(rawtext):
     """rawtext: unicode -> normalized_text: unicode"""
@@ -141,13 +120,15 @@ def is_numerical(paras):
 
 def scoring_clueword(text):
     """maybe use ScoringClass"""
-    ans = dict.fromkeys(TAGLIST,0.0)
+    anslist = []
     #sum score
-    for clueword in {u"para":{u"table":0.0,u"picture":1.0,u"graph":0.0,u"flow":0.0}}.items():
-        if text.find(clueword[0]) >= 0:
-            for key in clueword[1]:
-                ans[key] += clueword[1][key]
-    return ans
+
+    for clueword in ScoringClass.clueword.items():
+        index = 0
+        while text.find(clueword[0],index) >= 0:
+            anslist.append(clueword)
+            index += text.find(clueword[0],index)+len(clueword[0])
+    return anslist
 
 def has_description(childs,word):
     """childs: list[bunsetsu], word: unicode -> bool
@@ -180,6 +161,7 @@ def section_scoring(fromfilename,tofilename):
         sentences = split_sentences(section)
         section.paralells = []
         section.descriptions = []
+        section.cluewords = []
 
         #scoring
         scores = dict.fromkeys(TAGLIST,0.0) #score[tagname] -> score
@@ -198,14 +180,15 @@ def section_scoring(fromfilename,tofilename):
                         scores[u"table"] += PARA_TABLE_SCORE*len(para)
 
             #*has ClueWord and/or keyExp?
-            clueword_score = scoring_clueword(sentence.text)
-            for key in scores:
-                scores[key] += clueword_score[key]
+            clueword_scores = scoring_clueword(sentence.text)
+            for clueword_score in clueword_scores:
+                section.cluewords.append(clueword_score[0])
+                for key in scores:
+                    scores[key] += clueword_score[1].dict[key]
 
             #*is Description about paralell word?
             for para in allpara:
                 if has_description(sentence.childs,para):
-                    print("It is description about:"+para)
                     section.descriptions.append(para)
                     scores[u"table"] += DESCRIPTION_SCORE
 
@@ -224,20 +207,16 @@ def section_scoring(fromfilename,tofilename):
             if stflag:
                 stflag = False
             else:
-                print(u"\n")
                 answerfile.write(u"\n")
-            print(u"In Section %d, Score:%f"%(section.No,section.score))
-            print(section.text)
             answerfile.write(u"In Section %d, Score:%f"%(section.No,section.score)+u"\n")
             answerfile.write(section.text+u"\n")
             for paraitem in section.paralells:
-                print(u",".join(paraitem)+u"\n")
                 answerfile.write(",".join(paraitem)+u"\n")
             for descitem in section.descriptions:
-                print(u"description : "+descitem+u"\n")
                 answerfile.write(u"description : "+descitem+u"\n")
+            answerfile.write(u"clueword:\n")
+            answerfile.write(u", ".join(section.cluewords)+u"\n")
             for item in section.scores.items():
-                print(item[0] +u":"+ unicode(item[1]))
                 answerfile.write(item[0]+u" : "+unicode(item[1])+u"\n")
 
     # F I N I S H ! ( O S H I M A I ! )
