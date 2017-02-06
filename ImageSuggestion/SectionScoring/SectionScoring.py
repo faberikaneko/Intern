@@ -8,6 +8,7 @@ from sptext import SpText
 from HTMLParser import HTMLParser,HTMLParseError
 from ParalellFinder import sentence_paralell_finder as parafinder
 import os
+import threading
 
 PARA_GRAPH_SCORE = 1
 PARA_TABLE_SCORE = 1
@@ -242,9 +243,20 @@ def section_scoring(fromfilename,tofilename):
     # F I N I S H ! ( O S H I M A I ! )
 
 if __name__==u"__main__":
+    threads = []
     for dir in os.listdir(u"datas"):
         if not u"-answer" in dir:
             filename,exe = os.path.splitext(dir)
             inputfilename = os.path.join(ur"datas\\",filename+exe)
             outputfilename = os.path.join(ur"datas\\",filename+u"-answer"+exe)
-            section_scoring(inputfilename,outputfilename)
+            t = threading.Thread(
+                target=section_scoring,
+                args=(inputfilename,outputfilename)
+            )
+            t.setDaemon(True)
+            t.start()
+            threads.append(t)
+
+    for t in threads:
+        t.join()
+    print("end")
