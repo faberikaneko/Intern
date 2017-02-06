@@ -20,9 +20,11 @@ def parseHTML(htmltext):
     #htmlparser = HTMLParser()
     #parsedhtml = htmlparser.feed(htmltext)
     ans = u""
-    body = re.search(ur"<body.*>(?<body>(?:.|\n|\r)*)</body>",htmltext,flags=re.IGNORECASE|re.MULTILINE)
+    body = re.search(ur"<body.*?>(?<body>(?:.|\n|\r)*)</body>",htmltext,
+                     flags=re.IGNORECASE|re.MULTILINE)
     if body:
-        pstrs = re.findall(ur"<p>(.*)</p>",body.group("body"),flags=re.IGNORECASE|re.MULTILINE)
+        pstrs = re.findall(ur"<p>(.*)</p>",body.group("body"),
+                           flags=re.IGNORECASE|re.MULTILINE)
         for pstr in pstrs:
             ans += pstr + u"\n"
     return ans[:-1]
@@ -46,6 +48,41 @@ def text_normalizer(rawtext):
     #<>[]{} ()-> ＜＞［］｛｝（）
     #!"#$%&'=~|?_-^\/;:+*
     # -> ！”＃＄％＆’＝～｜？＿‐￥・／；：＋＊
+    replace_halfres = [
+        (ur"(?:(?<!\d)|\A)\.(?!\d)",u"．"),
+        (ur",",u"，")
+        (ur"<",u"＜"),
+        (ur">",u"＞"),
+        (ur"[[]",u"［"),
+        (ur"[]]",u"］"),
+        (ur"{",u"｛"),
+        (ur"}",u"｝"),
+        (ur"\(",u"（"),
+        (ur"\)",u"）"),
+        (ur"!",u"！"),
+        (ur"\"",u"”"),
+        (ur"#",u"＃"),
+        (ur"$",u"＄"),
+        (ur"%",u"％"),
+        (ur"'",u"’"),
+        (ur"=",u"＝"),
+        (ur"~",u"～"),
+        (ur"\|",u"｜"),
+        (ur"\?",u"？"),
+        (ur"_",u"＿"),
+        (ur"-",u"－"),
+        (ur"^",u"＾"),
+        (ur"\\",u"￥"),
+        (ur"/",u"／"),
+        (ur";",u"；"),
+        (ur":",u"："),
+        (ur"+",u"＋"),
+        (ur"*",u"＊"),
+    ]
+    for replace_halfre in replace_halfres:
+        fromre = replace_halfre[0]
+        tore = replace_halfre[1]
+        normalized_text = re.sub(fromre,tore,normalized_text)
     return normalized_text
 
 def split_sections(text):
