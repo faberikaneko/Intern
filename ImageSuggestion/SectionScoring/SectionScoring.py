@@ -5,6 +5,9 @@ import codecs
 import regex as re
 import unicodedata
 from sptext import SpText
+from HTMLParser import HTMLParser,HTMLParseError
+from ParalellFinder import sentence_paralell_finder as parafinder
+import os
 
 PARA_GRAPH_SCORE = 1
 PARA_TABLE_SCORE = 1
@@ -13,21 +16,19 @@ TAGLIST = [
     u"table",u"picture",u"graph",u"flow"
 ]
 
-def parseHTML(htmltext):
-    """html: unicode -> parsedHTML: type is not determined"""
-    print(u"parse html")
-    #lxml? BeautifulSoup? HTMLparser? You can use you want.
-    #htmlparser = HTMLParser()
-    #parsedhtml = htmlparser.feed(htmltext)
-    ans = u""
-    body = re.search(ur"<body.*?>(?<body>(?:.|\n|\r)*)</body>",htmltext,
-                     flags=re.IGNORECASE|re.MULTILINE)
-    if body:
-        pstrs = re.findall(ur"<p>(.*)</p>",body.group("body"),
-                           flags=re.IGNORECASE|re.MULTILINE)
-        for pstr in pstrs:
-            ans += pstr + u"\n"
-    return ans[:-1]
+class MyHTMLparser(HTMLParser):
+    def __init__(self):
+        self.datalist = []
+        self.tagstack = []
+        return HTMLParser.__init__(self)
+    def handle_data(self,data):
+        if len(self.tagstack) > 0 and self.tagstack[-1] == u"p" or u"div":
+            self.datalist.append(data)
+    def handle_starttag(self, tag, attrs):
+        self.tagstack.append(tag)
+    def handle_endtag(self, tag):
+        while self.tagstack.pop() != tag:
+            pass
 
 def html2text(parsedhtml):
     """parsedhtml: unicode -> text: unicode"""
@@ -44,11 +45,14 @@ def text_normalizer(rawtext):
     normalized_text = unicodedata.normalize(u"NFKC",rawtext)
 
     #half charactor -> full charactor
+    #\r\n or \r -> \n
     #., -> ，．(without number point)
     #<>[]{} ()-> ＜＞［］｛｝（）
     #!"#$%&'=~|?_-^\/;:+*
     # -> ！”＃＄％＆’＝～｜？＿‐￥・／；：＋＊
     replace_halfres = [
+        #return
+        (ur"\r\n|\r",u"\n"),
         #piriod and comma
         (ur"(?:(?<!\d)|\A)\.(?!\d)",u"．"),
         (ur",",u"，"),
@@ -94,8 +98,12 @@ def split_sections(text):
     sections = []
 
     #split by "\n\n" or "\n\n\n" or "\n\n\n\n" ...
+    index = 1
     for line in re.split(ur"\n{2,}",text):
-        sections.append(SpText(line))
+        section = SpText(line)
+        section.No = index
+        sections.append(section)
+        index += 1
     return sections
 
 def split_sentences(section):
@@ -110,10 +118,16 @@ def split_sentences(section):
     return answerlist
 
 def get_paralell(text):
-    """sentence: unicode -> list[list[unicode]]?"""
+    """sentence: sptext -> list[list[unicode]]?"""
+    paralist = parafinder(text)
+    answer = []
+    for paraitem in paralist:
+        anslist = list(b.word for b in paraitem[0].keys())
+        answer.append(anslist)
+        pass
 
     #maybe use Paralell Finder
-    return [text.split()]
+    return answer
 
 def is_numerical(paras):
     """return True is para has description about values"""
@@ -134,34 +148,25 @@ def scoring_clueword(text):
                 ans[key] += clueword[1][key]
     return ans
 
-def scoring_keyexp(text):
-    """maybe use ScoringClass"""
-    ans = dict.fromkeys(TAGLIST,0.0)
-    #sum score
-    return ans
-
-def is_description(text,word):
-    """text: list[bunsetsu], word: unicode -> bool
+def has_description(childs,word):
+    """childs: list[bunsetsu], word: unicode -> bool
         return True if text descript about word."""
-    if text.find(word) >= 0:
+    if any([b.description_about(word) for b in childs]):
         return True
     return False
 
 def section_scoring(fromfilename,tofilename):
-    #HTMLFile:unicode
-    htmlfile_name = fromfilename
+    #textfile:unicode
+    readfile_name = fromfilename
     answerfilen_name = tofilename
+
     try:
-        with codecs.open(htmlfile_name,u"r",u"utf-8-sig") as htmlfile:
-            htmltext = unicode(htmlfile.read())
+        with codecs.open(readfile_name,u"r",u"utf-8-sig") as htmlfile:
+            rawtext = unicode(htmlfile.read())
     except IOError as e:
         print(u"in:"+e.filename)
         print(e)
         raise
-
-    #HTMLText:unicode:unicode (and more?)
-    parsedhtml = parseHTML(htmltext)
-    rawtext = html2text(parsedhtml)
 
     #normalize text 
     normal_text = text_normalizer(rawtext)
@@ -172,35 +177,35 @@ def section_scoring(fromfilename,tofilename):
     for section in sections:
         #Section(sptext?unicode):list(sptext?unicode)
         sentences = split_sentences(section)
+        section.paralells = []
+        section.descriptions = []
 
         #scoring
         scores = dict.fromkeys(TAGLIST,0.0) #score[tagname] -> score
         allpara = set()
         for sentence in sentences:
             #*has Paralell?
-            paras = get_paralell(sentence.text)
+            paras = get_paralell(sentence)
+            section.paralells.extend(paras)
             if len(paras) > 0:
                 allpara = allpara.union(set(reduce(lambda a,b:a+b,paras)))
                 for para in paras:
                     #is about numerical? or sentential?
                     if is_numerical(para):
-                        scores[u"graph"] += PARA_GRAPH_SCORE
+                        scores[u"graph"] += PARA_GRAPH_SCORE*len(para)
                     else:
-                        scores[u"table"] += PARA_TABLE_SCORE
+                        scores[u"table"] += PARA_TABLE_SCORE*len(para)
 
-            #*has ClueWord?
+            #*has ClueWord and/or keyExp?
             clueword_score = scoring_clueword(sentence.text)
             for key in scores:
                 scores[key] += clueword_score[key]
 
-            #*has keyExpression?
-            keyexp_score = scoring_keyexp(sentence.text)
-            for key in scores:
-                scores[key] += keyexp_score[key]
-
             #*is Description about paralell word?
             for para in allpara:
-                if is_description(sentence.text,para):
+                if has_description(sentence.childs,para):
+                    print("It is description about:"+para)
+                    section.descriptions.append(para)
                     scores[u"table"] += DESCRIPTION_SCORE
 
         #sum score and set in Section
@@ -220,17 +225,26 @@ def section_scoring(fromfilename,tofilename):
             else:
                 print(u"\n")
                 answerfile.write(u"\n")
-            print(u"Score:" + unicode(section.score))
+            print(u"In Section %d, Score:%f"%(section.No,section.score))
             print(section.text)
-            answerfile.write(u"Score:" + unicode(section.score))
-            answerfile.write(section.text)
+            answerfile.write(u"In Section %d, Score:%f"%(section.No,section.score)+u"\n")
+            answerfile.write(section.text+u"\n")
+            for paraitem in section.paralells:
+                print(u",".join(paraitem)+u"\n")
+                answerfile.write(",".join(paraitem)+u"\n")
+            for descitem in section.descriptions:
+                print(u"description : "+descitem+u"\n")
+                answerfile.write(u"description : "+descitem+u"\n")
             for item in section.scores.items():
                 print(item[0] +u":"+ unicode(item[1]))
-                answerfile.write(item[0]+u" : "+unicode(item[1]))
+                answerfile.write(item[0]+u" : "+unicode(item[1])+u"\n")
 
     # F I N I S H ! ( O S H I M A I ! )
 
-
-
 if __name__==u"__main__":
-    section_scoring(u"sample.html",u"answer.txt")
+    for dir in os.listdir(u"datas"):
+        if not u"-answer" in dir:
+            filename,exe = os.path.splitext(dir)
+            inputfilename = os.path.join(ur"datas\\",filename+exe)
+            outputfilename = os.path.join(ur"datas\\",filename+u"-answer"+exe)
+            section_scoring(inputfilename,outputfilename)
