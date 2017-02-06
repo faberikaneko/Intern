@@ -13,7 +13,11 @@ from imagescore import ImageScore
 import ScoringClass
 
 import logging
+logging.basicConfig(level=logging.DEBUG,
+                    format='[%(levelname)s] (%(threadName)-10s) %(message)s',
+                    )
 
+#TODO: The Best Score Of Paralell Words
 PARA_GRAPH_SCORE = 0.05
 PARA_TABLE_SCORE = 0.05
 DESCRIPTION_SCORE = 0.05
@@ -141,6 +145,7 @@ def section_scoring(fromfilename,tofilename):
     #textfile:unicode
     readfile_name = fromfilename
     answerfilen_name = tofilename
+    logging.debug(u"from:"+fromfilename+u", to:"+tofilename)
 
     try:
         with codecs.open(readfile_name,u"r",u"utf-8-sig") as htmlfile:
@@ -229,6 +234,7 @@ if __name__==u"__main__":
             inputfilename = os.path.join(ur"datas\\",filename+exe)
             outputfilename = os.path.join(ur"datas\\",filename+u"-answer"+exe)
             t = threading.Thread(
+                name="sub:"+filename,
                 target=section_scoring,
                 args=(inputfilename,outputfilename)
             )
