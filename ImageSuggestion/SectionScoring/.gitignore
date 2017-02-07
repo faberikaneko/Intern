@@ -8,6 +8,8 @@
 *.sln.docstates
 *.pyc
 
+datas/
+
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
