@@ -12,12 +12,6 @@ import sptext
 from sptext import SpText
 from mini_bunsetsu import MiniBunsetsu
 
-import threading
-import logging
-logging.basicConfig(level=logging.DEBUG,
-                    format='[%(levelname)s] (%(threadName)-10s) %(message)s',
-                    )
-
 knp = None
 
 def selectNorm(fstring):

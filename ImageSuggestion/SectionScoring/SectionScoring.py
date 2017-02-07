@@ -9,13 +9,19 @@ from HTMLParser import HTMLParser,HTMLParseError
 from ParalellFinder import sentence_paralell_finder as parafinder
 import os
 import threading
+from multiprocessing import Pool
 from imagescore import ImageScore
 import ScoringClass
 
-import logging
-logging.basicConfig(level=logging.DEBUG,
-                    format='[%(levelname)s] (%(threadName)-10s) %(message)s',
-                    )
+from logging import getLogger, StreamHandler, Formatter, DEBUG
+formatter = Formatter(fmt=u"[%(levelname)s] %(message)s")
+handler = StreamHandler()
+handler.setFormatter(formatter)
+handler.setLevel(DEBUG)
+#config logger
+logger = getLogger(__name__)
+logger.setLevel(DEBUG)
+logger.addHandler(handler)
 
 #TODO: The Best Score Of Paralell Words
 PARA_GRAPH_SCORE = 0.05
@@ -123,10 +129,9 @@ def is_numerical(paras):
     return True if nums >= len(paras) else False
 
 def scoring_clueword(text):
-    """maybe use ScoringClass"""
+    """By ScorgingClass, scoring to text:unicode"""
     anslist = []
     #sum score
-
     for clueword in ScoringClass.clueword.items():
         index = 0
         while text.find(clueword[0],index) >= 0:
@@ -145,7 +150,7 @@ def section_scoring(fromfilename,tofilename):
     #textfile:unicode
     readfile_name = fromfilename
     answerfilen_name = tofilename
-    logging.debug(u"from:"+fromfilename+u", to:"+tofilename)
+    logger.debug(u"from:"+fromfilename+u", to:"+tofilename)
 
     try:
         with codecs.open(readfile_name,u"r",u"utf-8-sig") as htmlfile:
@@ -161,7 +166,10 @@ def section_scoring(fromfilename,tofilename):
     #RawText:unicode:list(sptext?unicode)
     sections = split_sections(normal_text)
 
+    logger.debug(u"%s's section#:%d start"%(readfile_name,len(sections)))
     for section in sections:
+        logger.debug(u"in section:%2d/%2d at %s"\
+                    %(sections.index(section)+1,len(sections),readfile_name))
         #Section(sptext?unicode):list(sptext?unicode)
         sentences = split_sentences(section)
         section.paralells = []
@@ -204,6 +212,7 @@ def section_scoring(fromfilename,tofilename):
     #sort Sections by score
     sorted_section = sorted(sections,key=lambda section:section.score,reverse=True)
 
+    logger.debug(u"write answer to %s"%(answerfilen_name))
     #show answer and...
     with codecs.open(answerfilen_name,u"w",encoding=u"utf-8-sig")\
     as answerfile:
@@ -223,25 +232,19 @@ def section_scoring(fromfilename,tofilename):
             answerfile.write(u", ".join(section.cluewords)+u"\n")
             for item in section.scores.items():
                 answerfile.write(item[0]+u" : "+unicode(item[1])+u"\n")
-
+    logger.debug(u"file:%s is end."%inputfilename)
     # F I N I S H ! ( O S H I M A I ! )
 
 if __name__==u"__main__":
     threads = []
+    p = Pool(5)
     for dir in os.listdir(u"datas"):
         if not u"-answer" in dir:
             filename,exe = os.path.splitext(dir)
             inputfilename = os.path.join(ur"datas\\",filename+exe)
             outputfilename = os.path.join(ur"datas\\",filename+u"-answer"+exe)
-            t = threading.Thread(
-                name="sub:"+filename,
-                target=section_scoring,
-                args=(inputfilename,outputfilename)
+            p.apply_async(func=section_scoring,
+                          args=(inputfilename,outputfilename),
             )
-            t.setDaemon(True)
-            t.start()
-            threads.append(t)
-
-    for t in threads:
-        t.join()
-    print("end")
+    p.close()
+    p.join()
