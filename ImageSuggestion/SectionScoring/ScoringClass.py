@@ -2,7 +2,6 @@
 
 import sys
 import codecs
-import csv
 import sqlite3
 
 from imagescore import ImageScore
@@ -18,9 +17,9 @@ from chardet.universaldetector import UniversalDetector
 clueword = None
 
 def openClueWord(filename="scoreimage.txt"):
-    ''' <- filename : filename to read default = ClueWord_List.csv
+    ''' <- filename : filename to read default = scoreimage.txt
         -> No return
-        read ClueWord.csv into dict(clueword)'''
+        read scoreimage.txt into dict(clueword)'''
     global clueword
     if clueword == None:
         scorere = re.compile(ur"(?<key>.*?) : \[ (?<image>\d+\.\d+) (?<table>\d+\.\d+) (?<graph>\d+\.\d+) (?<flow>\d+\.\d+)\]",
@@ -44,7 +43,7 @@ def openClueWordDB(dbName=u"WordDB.sqlite3",tableName=u"wordscore"):
         <- tableName : tablename to read/write default = clueword
         -> No return
         read clueword table in Database into dict(clueword)
-        if no table or dbfile, read csvfile and save it'''
+        if no table or dbfile, read textfile and save it'''
     global clueword
     if clueword == None:
         try:
