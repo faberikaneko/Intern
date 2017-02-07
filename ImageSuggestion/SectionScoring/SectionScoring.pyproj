@@ -31,19 +31,6 @@
     <Compile Include="SectionScoring.py" />
     <Compile Include="sptext.py" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="datas\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="datas\ansanburu-answer.txt" />
-    <Content Include="datas\ansanburu.txt" />
-    <Content Include="datas\girisha-answer.txt" />
-    <Content Include="datas\girisha.txt" />
-    <Content Include="datas\goshu-gi-answer.txt" />
-    <Content Include="datas\goshu-gi.txt" />
-    <Content Include="datas\sample-answer.txt" />
-    <Content Include="datas\sample.txt" />
-  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <PtvsTargetsFile>$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets</PtvsTargetsFile>

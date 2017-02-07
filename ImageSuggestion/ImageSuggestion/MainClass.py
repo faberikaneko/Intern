@@ -99,8 +99,6 @@ if __name__ == "__main__":
     main.splitSection()
     main.splitSentence()
 
-    # TODO: Difficulty Estimation
-
     dec = DifficultyEstimationClass()
     dec.makeDictionary()
     for section in main.sectionList[:]:

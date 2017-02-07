@@ -7,8 +7,6 @@ from pyknp import KNP
 
 import regex as re
 
-from janome.tokenizer import Tokenizer
-import sptext
 from sptext import SpText
 from mini_bunsetsu import MiniBunsetsu
 

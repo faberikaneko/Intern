@@ -13,12 +13,12 @@ from multiprocessing import Pool
 from imagescore import ImageScore
 import ScoringClass
 
+#config logger
 from logging import getLogger, StreamHandler, Formatter, DEBUG
 formatter = Formatter(fmt=u"[%(levelname)s] %(message)s")
 handler = StreamHandler()
 handler.setFormatter(formatter)
 handler.setLevel(DEBUG)
-#config logger
 logger = getLogger(__name__)
 logger.setLevel(DEBUG)
 logger.addHandler(handler)
@@ -114,7 +114,6 @@ def get_paralell(text):
     for paraitem in paralist:
         anslist = list(b.word for b in paraitem[0].keys())
         answer.append(anslist)
-        pass
 
     #maybe use Paralell Finder
     return answer
@@ -236,7 +235,7 @@ def section_scoring(fromfilename,tofilename):
     # F I N I S H ! ( O S H I M A I ! )
 
 if __name__==u"__main__":
-    threads = []
+    #MAXTHREAD = 5
     p = Pool(5)
     for dir in os.listdir(u"datas"):
         if not u"-answer" in dir:
