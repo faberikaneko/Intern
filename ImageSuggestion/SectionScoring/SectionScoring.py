@@ -231,7 +231,7 @@ def section_scoring(fromfilename,tofilename):
             answerfile.write(u", ".join(section.cluewords)+u"\n")
             for item in section.scores.items():
                 answerfile.write(item[0]+u" : "+unicode(item[1])+u"\n")
-    logger.debug(u"file:%s is end."%inputfilename)
+    logger.debug(u"file:%s is end."%readfile_name)
     # F I N I S H ! ( O S H I M A I ! )
 
 if __name__==u"__main__":
@@ -247,3 +247,4 @@ if __name__==u"__main__":
             )
     p.close()
     p.join()
+    #section_scoring(u"sample.txt",u"sample-ans.txt")
