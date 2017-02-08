@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>512efe75-17d8-4748-83e5-60d06d67e37e</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>SectionScoring.py</StartupFile>
+    <StartupFile>testSample.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -30,6 +30,9 @@
     <Compile Include="ScoringClass.py" />
     <Compile Include="SectionScoring.py" />
     <Compile Include="sptext.py" />
+    <Compile Include="testSample.py">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
