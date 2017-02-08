@@ -46,7 +46,12 @@ class MiniBunsetsu:
             raise AttributeError
 
     def description_about(self,word):
-        if self.tag.get(u"ハ") and re.match(self.word,word):
-            return True
-        else:
+        if not self.tag.get(u"ハ"):
             return False
+        else:
+            if re.match(self.word,word):
+                return True
+            elif self.word == \
+                    (u"際/さい" or u"とき/とき" or u"さい/さい" or u"時/とき"):
+                if len(self.childList) > 0:
+                    return re.match(word,self.childList[-1].word)
