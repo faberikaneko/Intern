@@ -90,22 +90,23 @@ def text_normalizer(rawtext):
 
 def split_sections(text):
     """text: SpText -> list[SpText]"""
-    sections = []
+    section_child = []
 
     #split by "\n\n" or "\n\n\n" or "\n\n\n\n" ...
     index = 1
     for line in re.split(ur"(?:\n\p{Zs}*)+\n",text):
         section = SpText(line)
         section.No = index
-        sections.append(section)
+        section_child.append(section)
         index += 1
+    sections = SpText(text,childs=section_child)
     return sections
 
 def split_sentences(section):
     """section: SpText -> list[SpText]"""
     answerlist = []
     st = section.text.strip()
-    sentenceRe = re.compile(ur"(?P<all>(?:[^「」（）。]*(?P<rec>[「（](?:[^「」（）]*|(?P&rec))*[」）]))*.*?(?:。|\Z))")
+    sentenceRe = re.compile(ur"(?P<all>(?:[^「」（）。]*(?P<rec>[「（](?:[^「」（）]*|(?P&rec))*[」）]))*.*?(?:。|\Z|\n))")
     for line in st.split(ur"\n"):
         sentencelist = [SpText(i[0]) for i in sentenceRe.findall(line.strip())]
         sentencelist = list(filter(lambda s:len(s.text) > 0,sentencelist))
@@ -149,11 +150,9 @@ def has_description(childs,word):
 
 def readsections(filename):
     #textfile:unicode
-    logger.debug(u"from:"+fromfilename+u", to:"+tofilename)
-
     try:
-        with codecs.open(readfile_name,u"r",u"utf-8-sig") as htmlfile:
-            rawtext = unicode(htmlfile.read())
+        with codecs.open(filename,u"r",u"utf-8-sig") as file:
+            rawtext = unicode(file.read())
     except IOError as e:
         print(u"in:"+e.filename)
         print(e)
@@ -166,13 +165,19 @@ def readsections(filename):
     sections = split_sections(normal_text)
     return sections
 
-def sectionscoring(sections):
-    logger.debug(u"%s's section#:%d start"%(readfile_name,len(sections)))
-    for section in sections:
-        logger.debug(u"in section:%2d/%2d at %s"\
-                    %(sections.index(section)+1,len(sections),readfile_name))
+def sectionscoring(sections,filename=None):
+    """sections:list(sentence:SpText)"""
+    logger.debug(u"section#:%d start%s"
+                    %(len(sections.childs),
+                      (u" in "+filename) if filename != None else u"")
+    )
+    for section in sections.childs:
+        logger.debug(u"in section:%2d/%2d%s"\
+                    %(sections.childs.index(section)+1,len(sections.childs),
+                      (u" in "+filename) if filename != None else u""))
         #Section(sptext?unicode):list(sptext?unicode)
         sentences = split_sentences(section)
+        section.childs = sentences
         section.paralells = []
         section.descriptions = []
         section.cluewords = []
@@ -222,7 +227,7 @@ def sectionscoring(sections):
 
 def writescore(sections,filename):
     #sort Sections by score
-    sorted_section = sorted(sections,key=lambda section:section.score,reverse=True)
+    sorted_section = sorted(sections.childs,key=lambda section:section.score,reverse=True)
 
     with codecs.open(filename,u"w",encoding=u"utf-8-sig")\
     as answerfile:
@@ -260,9 +265,10 @@ def writescore(sections,filename):
 def filescoring(fromfilename,tofilename):
     readfile_name = fromfilename
     answerfilen_name = tofilename
+    logger.debug(u"from:"+fromfilename+u", to:"+tofilename)
     sections = readsections(readfile_name)
 
-    anssections = sectionscoring(sections)
+    anssections = sectionscoring(sections,filename=readfile_name)
 
     logger.debug(u"write answer to %s"%(answerfilen_name))
     #show answer and...
