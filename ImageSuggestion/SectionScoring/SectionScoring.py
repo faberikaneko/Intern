@@ -147,6 +147,40 @@ def has_description(childs,word):
         return True
     return False
 
+def writescore(sections,filename):
+    with codecs.open(filename,u"w",encoding=u"utf-8-sig")\
+    as answerfile:
+        stflag = True
+        for section in sorted_section:
+            if stflag:
+                stflag = False
+            else:
+                answerfile.write(u"\n")
+            answerfile.write(u"In Section %d, Score:%f"%(section.No,section.score)+u"\n")
+            answerfile.write(section.text+u"\n")
+            answerfile.write(u"paraword\n")
+            for paraitem in section.paralells:
+                answerfile.write(u"list\n")
+                if any(map(lambda a:len(a) > 0,paraitem[0].itervalues())):
+                    for item in paraitem[0].iteritems():
+                        answerfile.write(item[0].word + u":")
+                        wordlist = [s.word for s in item[1]]
+                        answerfile.write(",".join(wordlist) + u"\n")
+                else:
+                    answerfile.write(u"  [" + u", ".join([p.word for p in paraitem[0]]) + u"]\n")
+                answerfile.write(u"to root\n")
+                answerfile.write(u"  [" + u", ".join([p.word for p in paraitem[1]]) + u"]\n")
+                answerfile.write(u"to reaf\n")
+                answerfile.write(u"  [" + u", ".join([p.word for p in paraitem[2]]) + u"]\n")
+            for descitem in section.descriptions:
+                answerfile.write(u"description : "+descitem[0].word+u"\n")
+                answerfile.write(u"\t : "+descitem[1].text+u"\n")
+            answerfile.write(u"clueword:\n")
+            if len(section.cluewords) > 0:
+                answerfile.write(u", ".join(section.cluewords)+u"\n")
+            for key in ImageScore.taglist:
+                answerfile.write(key+u" : "+unicode(section.scores[key])+u"\n")
+
 def section_scoring(fromfilename,tofilename):
     #textfile:unicode
     readfile_name = fromfilename
@@ -223,38 +257,8 @@ def section_scoring(fromfilename,tofilename):
 
     logger.debug(u"write answer to %s"%(answerfilen_name))
     #show answer and...
-    with codecs.open(answerfilen_name,u"w",encoding=u"utf-8-sig")\
-    as answerfile:
-        stflag = True
-        for section in sorted_section:
-            if stflag:
-                stflag = False
-            else:
-                answerfile.write(u"\n")
-            answerfile.write(u"In Section %d, Score:%f"%(section.No,section.score)+u"\n")
-            answerfile.write(section.text+u"\n")
-            answerfile.write(u"paraword\n")
-            for paraitem in section.paralells:
-                answerfile.write(u"list\n")
-                if any(map(lambda a:len(a) > 0,paraitem[0].itervalues())):
-                    for item in paraitem[0].iteritems():
-                        answerfile.write(item[0].word + u":")
-                        wordlist = [s.word for s in item[1]]
-                        answerfile.write(",".join(wordlist) + u"\n")
-                else:
-                    answerfile.write(u"  [" + u", ".join([p.word for p in paraitem[0]]) + u"]\n")
-                answerfile.write(u"to root\n")
-                answerfile.write(u"  [" + u", ".join([p.word for p in paraitem[1]]) + u"]\n")
-                answerfile.write(u"to reaf\n")
-                answerfile.write(u"  [" + u", ".join([p.word for p in paraitem[2]]) + u"]\n")
-            for descitem in section.descriptions:
-                answerfile.write(u"description : "+descitem[0].word+u"\n")
-                answerfile.write(u"\t : "+descitem[1].text+u"\n")
-            answerfile.write(u"clueword:\n")
-            if len(section.cluewords) > 0:
-                answerfile.write(u", ".join(section.cluewords)+u"\n")
-            for key in ImageScore.taglist:
-                answerfile.write(key+u" : "+unicode(section.scores[key])+u"\n")
+    writescore(sections,answerfilen_name)
+
     logger.debug(u"file:%s is end."%readfile_name)
     # F I N I S H ! ( O S H I M A I ! )
 
