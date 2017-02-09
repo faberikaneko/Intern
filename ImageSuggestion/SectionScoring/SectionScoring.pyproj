@@ -22,6 +22,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="count_checkdata.py" />
     <Compile Include="imagescore.py">
       <SubType>Code</SubType>
     </Compile>
