@@ -86,7 +86,7 @@ def scoreSentenceByWord(text):
             matching.append(item)
     return matching
 
-openClueWordDB(u"WordDB.sqlite3",filename="dict_all.txt")
+openClueWordDB(u"WordDB.sqlite3",filename="scoreimage.txt")
 
 #てすとプログラム
 if __name__ == "__main__":
