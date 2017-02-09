@@ -20,6 +20,9 @@ logger = getLogger(__name__)
 logger.setLevel(DEBUG)
 logger.addHandler(handler)
 
+global SCORE_LINE
+SCORE_LINE = 0.10
+
 def testscoring(inputfilename,outputfilename,answer):
     sections = readsections(inputfilename)
     anssections = sectionscoring(sections,inputfilename)
@@ -55,7 +58,8 @@ def testscoring(inputfilename,outputfilename,answer):
                         count+=1
                 sortscore = sorted(section.scores.items(),key=lambda s:s[1],reverse=True)
                 if count == 0:
-                    if sortscore[0][1] <= 0.0:
+                    global SCORE_LINE
+                    if sortscore[0][1] <= SCORE_LINE:
                         allcheker += 1
                         outfile.write(u"good!\n")
                     else:
