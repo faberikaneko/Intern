@@ -16,7 +16,7 @@ from chardet.universaldetector import UniversalDetector
 #dict[key:unicode] -> (dict[typename:unicode] -> score:float)
 clueword = None
 
-def openClueWord(filename="output2_all (3).txt"):
+def openClueWord(filename):
     ''' <- filename : filename to read default = scoreimage.txt
         -> No return
         read scoreimage.txt into dict(clueword)'''
@@ -38,12 +38,15 @@ def openClueWord(filename="output2_all (3).txt"):
                 clueword[word] = imagescore
     return
 
-def openClueWordDB(dbName=u"WordDB.sqlite3",tableName=u"wordscore"):
-    ''' <- dbname : filename to read default = WordDB.sqlite3
-        <- tableName : tablename to read/write default = clueword
-        -> No return
-        read clueword table in Database into dict(clueword)
-        if no table or dbfile, read textfile and save it'''
+def openClueWordDB(
+        dbName=u"WordDB.sqlite3",
+        tableName=u"wordscore",
+        filename=u"output2_all (3).txt"
+    ):
+    '''<- dbname : filename to read
+<- tableName : tablename to read/write
+read clueword table in Database into dict(clueword)
+if no table or dbfile, read textfile and save it'''
     global clueword
     if clueword == None:
         try:
@@ -53,7 +56,7 @@ def openClueWordDB(dbName=u"WordDB.sqlite3",tableName=u"wordscore"):
                 if cr.execute(u"select count(*) from sqlite_master where type=\"table\" and name=?;",(tableName,)).fetchone()[0] == 0:
                     message = u"create table "+tableName+u"\n (word ntext,image real,tables real,graph real,flow real);"
                     cr.execute(message)
-                    openClueWord()
+                    openClueWord(filename)
                     message = u"insert into "+tableName+" values (:key,:image,:table,:graph,:flow)"
                     for item in clueword.items():
                         args = (item[0],item[1][u"image"],item[1][u"table"],item[1][u"graph"],item[1][u"flow"])
@@ -83,7 +86,7 @@ def scoreSentenceByWord(text):
             matching.append(item)
     return matching
 
-openClueWordDB(u"WordDB.sqlite3")
+openClueWordDB(u"WordDB.sqlite3",filename="dict_all.txt")
 
 #てすとプログラム
 if __name__ == "__main__":

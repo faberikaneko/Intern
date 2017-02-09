@@ -24,7 +24,7 @@ logger.addHandler(handler)
 
 #TODO: The Best Score Of Paralell Words
 PARA_GRAPH_SCORE = 0.005
-PARA_TABLE_SCORE = 0.005
+PARA_TABLE_SCORE = 0.05
 PARA_IMAGE_SOCRE = 0.02
 DESCRIPTION_SCORE = 0.01
 TAGLIST = ImageScore.taglist
@@ -44,7 +44,7 @@ def text_normalizer(rawtext):
         #http
         (ur"https?://[\w/:%#\$&\?\(\)~\.=\+\-]+",u"(urls)"),
         #return
-        (ur"\r\n|\r",u"\n"),
+        (ur"\r\n|\r|\n",u"\n"),
         #piriod and comma
         (ur"(?:(?<!\d)|\A)\.(?!\d)",u"．"),
         (ur",",u""),
@@ -129,7 +129,7 @@ def split_sentences(section):
         [^「」（）。]*(?:。|\Z|\n)
     )""",
         flags=re.X)
-    for line in st.split(ur"\n"):
+    for line in st.split(u"\n"):
         sentencelist = [SpText(i[0]) for i in sentenceRe.findall(line.strip())]
         sentencelist = list(filter(lambda s:len(s.text) > 0,sentencelist))
         answerlist.extend(sentencelist if len(sentencelist) else [SpText(line.strip())])

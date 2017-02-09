@@ -86,10 +86,10 @@ if __name__ == '__main__':
             inputfilename = os.path.join(ur"afters\\",filename+exe)
             outputfilename = os.path.join(ur"afters\\",filename+u"-checker"+exe)
             answer = os.path.join(ur"afters\\",filename+u"-answer"+exe)
-            p.apply_async(func=testscoring,
-                            args=(inputfilename,outputfilename,answer),
-            )
+            #p.apply_async(func=testscoring,
+            #                args=(inputfilename,outputfilename,answer),
+            #)
             #testscoring(inputfilename,outputfilename,answer)
     p.close()
     p.join()
-    #testscoring(ur"after5.txt",u"after5-check.txt",u"after5-ans.txt")
+    testscoring(ur"afters-0.txt",u"afters-0-check.txt",u"afters-0-ans.txt")
