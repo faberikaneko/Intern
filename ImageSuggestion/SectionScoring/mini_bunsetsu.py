@@ -54,4 +54,4 @@ class MiniBunsetsu:
             elif self.word == \
                     (u"際/さい" or u"とき/とき" or u"さい/さい" or u"時/とき"):
                 if len(self.childList) > 0:
-                    return re.match(word,self.childList[-1].word)
+                    return True if re.match(word,self.childList[-1].word) else False

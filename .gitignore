@@ -244,5 +244,5 @@ ModelManifest.xml
 /ImageSuggestion/Sunaba/input
 /ImageSuggestion/Sunaba/output
 /.vscode
-/ImageSuggestion/SectionScoring/tests
-/ImageSuggestion/SectionScoring/check
+/ImageSuggestion/SectionScoring/check-olddict
+/ImageSuggestion/SectionScoring/check-minus

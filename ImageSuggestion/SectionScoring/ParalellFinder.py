@@ -34,29 +34,7 @@ def select_dependency_structure(line):
     knp = KNP(option = '-tab -anaphora')
 
     # 解析
-    #escape
-    escapelist = [
-        #url escape
-        (ur"https?://[\w/:%#\$&\?\(\)~\.=\+\-]+",u"(urls)"),
-        #blanket escape
-        (ur"<",ur"＜"),
-        (ur">",ur"＞"),
-        #coron escape
-        (ur":",ur"："),
-        #cdot escape
-        (u'•|·|･','・'),
-        #dot and comma
-        (u",",u"，"),
-        (u"\.",u"．"),
-        (u"/",u"／")
-    ]
-
-    for escape in escapelist:
-        line = re.sub(escape[0],escape[1],line)
-
-    #kaiseki
     result = knp.parse(line)
-
     # 文節リスト
     bnst_list = result.bnst_list()
     miniList = [None]*len(bnst_list)
@@ -109,7 +87,6 @@ def sentence_paralell_finder(sentence):
     try:
         miniList = select_dependency_structure(sentence.text)
     except Exception as e:
-        logging.debug(e.message)
         raise
     sentence.childs = miniList
 
@@ -134,6 +111,7 @@ def sentence_paralell_finder(sentence):
                     if not ps in plist:
                         plist.get(pc).append(ps)
             plist[cur] = []
+            #TODO
             for ps in cur.getallchilds():
                 if ps.id > id and not ps in plist:
                     plist[cur].append(ps)

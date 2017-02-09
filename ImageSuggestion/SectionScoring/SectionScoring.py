@@ -5,13 +5,12 @@ import codecs
 import regex as re
 import unicodedata
 from sptext import SpText
-from HTMLParser import HTMLParser,HTMLParseError
 from ParalellFinder import sentence_paralell_finder as parafinder
 import os
 import threading
 from multiprocessing import Pool
 from imagescore import ImageScore
-import ScoringClass
+import ScoringMod
 
 #config logger
 from logging import getLogger, StreamHandler, Formatter, DEBUG
@@ -24,10 +23,10 @@ logger.setLevel(DEBUG)
 logger.addHandler(handler)
 
 #TODO: The Best Score Of Paralell Words
-PARA_GRAPH_SCORE = 0.05
-PARA_TABLE_SCORE = 0.01
-PARA_IMAGE_SOCRE = 0.05
-DESCRIPTION_SCORE = 0.05
+PARA_GRAPH_SCORE = 0.005
+PARA_TABLE_SCORE = 0.005
+PARA_IMAGE_SOCRE = 0.02
+DESCRIPTION_SCORE = 0.01
 TAGLIST = ImageScore.taglist
 
 def text_normalizer(rawtext):
@@ -66,10 +65,11 @@ def text_normalizer(rawtext):
         (ur"=",u"＝"),
         (ur"~",u"～"),
         (ur"_",u"＿"),
-        (ur"-",u"－"),
+        (ur"-|–",u"－"),
         (ur"/",u"／"),
         (ur";",u"；"),
         (ur":",u"："),
+        (u'•|·|･','・'),
         #special marks
         (ur"\"",u"”"),
         (ur"\|",u"｜"),
@@ -86,6 +86,20 @@ def text_normalizer(rawtext):
         fromre = replace_halfre[0]
         tore = replace_halfre[1]
         normalized_text = re.sub(fromre,tore,normalized_text)
+
+    #encode escape
+    try:
+        normalized_text.encode(u"cp932")
+    except UnicodeEncodeError as e:
+        newline = u""
+        for c in normalized_text:
+            try:
+                c.encode(u"cp932")
+                newline += c
+            except UnicodeEncodeError:
+                newline += u"？"
+        normalized_text = newline
+
     return normalized_text
 
 def split_sections(text):
@@ -95,10 +109,11 @@ def split_sections(text):
     #split by "\n\n" or "\n\n\n" or "\n\n\n\n" ...
     index = 1
     for line in re.split(ur"(?:\n\p{Zs}*)+\n",text):
-        section = SpText(line)
-        section.No = index
-        section_child.append(section)
-        index += 1
+        if len(line) > 0:
+            section = SpText(line)
+            section.No = index
+            section_child.append(section)
+            index += 1
     sections = SpText(text,childs=section_child)
     return sections
 
@@ -106,18 +121,25 @@ def split_sentences(section):
     """section: SpText -> list[SpText]"""
     answerlist = []
     st = section.text.strip()
-    sentenceRe = re.compile(ur"(?P<all>(?:[^「」（）。]*(?P<rec>[「（](?:[^「」（）]*|(?P&rec))*[」）]))*.*?(?:。|\Z|\n))")
+    sentenceRe = re.compile(ur"""
+    (?P<all>
+        (?:[^「」（）。]*
+            (?P<rec>[「（]   (?:[^「」（）]*|(?P&rec))*   [」）])
+        )*
+        [^「」（）。]*(?:。|\Z|\n)
+    )""",
+        flags=re.X)
     for line in st.split(ur"\n"):
         sentencelist = [SpText(i[0]) for i in sentenceRe.findall(line.strip())]
         sentencelist = list(filter(lambda s:len(s.text) > 0,sentencelist))
         answerlist.extend(sentencelist if len(sentencelist) else [SpText(line.strip())])
     return answerlist
 
-def get_paralell(text):
+def get_paralell(sentence):
     """sentence: sptext
-     -> [({paralell_word:discription},[toroot],[toleaf])]
+     -> [({paralell_word:discription[]},[toroot],[toleaf])]
         :mini_bunsetsu"""
-    paralist = parafinder(text)
+    paralist = parafinder(sentence)
     return paralist
 
 def is_numerical(para):
@@ -134,11 +156,10 @@ def scoring_clueword(text):
     """By ScorgingClass, scoring to text:unicode"""
     anslist = []
     #sum score
-    for clueword in ScoringClass.clueword.items():
+    for clueword in ScoringMod.clueword.items():
         index = 0
-        while text.find(clueword[0],index) >= 0:
+        if clueword[0] in text:
             anslist.append(clueword)
-            index += text.find(clueword[0],index)+len(clueword[0])
     return anslist
 
 def has_description(childs,word):
@@ -171,57 +192,74 @@ def sectionscoring(sections,filename=None):
                     %(len(sections.childs),
                       (u" in "+filename) if filename != None else u"")
     )
+    allpara = {}
+    renum = re.compile(ur"\d",flags=re.U|re.I)
+    redot = re.compile(ur"・|●|〇|＊",flags=re.U|re.I)
     for section in sections.childs:
         logger.debug(u"in section:%2d/%2d%s"\
                     %(sections.childs.index(section)+1,len(sections.childs),
-                      (u" in "+filename) if filename != None else u""))
+                      ((u" in "+filename) if (filename != None) else u"")))
         #Section(sptext?unicode):list(sptext?unicode)
         sentences = split_sentences(section)
         section.childs = sentences
         section.paralells = []
         section.descriptions = []
         section.cluewords = []
-
         #scoring
-        scores = dict.fromkeys(TAGLIST,0.0) #score[tagname] -> score
-        allpara = set()
+        section.scores = dict.fromkeys(TAGLIST,0.0) #score[tagname] -> score
+
+        #Section Paralells
+        numnum = 0
+        dotnum = 0
+        for sentence in section.childs:
+            if renum.match(sentence.text):
+                numnum += 1
+            elif redot.match(sentence.text):
+                dotnum += 1
+        if len(sections.childs) <= dotnum*2 or numnum*2:
+            #paralell scores
+            section.scores[ImageScore.TABLE] += PARA_TABLE_SCORE*(dotnum+numnum)
+
         for sentence in sentences:
             #*has Paralell?
             paras = get_paralell(sentence)
-            section.paralells.extend(paras)
             if len(paras) > 0:
-                wordset = set(reduce(lambda a,b:a+b,[b[0].keys() for b in paras]))
-                allpara = allpara.union(wordset)
+                section.paralells.extend(paras)
+                wordset = reduce(lambda a,b:a+b,[b[0].keys() for b in paras])
+                for word in wordset:
+                    if word.word in allpara:
+                        allpara[word.word].append(section)
+                    else:
+                        allpara[word.word] = [section]
                 for para in paras:
                     #is about numerical? sentential? or example?
                     desc_bunsetsus = reduce(lambda a,b:a+b,para[0].values())
-                    if len(desc_bunsetsus) > 0:
-                        scores[ImageScore.IMAGE] += PARA_IMAGE_SOCRE
+                    if not len(desc_bunsetsus) > 0:
+                        section.scores[ImageScore.IMAGE] += PARA_IMAGE_SOCRE*len(para[0])
                     else:
                         if is_numerical(para):
-                            scores[ImageScore.GRAPH] += PARA_GRAPH_SCORE*len(para)
+                            section.scores[ImageScore.GRAPH] += PARA_GRAPH_SCORE*len(para[0])
                         else:
-                            scores[ImageScore.TABLE] += PARA_TABLE_SCORE*len(para)
+                            section.scores[ImageScore.TABLE] += PARA_TABLE_SCORE*len(para[0])
 
             #*has ClueWord and/or keyExp?
             clueword_scores = scoring_clueword(sentence.text)
             for clueword_score in clueword_scores:
                 section.cluewords.append(clueword_score[0])
-                for key in scores:
-                    scores[key] += clueword_score[1].dict[key]
+                for key in ImageScore.taglist:
+                    section.scores[key] += clueword_score[1].dict[key]
 
             #*is Description about paralell word?
             for para in allpara:
-                if has_description(sentence.childs,para.word):
+                if has_description(sentence.childs,para)\
+                        or re.match(para,sentence.childs[0].word if len(sentence.childs) > 0 else u""):
                     section.descriptions.append((para,sentence))
-                    scores[ImageScore.IMAGE] += DESCRIPTION_SCORE
-                elif re.match(para.word,sentence.text):
-                    section.descriptions.append((para,sentence))
-                    scores[ImageScore.IMAGE] += DESCRIPTION_SCORE
+                    for sec in allpara[para]:
+                        sec.descriptions.append((para,sentence))
+                        sec.scores[ImageScore.TABLE] += DESCRIPTION_SCORE
 
         #sum score and set in Section
-        section.scores = scores
-        section.score = float(reduce(lambda a,b:a+b,scores.values()))
+        section.score = float(reduce(lambda a,b:a+b,section.scores.values()))
     return sections
 
 
@@ -254,7 +292,7 @@ def writescore(sections,filename):
                 answerfile.write(u"to reaf\n")
                 answerfile.write(u"  [" + u", ".join([p.word for p in paraitem[2]]) + u"]\n")
             for descitem in section.descriptions:
-                answerfile.write(u"description : "+descitem[0].word+u"\n")
+                answerfile.write(u"description : "+descitem[0]+u"\n")
                 answerfile.write(u"\t : "+descitem[1].text+u"\n")
             answerfile.write(u"clueword:\n")
             if len(section.cluewords) > 0:

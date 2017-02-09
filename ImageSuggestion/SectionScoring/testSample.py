@@ -1,4 +1,4 @@
-# -*- encoding:utf-8-sig -*-
+﻿# -*- encoding:utf-8-sig -*-
 
 import unittest
 
@@ -11,10 +11,19 @@ import regex as re
 from imagescore import ImageScore
 
 import codecs
+from logging import getLogger, StreamHandler, Formatter, DEBUG
+formatter = Formatter(fmt=u"[%(levelname)s] %(message)s")
+handler = StreamHandler()
+handler.setFormatter(formatter)
+handler.setLevel(DEBUG)
+logger = getLogger(__name__)
+logger.setLevel(DEBUG)
+logger.addHandler(handler)
 
-def testscoring(inputfilename,outputfilename):
+def testscoring(inputfilename,outputfilename,answer):
     sections = readsections(inputfilename)
     anssections = sectionscoring(sections,inputfilename)
+    writescore(sections,answer)
     sorted_section = sorted(anssections.childs,key=lambda section:section.score,reverse=True)
     flags = re.compile(ur"Flag：：(?<image>\d)(?<table>\d)(?<graph>\d)(?<flow>\d)")
     outfile = codecs.open(outputfilename,mode="w",encoding="utf-8-sig")
@@ -45,33 +54,42 @@ def testscoring(inputfilename,outputfilename):
                     if teacher:
                         count+=1
                 sortscore = sorted(section.scores.items(),key=lambda s:s[1],reverse=True)
-                if not 1 == teacherscore.get(sortscore[0][0]):
-                    outfile.write(u"bad\n")
-                    pass
+                if count == 0:
+                    if sortscore[0][1] <= 0.0:
+                        allcheker += 1
+                        outfile.write(u"good!\n")
+                    else:
+                        outfile.write(u"bad\n")
                 else:
-                    if (count >= 2) and 1 == teacherscore.get(sortscore[1][0]):
+                    if not 1 == teacherscore.get(sortscore[0][0]):
                         outfile.write(u"bad\n")
                         pass
                     else:
-                        outfile.write(u"good!\n")
-                        allcheker += 1 
-                        pass
+                        if False and (count >= 2) and not 1 == teacherscore.get(sortscore[1][0]):
+                            outfile.write(u"bad\n")
+                            pass
+                        else:
+                            outfile.write(u"good!\n")
+                            allcheker += 1 
+                            pass
     outfile.write(u"\n\n check is "+unicode(allcheker)+u" / " + unicode(len(sections.childs)))
     outfile.close()
+    logger.debug(u"finish %s"%(inputfilename))
 
 
 if __name__ == '__main__':
     MAXTHREAD = 8
     p = Pool(MAXTHREAD)
-    for dir in os.listdir(u"tests"):
-        if not u"-answer" in dir:
+    for dir in os.listdir(u"afters"):
+        if not (u"-answer" in dir or u"-checker" in dir):
             filename,exe = os.path.splitext(dir)
-            inputfilename = os.path.join(ur"tests\\",filename+exe)
-            outputfilename = os.path.join(ur"check\\",filename+u"-checker"+exe)
+            inputfilename = os.path.join(ur"afters\\",filename+exe)
+            outputfilename = os.path.join(ur"afters\\",filename+u"-checker"+exe)
+            answer = os.path.join(ur"afters\\",filename+u"-answer"+exe)
             p.apply_async(func=testscoring,
-                            args=(inputfilename,outputfilename),
+                            args=(inputfilename,outputfilename,answer),
             )
-            #testscoring(inputfilename,outputfilename)
+            #testscoring(inputfilename,outputfilename,answer)
     p.close()
     p.join()
-    #section_scoring(u"sample.txt",u"sample-ans.txt")
+    #testscoring(ur"after5.txt",u"after5-check.txt",u"after5-ans.txt")

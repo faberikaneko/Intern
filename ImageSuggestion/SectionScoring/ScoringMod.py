@@ -16,7 +16,7 @@ from chardet.universaldetector import UniversalDetector
 #dict[key:unicode] -> (dict[typename:unicode] -> score:float)
 clueword = None
 
-def openClueWord(filename="scoreimage.txt"):
+def openClueWord(filename="output2_all (3).txt"):
     ''' <- filename : filename to read default = scoreimage.txt
         -> No return
         read scoreimage.txt into dict(clueword)'''
@@ -33,7 +33,7 @@ def openClueWord(filename="scoreimage.txt"):
                 word = scoreobj.group(u"key")
                 score = dict()
                 for tag in ImageScore.taglist:
-                    score[tag] = scoreobj.group(tag)
+                    score[tag] = float(scoreobj.group(tag))
                 imagescore = ImageScore(score)
                 clueword[word] = imagescore
     return
@@ -56,7 +56,7 @@ def openClueWordDB(dbName=u"WordDB.sqlite3",tableName=u"wordscore"):
                     openClueWord()
                     message = u"insert into "+tableName+" values (:key,:image,:table,:graph,:flow)"
                     for item in clueword.items():
-                        args = (item[0],item[1].image,item[1].table,item[1].graph,item[1].flow)
+                        args = (item[0],item[1][u"image"],item[1][u"table"],item[1][u"graph"],item[1][u"flow"])
                         cr.execute(message,args)
                 else :
                     clueword = {}
