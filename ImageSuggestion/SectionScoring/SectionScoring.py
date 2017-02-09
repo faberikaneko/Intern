@@ -26,7 +26,8 @@ logger.addHandler(handler)
 PARA_GRAPH_SCORE = 0.005
 PARA_TABLE_SCORE = 0.005
 PARA_IMAGE_SOCRE = 0.02
-DESCRIPTION_SCORE = 0.05
+DESC_SENT_SCORE = 0.01
+DESC_WORD_SCORE = 0.01
 TAGLIST = ImageScore.taglist
 
 def text_normalizer(rawtext):
@@ -254,9 +255,10 @@ def sectionscoring(sections,filename=None):
                 if has_description(sentence.childs,para)\
                         or re.match(para,sentence.childs[0].word if len(sentence.childs) > 0 else u""):
                     section.descriptions.append((para,sentence))
+                    section.scores[ImageScore.TABLE] += DESC_SENT_SCORE
                     for sec in allpara[para]:
                         sec.descriptions.append((para,sentence))
-                        sec.scores[ImageScore.TABLE] += DESCRIPTION_SCORE
+                        sec.scores[ImageScore.TABLE] += DESC_WORD_SCORE
 
         #sum score and set in Section
         section.score = float(reduce(lambda a,b:a+b,section.scores.values()))
