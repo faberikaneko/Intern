@@ -16,4 +16,4 @@ def count_checkdata(dirname):
     return point,alls
 
 if __name__ == "__main__":
-    count_checkdata(u"docs\\61_80")
+    count_checkdata(u"docs\\81_100")
