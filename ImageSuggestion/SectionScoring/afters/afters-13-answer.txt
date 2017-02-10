@@ -997,8 +997,8 @@ paraword
 list
 WindowsUpdate/WindowsUpdate:
 ソフトウエア/そふとうえあ+アップデート/あっぷでーと:AppStore/AppStore
-アップデート/あっぷでーと:AppStore/AppStore,Adobe/Adobe+製品/せいひん
 更新/こうしん:AppStore/AppStore,Adobe/Adobe+製品/せいひん,JavaUpdate/JavaUpdate
+アップデート/あっぷでーと:AppStore/AppStore,Adobe/Adobe+製品/せいひん
 to root
   [累積/るいせき, 追い付く/おいつく]
 to reaf

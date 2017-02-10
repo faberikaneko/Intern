@@ -232,7 +232,7 @@ image : 0.00105263157895
 table : 0.00247875354108
 graph : 0.000958772770853
 flow : 0.0
-good!
+bad
 
 Flag：：0000
 食品サンプルの作り方～型の取り方～前編
@@ -271,7 +271,7 @@ image : 0.0
 table : 0.0
 graph : 0.0
 flow : 0.0
-good!
+bad
 
 
- check is 10 / 20
+ check is 8 / 20
