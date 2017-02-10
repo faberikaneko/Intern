@@ -261,7 +261,10 @@ def sectionscoring(sections,filename=None):
                         sec.scores[ImageScore.TABLE] += DESC_WORD_SCORE
 
         #sum score and set in Section
-        section.score = float(reduce(lambda a,b:a+b,section.scores.values()))
+        section.score = 0.0
+    for section in sections:
+        for soloscore in section.scores.values():
+            section.score += soloscore
     return sections
 
 
