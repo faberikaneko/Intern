@@ -80,16 +80,16 @@ def testscoring(inputfilename,outputfilename,answer):
 if __name__ == '__main__':
     MAXTHREAD = 8
     p = Pool(MAXTHREAD)
-    for dir in os.listdir(u"afters"):
+    for dir in os.listdir(ur"docs\\1_20\\"):
         if not (u"-answer" in dir or u"-checker" in dir):
             filename,exe = os.path.splitext(dir)
-            inputfilename = os.path.join(ur"afters\\",filename+exe)
-            outputfilename = os.path.join(ur"afters\\",filename+u"-checker"+exe)
-            answer = os.path.join(ur"afters\\",filename+u"-answer"+exe)
-            #p.apply_async(func=testscoring,
-            #                args=(inputfilename,outputfilename,answer),
-            #)
+            inputfilename = os.path.join(ur"docs\\1_20\\",filename+exe)
+            outputfilename = os.path.join(ur"docs\\1_20\\",filename+u"-checker"+exe)
+            answer = os.path.join(ur"docs\\1_20\\",filename+u"-answer"+exe)
+            p.apply_async(func=testscoring,
+                            args=(inputfilename,outputfilename,answer),
+            )
             #testscoring(inputfilename,outputfilename,answer)
     p.close()
     p.join()
-    testscoring(ur"afters-0.txt",u"afters-0-check.txt",u"afters-0-ans.txt")
+    #testscoring(ur"docs\\1_20.txt",u"anss\\1_20_check.txt",u"anss\\1_20_answer.txt")

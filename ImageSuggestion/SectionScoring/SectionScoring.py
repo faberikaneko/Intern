@@ -1,5 +1,7 @@
 ﻿# -*- encoding:utf-8-sig -*-
 
+print(__name__)
+
 import sys
 import codecs
 import regex as re
@@ -10,6 +12,7 @@ import os
 import threading
 from multiprocessing import Pool
 from imagescore import ImageScore
+from ScoringMod import ScoringClass
 
 #config logger
 from logging import getLogger, StreamHandler, Formatter, DEBUG
@@ -154,10 +157,9 @@ def is_numerical(para):
 
 def scoring_clueword(text):
     """By ScorgingClass, scoring to text:unicode"""
-    from ScoringMod import clueword as cluewords
     anslist = []
     #sum score
-    for clueword in cluewords.items():
+    for clueword in ScoringClass.get_clueword().items():
         if clueword[0] in text:
             anslist.append(clueword)
     return anslist
