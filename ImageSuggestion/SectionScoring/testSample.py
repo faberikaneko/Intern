@@ -1,9 +1,6 @@
 ﻿# -*- encoding:utf-8-sig -*-
 
-import unittest
-
-from SectionScoring import filescoring
-from SectionScoring import readsections,sectionscoring,writescore
+from SectionScoring import filescoring,readsections,sectionscoring,writescore
 from multiprocessing import Pool
 import os
 
@@ -79,7 +76,6 @@ def testscoring(inputfilename,outputfilename,answer):
     outfile.write(u"\n\n check is "+unicode(allcheker)+u" / " + unicode(len(sections.childs)))
     outfile.close()
     logger.debug(u"finish %s"%(inputfilename))
-
 
 if __name__ == '__main__':
     MAXTHREAD = 8
