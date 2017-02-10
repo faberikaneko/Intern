@@ -26,8 +26,8 @@ logger.addHandler(handler)
 PARA_GRAPH_SCORE = 0.005
 PARA_TABLE_SCORE = 0.005
 PARA_IMAGE_SOCRE = 0.02
-DESC_SENT_SCORE = 0.001
-DESC_WORD_SCORE = 0.001
+DESC_SENT_SCORE = 0.0
+DESC_WORD_SCORE = 0.01
 TAGLIST = ImageScore.taglist
 
 def text_normalizer(rawtext):
