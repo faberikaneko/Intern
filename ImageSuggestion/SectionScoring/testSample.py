@@ -80,7 +80,7 @@ def testscoring(inputfilename,outputfilename,answer):
 if __name__ == '__main__':
     MAXTHREAD = 8
     p = Pool(MAXTHREAD)
-    dirname = ur"docs\\21_40\\"
+    dirname = ur"docs\\41_60\\"
     for dir in os.listdir(dirname):
         if not (u"-answer" in dir or u"-checker" in dir):
             filename,exe = os.path.splitext(dir)
