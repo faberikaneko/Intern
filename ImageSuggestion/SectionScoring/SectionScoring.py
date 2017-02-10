@@ -220,6 +220,13 @@ def sectionscoring(sections,filename=None):
         if len(sections.childs) <= dotnum*2 or numnum*2:
             #paralell scores
             section.scores[ImageScore.TABLE] += PARA_TABLE_SCORE*(dotnum+numnum)
+        
+        #*has ClueWord and/or keyExp?
+        clueword_scores = scoring_clueword(section.text)
+        for clueword_score in clueword_scores:
+            section.cluewords.append(clueword_score[0])
+            for key in ImageScore.taglist:
+                section.scores[key] += clueword_score[1].dict[key]
 
         for sentence in sentences:
             #*has Paralell?
@@ -242,13 +249,6 @@ def sectionscoring(sections,filename=None):
                             section.scores[ImageScore.GRAPH] += PARA_GRAPH_SCORE*len(para[0])
                         else:
                             section.scores[ImageScore.TABLE] += PARA_TABLE_SCORE*len(para[0])
-
-            #*has ClueWord and/or keyExp?
-            clueword_scores = scoring_clueword(sentence.text)
-            for clueword_score in clueword_scores:
-                section.cluewords.append(clueword_score[0])
-                for key in ImageScore.taglist:
-                    section.scores[key] += clueword_score[1].dict[key]
 
             #*is Description about paralell word?
             for para in allpara:
