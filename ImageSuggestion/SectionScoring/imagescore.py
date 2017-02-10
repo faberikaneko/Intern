@@ -12,3 +12,11 @@ class ImageScore(object):
             return self.dict.get(key)
         else:
             raise IndexError
+    def __add__(self,other):
+        if not isinstance(other,(ImageScore,dict)):
+            raise TypeError
+        for tag in taglist:
+            if not tag in other:
+                raise ValueError
+            self.dict[tag] += other.get(tag)
+        return self 
