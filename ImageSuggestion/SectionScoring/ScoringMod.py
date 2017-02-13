@@ -35,7 +35,6 @@ class ScoringClass:
     
     @staticmethod
     def _opendict_bylist(dictlistfilename):
-        print("open")
         clueword = {}
         with codecs.open(dictlistfilename,
                             mode=u"r",

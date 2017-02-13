@@ -1,7 +1,5 @@
 ﻿# -*- encoding:utf-8-sig -*-
 
-print(__name__)
-
 import sys
 import codecs
 import regex as re
@@ -25,11 +23,11 @@ logger.setLevel(DEBUG)
 logger.addHandler(handler)
 
 #TODO: The Best Score Of Paralell Words
-PARA_GRAPH_SCORE = 0.005
-PARA_TABLE_SCORE = 0.005
-PARA_IMAGE_SOCRE = 0.02
+PARA_GRAPH_SCORE = 0.00
+PARA_TABLE_SCORE = 0.05
+PARA_IMAGE_SOCRE = 0.0
 DESC_SENT_SCORE = 0.0
-DESC_WORD_SCORE = 0.05
+DESC_WORD_SCORE = 0.0
 TAGLIST = ImageScore.taglist
 
 def text_normalizer(rawtext):
@@ -177,8 +175,8 @@ def readsections(filename):
         with codecs.open(filename,u"r",u"utf-8-sig") as file:
             rawtext = unicode(file.read())
     except IOError as e:
-        print(u"in:"+e.filename)
-        print(e)
+        logger.error(u"in:"+e.filename)
+        logger.error(e)
         raise
 
     #normalize text 
@@ -227,39 +225,42 @@ def sectionscoring(sections,filename=None):
         for clueword_score in clueword_scores:
             section.cluewords.append(clueword_score[0])
             for key in ImageScore.taglist:
-                section.scores[key] += clueword_score[1].dict[key]
+                section.scores[key] += \
+                    clueword_score[1].dict[key]\
+                    /(1.0 if (key == ImageScore.IMAGE) else 1.0)
 
-        for sentence in sentences:
-            #*has Paralell?
-            paras = get_paralell(sentence)
-            if len(paras) > 0:
-                section.paralells.extend(paras)
-                wordset = reduce(lambda a,b:a+b,[b[0].keys() for b in paras])
-                for word in wordset:
-                    if word.word in allpara:
-                        allpara[word.word].append(section)
-                    else:
-                        allpara[word.word] = [section]
-                for para in paras:
-                    #is about numerical? sentential? or example?
-                    desc_bunsetsus = reduce(lambda a,b:a+b,para[0].values())
-                    if not len(desc_bunsetsus) > 0:
-                        section.scores[ImageScore.IMAGE] += PARA_IMAGE_SOCRE*len(para[0])
-                    else:
-                        if is_numerical(para):
-                            section.scores[ImageScore.GRAPH] += PARA_GRAPH_SCORE*len(para[0])
+        if True:
+            for sentence in sentences:
+                #*has Paralell?
+                paras = get_paralell(sentence)
+                if len(paras) > 0:
+                    section.paralells.extend(paras)
+                    wordset = reduce(lambda a,b:a+b,[b[0].keys() for b in paras])
+                    for word in wordset:
+                        if word.word in allpara:
+                            allpara[word.word].append(section)
                         else:
-                            section.scores[ImageScore.TABLE] += PARA_TABLE_SCORE*len(para[0])
+                            allpara[word.word] = [section]
+                    for para in paras:
+                        #is about numerical? sentential? or example?
+                        desc_bunsetsus = reduce(lambda a,b:a+b,para[0].values())
+                        if not len(desc_bunsetsus) > 0:
+                            section.scores[ImageScore.IMAGE] += PARA_IMAGE_SOCRE*len(para[0])
+                        else:
+                            if is_numerical(para):
+                                section.scores[ImageScore.GRAPH] += PARA_GRAPH_SCORE*len(para[0])
+                            else:
+                                section.scores[ImageScore.TABLE] += PARA_TABLE_SCORE*len(para[0])
 
-            #*is Description about paralell word?
-            for para in allpara:
-                if has_description(sentence.childs,para)\
-                        or re.match(para,sentence.childs[0].word if len(sentence.childs) > 0 else u""):
-                    section.descriptions.append((para,sentence))
-                    section.scores[ImageScore.TABLE] += DESC_SENT_SCORE
-                    for sec in allpara[para]:
-                        sec.descriptions.append((para,sentence))
-                        sec.scores[ImageScore.TABLE] += DESC_WORD_SCORE
+                #*is Description about paralell word?
+                for para in allpara:
+                    if has_description(sentence.childs,para)\
+                            or re.match(para,sentence.childs[0].word if len(sentence.childs) > 0 else u""):
+                        section.descriptions.append((para,sentence))
+                        section.scores[ImageScore.TABLE] += DESC_SENT_SCORE
+                        for sec in allpara[para]:
+                            sec.descriptions.append((para,sentence))
+                            sec.scores[ImageScore.TABLE] += DESC_WORD_SCORE
 
         #sum score and set in Section
         section.score = 0.0

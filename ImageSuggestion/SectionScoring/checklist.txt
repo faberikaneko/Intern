@@ -1,0 +1,197 @@
+﻿﻿# limit == 0.0
+indocs\1_20\, check is 45 / 206
+﻿indocs\21_40\, check is 50 / 204
+﻿indocs\41_60\, check is 36 / 170
+﻿indocs\61_80\, check is 42 / 137
+﻿indocs\81_100\, check is 42 / 174
+# 215 / 891 == 0.241
+# limit == 0.1
+﻿indocs\1_20\, check is 38 / 184
+﻿indocs\21_40\, check is 44 / 189
+﻿indocs\41_60\, check is 29 / 150
+﻿indocs\61_80\, check is 31 / 115
+﻿indocs\81_100\, check is 31 / 148
+# == 
+# limit == 1.0
+﻿in docs\1_20\, check is 26 / 122
+﻿in docs\21_40\, check is 32 / 120
+﻿in docs\41_60\, check is 18 / 95
+﻿in docs\61_80\, check is 21 / 79
+﻿in docs\81_100\, check is 25 / 99
+﻿in all, check is 122 / 515
+# == 0.237
+# new dict. limit == 0.0
+﻿in docs\1_20\, check is 54 / 204
+﻿in docs\21_40\, check is 68 / 204
+﻿in docs\41_60\, check is 56 / 170
+﻿in docs\61_80\, check is 30 / 137
+﻿in docs\81_100\, check is 53 / 174
+﻿in all, check is 261 / 889
+# == 0.294
+# new dict. limit == 1.0
+﻿in docs\1_20\, check is 47 / 154
+﻿in docs\21_40\, check is 65 / 178
+﻿in docs\41_60\, check is 46 / 126
+﻿in docs\61_80\, check is 25 / 110
+﻿in docs\81_100\, check is 45 / 137
+﻿in all, check is 228 / 705
+# == 0.323
+﻿in docs\1_20\, check is 7 / 104
+﻿in docs\21_40\, check is 31 / 112
+﻿in docs\41_60\, check is 14 / 86
+﻿in docs\61_80\, check is 14 / 86
+﻿in docs\81_100\, check is 14 / 107
+﻿in all, check is 80 / 495
+﻿in docs\1_20\, check is 31 / 200
+﻿in docs\21_40\, check is 60 / 195
+﻿in docs\41_60\, check is 34 / 157
+﻿in docs\61_80\, check is 20 / 131
+﻿in docs\81_100\, check is 30 / 167
+﻿in all, check is 175 / 850
+﻿in docs\1_20\, check is 50 / 200
+﻿in docs\21_40\, check is 72 / 195
+﻿in docs\41_60\, check is 57 / 157
+﻿in docs\61_80\, check is 32 / 131
+﻿in docs\81_100\, check is 53 / 167
+﻿in all, check is 264 / 850
+﻿in docs\1_20\, check is 29 / 153
+﻿in docs\21_40\, check is 33 / 162
+﻿in docs\41_60\, check is 24 / 127
+﻿in docs\61_80\, check is 24 / 99
+﻿in docs\81_100\, check is 26 / 123
+﻿in all, check is 136 / 664
+﻿in docs\1_20\, check is 31 / 200
+﻿in docs\21_40\, check is 60 / 200
+﻿in docs\41_60\, check is 34 / 161
+﻿in docs\61_80\, check is 20 / 133
+﻿in docs\81_100\, check is 30 / 168
+﻿in all, check is 175 / 862
+# norn / 2.0, limit = 0.1, new dict
+﻿in docs\1_20\, check is 50 / 200
+﻿in docs\21_40\, check is 72 / 200
+﻿in docs\41_60\, check is 57 / 161
+﻿in docs\61_80\, check is 32 / 133
+﻿in docs\81_100\, check is 53 / 168
+﻿in all, check is 264 / 862
+# norn / 1.0, limit = 0.1 new dict﻿
+in docs\1_20\, check is 53 / 201
+﻿in docs\21_40\, check is 68 / 200
+﻿in docs\41_60\, check is 56 / 161
+﻿in docs\61_80\, check is 30 / 133
+﻿in docs\81_100\, check is 53 / 168
+﻿in all, check is 260 / 863
+﻿in docs\1_20\, check is 50 / 200
+﻿in docs\21_40\, check is 72 / 200
+﻿in docs\41_60\, check is 57 / 161
+﻿in docs\61_80\, check is 32 / 133
+﻿in docs\81_100\, check is 53 / 168
+﻿in all, check is 264 / 862
+# norn / 2.0, limit = 0.0, new dict
+﻿in docs\1_20\, check is 32 / 204
+﻿in docs\21_40\, check is 60 / 204
+﻿in docs\41_60\, check is 34 / 170
+﻿in docs\61_80\, check is 20 / 137
+﻿in docs\81_100\, check is 30 / 174
+﻿in all, check is 176 / 889
+# norn / 2.0, limit = 1.0, new dict
+﻿in docs\1_20\, check is 7 / 104
+﻿in docs\21_40\, check is 31 / 112
+﻿in docs\41_60\, check is 14 / 86
+﻿in docs\61_80\, check is 14 / 86
+﻿in docs\81_100\, check is 14 / 107
+﻿in all, check is 80 / 495
+# norn / 2.0, limit = 0.5, new dict
+﻿in docs\1_20\, check is 31 / 200
+﻿in docs\21_40\, check is 60 / 195
+﻿in docs\41_60\, check is 34 / 157
+﻿in docs\61_80\, check is 20 / 131
+﻿in docs\81_100\, check is 30 / 167
+﻿in all, check is 175 / 850
+# norn / 1.0, limit = 1.0, new dict
+﻿in docs\1_20\, check is 47 / 154
+﻿in docs\21_40\, check is 65 / 178
+﻿in docs\41_60\, check is 46 / 126
+﻿in docs\61_80\, check is 25 / 110
+﻿in docs\81_100\, check is 45 / 137
+﻿in all, check is 228 / 705
+# norn / 2.0, limit = 0.1, new dict
+﻿in docs\1_20\, check is 31 / 200
+﻿in docs\21_40\, check is 60 / 200
+﻿in docs\41_60\, check is 34 / 161
+﻿in docs\61_80\, check is 20 / 133
+﻿in docs\81_100\, check is 30 / 168
+﻿in all, check is 175 / 862
+# norn / 1.0, limit = 0.0, new dict
+﻿in docs\1_20\, check is 54 / 204
+﻿in docs\21_40\, check is 68 / 204
+﻿in docs\41_60\, check is 56 / 170
+﻿in docs\61_80\, check is 30 / 137
+﻿in docs\81_100\, check is 53 / 174
+﻿in all, check is 261 / 889
+# norn / 1.0, limit = 0.5, new dict
+﻿in docs\1_20\, check is 53 / 200
+﻿in docs\21_40\, check is 68 / 195
+﻿in docs\41_60\, check is 56 / 157
+﻿in docs\61_80\, check is 30 / 132
+﻿in docs\81_100\, check is 53 / 167
+﻿in all, check is 260 / 851
+# norn / 1.0, limit = 5.0, new dict
+﻿in docs\1_20\, check is 0 / 7
+﻿in docs\21_40\, check is 0 / 2
+﻿in docs\41_60\, check is 0 / 3
+﻿in docs\61_80\, check is 0 / 0
+﻿in docs\81_100\, check is 0 / 3
+﻿in all, check is 0 / 15
+# norn / 1.0, limit = 2.0, new dict
+﻿in docs\1_20\, check is 2 / 14
+﻿in docs\21_40\, check is 3 / 18
+﻿in docs\41_60\, check is 7 / 20
+﻿in docs\61_80\, check is 3 / 15
+﻿in docs\81_100\, check is 8 / 30
+﻿in all, check is 23 / 97
+# norn / 1.0, limit = 1.5, new dict
+﻿in docs\1_20\, check is 22 / 64
+﻿in docs\21_40\, check is 17 / 70
+﻿in docs\41_60\, check is 21 / 65
+﻿in docs\61_80\, check is 17 / 64
+﻿in docs\81_100\, check is 21 / 78
+﻿in all, check is 98 / 341
+﻿in docs\1_20\, check is 160 / 492
+﻿in docs\1_20\, check is 164 / 522
+﻿in docs\1_20\, check is 168 / 552
+﻿in docs\21_40\, check is 201 / 504
+﻿in docs\21_40\, check is 219 / 563
+﻿in docs\21_40\, check is 235 / 611
+﻿in docs\41_60\, check is 153 / 407
+﻿in docs\41_60\, check is 163 / 437
+﻿in docs\41_60\, check is 167 / 451
+﻿in docs\61_80\, check is 94 / 368
+﻿in docs\61_80\, check is 95 / 383
+﻿in docs\61_80\, check is 96 / 398
+﻿in docs\81_100\, check is 114 / 372
+﻿in all, check is 722 / 2143
+﻿in docs\81_100\, check is 137 / 433
+﻿in all, check is 778 / 2338
+﻿in docs\81_100\, check is 164 / 499
+﻿in all, check is 830 / 2511
+# -checker_1
+﻿in docs\1_20\, check is 48 / 161
+﻿in docs\21_40\, check is 74 / 179
+﻿in docs\41_60\, check is 50 / 130
+﻿in docs\61_80\, check is 27 / 112
+﻿in docs\81_100\, check is 49 / 142
+﻿in all, check is 248 / 724
+# -checker_2
+﻿in docs\1_20\, check is 47 / 155
+﻿in docs\21_40\, check is 65 / 179
+﻿in docs\41_60\, check is 46 / 126
+﻿in docs\61_80\, check is 26 / 110
+﻿in docs\81_100\, check is 45 / 137
+﻿in all, check is 229 / 707
+# -checker_3
+﻿in docs\1_20\, check is 48 / 160
+﻿in docs\21_40\, check is 74 / 178
+﻿in docs\41_60\, check is 50 / 130
+﻿in docs\61_80\, check is 26 / 112
+﻿in docs\81_100\, check is 49 / 142
+﻿in all, check is 247 / 722

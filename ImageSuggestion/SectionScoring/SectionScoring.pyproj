@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>512efe75-17d8-4748-83e5-60d06d67e37e</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>testSample.py</StartupFile>
+    <StartupFile>count_checkdata.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -23,7 +23,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="count_checkdata.py" />
+    <Compile Include="covariance_checker.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="imagescore.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="katachi_diviner.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="mini_bunsetsu.py" />
