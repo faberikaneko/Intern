@@ -246,3 +246,4 @@ ModelManifest.xml
 /.vscode
 /ImageSuggestion/SectionScoring/check-olddict
 /ImageSuggestion/SectionScoring/check-minus
+/ImageSuggestion/SectionScoring/.temp
