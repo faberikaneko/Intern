@@ -27,7 +27,7 @@ logger.addHandler(handler)
 
 #TODO: The Best Score Of Paralell Words
 PARA_GRAPH_SCORE = 0.00
-PARA_TABLE_SCORE = 0.00
+PARA_TABLE_SCORE = 0.05
 PARA_IMAGE_SOCRE = 0.0
 DESC_SENT_SCORE = 0.0
 DESC_WORD_SCORE = 0.0
@@ -240,7 +240,7 @@ def sectionscoring(sections,filename=None):
                     else:
                         markf[sentence.text[0]] = 1
         dotnum = max(markf.values()) if len(markf) != 0 else 0
-        if len(sections.childs) <= dotnum*2 or numnum*2:
+        if dotnum >= 3 or numnum >= 2:
             #paralell scores
             section.scores[ImageScore.TABLE] += PARA_TABLE_SCORE*(dotnum+numnum)
         

@@ -243,17 +243,6 @@ table : 0.0
 graph : 0.0138888888889
 flow : 0.0
 
-In Section 12, Score:0.020000
-Flag：：0000
-1日70杯売れる店を作れれば確かに儲かるといえる店が作れます。
-さて、それだけ売れる店はどうやって作ればいいでしょうか？
-paraword
-clueword:
-image : 0.0
-table : 0.02
-graph : 0.0
-flow : 0.0
-
 In Section 21, Score:0.015828
 Flag：：0000
 経営者なら、目の前でお客さん（お金）を逃すのを黙ってみてられませんよね。イケル！と思い店を増やすという判断をするのは間違ってはいないように思えます。
@@ -327,6 +316,17 @@ flow : 0.0
 In Section 6, Score:0.000000
 Flag：：0000
 ラーメン屋を開業するには！？
+paraword
+clueword:
+image : 0.0
+table : 0.0
+graph : 0.0
+flow : 0.0
+
+In Section 12, Score:0.000000
+Flag：：0000
+1日70杯売れる店を作れれば確かに儲かるといえる店が作れます。
+さて、それだけ売れる店はどうやって作ればいいでしょうか？
 paraword
 clueword:
 image : 0.0
