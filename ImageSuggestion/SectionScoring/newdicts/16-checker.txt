@@ -32,6 +32,17 @@ graph : 0.0
 flow : 0.0
 BAD, pattern C
 
+Flag：：0000
+BMWが、FR（後輪駆動）にこだわったクルマづくりをする理由とは
+BMWのキホン｜BMWの基本
+SUMOME
+BMW6シリーズ
+image : 0.0
+table : 0.03
+graph : 0.0
+flow : 0.0
+BAD, pattern C
+
 Flag：：1000
 スポーティな走りと抜群の重量配分を実現する
 BMWはフロント・エンジン＋後輪駆動という「FR」のレイアウトに強いこだわりを持つメーカーです。「駆け抜ける歓び」をブランドコンセプトに掲げるBMWは、運動性能や乗り心地といった走りのフィーリングをダイレクトにドライバーに伝えるために長きに渡りこのレイアウトを採用してきました。
@@ -40,17 +51,6 @@ table : 0.00735294117647
 graph : 0.0169491525424
 flow : 0.0
 good, pattern D
-
-Flag：：0000
-BMWが、FR（後輪駆動）にこだわったクルマづくりをする理由とは
-BMWのキホン｜BMWの基本
-SUMOME
-BMW6シリーズ
-image : 0.0
-table : 0.0
-graph : 0.0
-flow : 0.0
-no, pattern A
 
 Flag：：0000
 BMWX5
@@ -62,7 +62,7 @@ flow : 0.0
 no, pattern A
 
 
-a,b,c,d = 2,0,1,4
-precision = 0.800000
+a,b,c,d = 1,0,2,4
+precision = 0.666667
 recall = 1.000000
-fvalue = 0.888889
+fvalue = 0.800000

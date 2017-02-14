@@ -15,7 +15,7 @@ table : 0.263823529412
 graph : 0.0
 flow : 0.0
 
-In Section 1, Score:0.222437
+In Section 1, Score:0.252437
 Flag：：0100
 アンケートの回答方法
 Step1「マクロミルからアンケート依頼メールが！」
@@ -29,7 +29,7 @@ paraword
 clueword:
 方法, 場合
 image : 0.0103909086126
-table : 0.122760180995
+table : 0.152760180995
 graph : 0.0
 flow : 0.0892857142857
 

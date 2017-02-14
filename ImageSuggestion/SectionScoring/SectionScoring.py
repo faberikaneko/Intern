@@ -27,7 +27,7 @@ logger.addHandler(handler)
 
 #TODO: The Best Score Of Paralell Words
 PARA_GRAPH_SCORE = 0.00
-PARA_TABLE_SCORE = 0.05
+PARA_TABLE_SCORE = 0.01
 PARA_IMAGE_SOCRE = 0.0
 DESC_SENT_SCORE = 0.0
 DESC_WORD_SCORE = 0.0

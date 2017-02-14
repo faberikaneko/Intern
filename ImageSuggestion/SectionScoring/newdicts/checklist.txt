@@ -69,3 +69,11 @@
       precision = 0.605744
          recall = 0.931727
          fvalue = 0.734177
+﻿in all, a,b,c,d = 73,31,303,467
+      precision = 0.606494
+         recall = 0.937751
+         fvalue = 0.736593
+﻿in all, a,b,c,d = 73,31,303,467
+      precision = 0.606494
+         recall = 0.937751
+         fvalue = 0.736593

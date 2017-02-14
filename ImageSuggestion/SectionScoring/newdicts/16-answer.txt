@@ -44,6 +44,19 @@ table : 0.105497737557
 graph : 0.0
 flow : 0.0
 
+In Section 1, Score:0.030000
+Flag：：0000
+BMWが、FR（後輪駆動）にこだわったクルマづくりをする理由とは
+BMWのキホン｜BMWの基本
+SUMOME
+BMW6シリーズ
+paraword
+clueword:
+image : 0.0
+table : 0.03
+graph : 0.0
+flow : 0.0
+
 In Section 2, Score:0.024302
 Flag：：1000
 スポーティな走りと抜群の重量配分を実現する
@@ -54,19 +67,6 @@ clueword:
 image : 0.0
 table : 0.00735294117647
 graph : 0.0169491525424
-flow : 0.0
-
-In Section 1, Score:0.000000
-Flag：：0000
-BMWが、FR（後輪駆動）にこだわったクルマづくりをする理由とは
-BMWのキホン｜BMWの基本
-SUMOME
-BMW6シリーズ
-paraword
-clueword:
-image : 0.0
-table : 0.0
-graph : 0.0
 flow : 0.0
 
 In Section 5, Score:0.000000
