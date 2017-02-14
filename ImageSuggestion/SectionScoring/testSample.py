@@ -19,7 +19,7 @@ logger.setLevel(DEBUG)
 logger.addHandler(handler)
 
 global SCORE_LIMIT
-SCORE_LIMIT = 1.0
+SCORE_LIMIT = 0.01
 
 def testscoring(inputfilename,outputfilename,answer):
     sections = readsections(inputfilename)
@@ -28,7 +28,7 @@ def testscoring(inputfilename,outputfilename,answer):
     sorted_section = sorted(anssections.childs,key=lambda section:section.score,reverse=True)
     flags = re.compile(ur"Flag：：(?<image>\d)(?<table>\d)(?<graph>\d)(?<flow>\d)")
     outfile = codecs.open(outputfilename,mode="w",encoding="utf-8-sig")
-    allcheker = 0
+    a,b,c,d = 0,0,0,0
     startflag = True
     ignorecount = 0
     for section in sorted_section:
@@ -58,39 +58,46 @@ def testscoring(inputfilename,outputfilename,answer):
                 sortscore = sorted(section.scores.items(),key=lambda s:s[1],reverse=True)
                 global SCORE_LIMIT
                 if section.score <= SCORE_LIMIT:
-                    #if 0 == count:
-                    #    allcheker += 1
-                    #    outfile.write(u"good!\n")
-                    #else:
-                    #    outfile.write(u"bad\n")
-                    ignorecount += 1
-                else:
-                    if not 1 == teacherscore.get(sortscore[0][0]):
-                        outfile.write(u"bad\n")
-                        pass
+                    if count == 0:#A:nono
+                        outfile.write(u"no, pattern A\n")
+                        a += 1
                     else:
-                        if False and (count >= 2) and not 1 == teacherscore.get(sortscore[1][0]):
-                            outfile.write(u"bad\n")
-                            pass
-                        else:
-                            outfile.write(u"good!\n")
-                            allcheker += 1 
-                            pass
-    outfile.write(u"\n\n check is "+unicode(allcheker)+u" / " + unicode(len(sections.childs)-ignorecount))
+                        outfile.write(u"BAD, pattern B\n")
+                        b += 1
+                else:
+                    if count == 0:
+                        outfile.write(u"BAD, pattern C\n")
+                        c += 1
+                    else:
+                        outfile.write(u"good, pattern D\n")
+                        d += 1
+    outfile.write(u"\n\na,b,c,d = %d,%d,%d,%d\n"%(a,b,c,d))
+    precision = (float(d)/(c+d)) if c+d != 0 else 0
+    recall = (float(d)/(b+d)) if b+d != 0 else 0
+    outfile.write(u"precision = %f\n"%(precision))
+    outfile.write(u"recall = %f\n"%(recall))
+    fvalue = (2.0*precision*recall/(precision+recall)) if precision+recall != 0 else 0
+    outfile.write(u"fvalue = %f"%(fvalue))
     outfile.close()
     logger.debug(u"finish %s"%(inputfilename))
 
 def worker():
     while True:
         t = q.get()
-        testscoring(t[0],t[1],t[2])
-        q.task_done()
+        try:
+            testscoring(t[0],t[1],t[2])
+        except Exception as e:
+            with codecs.open(u"error.txt",u"a",u"utf-8-sig") as file:
+                file.write(u"in %s,\n"%t[0])
+                file.write(e.message)
+            raise
+        finally:
+            q.task_done()
 
 
 MAXTHREAD = 4
 q = Queue(MAXTHREAD)
-def test_samples(dirname):
-    #p = Pool(MAXTHREAD)
+def test_samples(dirname,outdirname):
     for i in range(MAXTHREAD):
         t = Thread(target=worker)
         t.daemon = True
@@ -99,17 +106,12 @@ def test_samples(dirname):
         if not (u"-answer" in dir or u"-checker" in dir):
             filename,exe = os.path.splitext(dir)
             inputfilename = os.path.join(dirname,filename+exe)
-            outputfilename = os.path.join(dirname,filename+u"-checker_3"+exe)
-            answer = os.path.join(dirname,filename+u"-answer_3"+exe)
+            outputfilename = os.path.join(outdirname,filename+u"-checker"+exe)
+            answer = os.path.join(outdirname,filename+u"-answer"+exe)
             q.put((inputfilename,outputfilename,answer))
-            #p.apply_async(func=testscoring,
-            #                args=(inputfilename,outputfilename,answer),
-            #)
             #testscoring(inputfilename,outputfilename,answer)
     q.join()
-    #p.close()
-    #p.join()
     #testscoring(ur"docs\\1_20.txt",u"anss\\1_20_check.txt",u"anss\\1_20_answer.txt")
 
 if __name__ == '__main__':
-    test_samples(u"docs\\1_20\\")
+    test_samples(u"docs\\1_20\\",u"newdicts\\")

@@ -195,3 +195,42 @@ in docs\1_20\, check is 53 / 201
 ﻿in docs\61_80\, check is 26 / 112
 ﻿in docs\81_100\, check is 49 / 142
 ﻿in all, check is 247 / 722
+﻿in newdicts, check is 0 / 15
+﻿in newdicts, check is 0 / 15
+﻿in newdicts, check is 0 / 15
+﻿in newdicts, check is 201 / 757
+﻿in newdicts, check is 203 / 757
+﻿in newdicts, check is 205 / 757
+﻿in newdicts, check is 197 / 713
+﻿in newdicts, check is 197 / 713
+﻿in newdicts, check is 197 / 713
+﻿in newdicts, check is 197 / 713
+﻿in newdicts, check is 197 / 713
+﻿in newdicts, check is 197 / 713
+﻿in newdicts, check is 197 / 713
+﻿in newdicts, check is 205 / 757
+﻿in newdicts, check is 205 / 757
+﻿in newdicts-only1_20, check is 55 / 182
+﻿in newdicts-only1_20, check is 49 / 142
+﻿in newdicts-only1_20, check is 138 / 205
+﻿in newdicts, check is 511 / 890
+﻿in newdicts, check is 323 / 890
+﻿in newdicts, a,b,c,d = 188,175,189,323
+﻿in newdicts, a,b,c,d = 0,0,377,498
+﻿in newdicts, a,b,c,d = 105,72,272,426
+﻿in newdicts, a,b,c,d = 105,72,272,426
+﻿in newdicts, a,b,c,d = 188,175,189,323
+﻿in newdicts, a,b,c,d = 81,52,296,446
+﻿in newdicts, a,b,c,d = 81,52,296,446
+﻿in newdicts, a,b,c,d = 81,52,296,446
+﻿in newdicts, a,b,c,d = 221,241,155,257
+﻿in newdicts, a,b,c,d = 212,231,164,267
+﻿in newdicts, a,b,c,d = 186,193,190,305
+﻿in newdicts, a,b,c,d = 59,24,317,474
+﻿in newdicts, a,b,c,d = 59,24,317,474
+﻿in newdicts, a,b,c,d = 59,24,317,474
+﻿in newdicts, a,b,c,d = 59,24,317,474
+﻿in newdicts, a,b,c,d = 59,24,317,474
+﻿in newdicts, a,b,c,d = 135,102,241,396
+﻿in newdicts, a,b,c,d = 74,34,302,464
+﻿in newdicts, a,b,c,d = 63,31,313,467

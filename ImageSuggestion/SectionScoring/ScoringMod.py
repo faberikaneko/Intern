@@ -4,12 +4,18 @@ import sys
 import codecs
 import sqlite3
 
+from multiprocessing import Lock
+
+wlock = Lock()
+glock = Lock()
+
 from imagescore import ImageScore
 
 #External import package to check Unicode parameter
 import regex as re
 class ScoringClass:
     _clueword = None
+    _regulers = None
 
     @staticmethod
     def _openClueWord(filename):
@@ -27,6 +33,11 @@ class ScoringClass:
             for line in file.readlines():
                 scoreobj = scorere.search(line)
                 word = scoreobj.group(u"key")
+                if word.startswith(u"～"):
+                    word = word[1:]
+                if word.endswith(u"～"):
+                    word = word[:-1]
+                word = re.sub(u"～",u"(?:.*?)",word)
                 score = dict()
                 for tag in ImageScore.taglist:
                     score[tag] = float(scoreobj.group(tag))
@@ -58,12 +69,27 @@ class ScoringClass:
                     asd[tag] += value[tag]
         return clueword
 
-    @staticmethod
-    def get_clueword():
-        if ScoringClass._clueword == None:
-            ScoringClass._clueword = ScoringClass._opendict_bylist(u"dictlist.txt")
-        return ScoringClass._clueword
+    @classmethod
+    def _make_regulers(cls):
+        if cls._clueword == None:
+            cls.get_clueword()
+        cls._regulers = []
+        for key in cls._clueword:
+            word = re.sub(u"～",u"(?:.*?)",key)
+            cls._regulers.append((re.compile(word),key))
 
+    @classmethod
+    def get_clueword(cls):
+        with wlock:
+            if cls._clueword == None:
+                cls._clueword = cls._opendict_bylist(u"dictlist.txt")
+        return cls._clueword
+    @classmethod
+    def get_regs(cls):
+        with glock:
+            if cls._regulers == None:
+                cls._make_regulers()
+        return cls._regulers
 
 #てすとプログラム
 if __name__ == "__main__":

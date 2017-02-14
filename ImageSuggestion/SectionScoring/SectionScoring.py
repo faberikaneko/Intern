@@ -9,6 +9,9 @@ from ParalellFinder import sentence_paralell_finder as parafinder
 import os
 import threading
 from multiprocessing import Pool
+
+from pyknp import Juman
+
 from imagescore import ImageScore
 from ScoringMod import ScoringClass
 
@@ -24,10 +27,14 @@ logger.addHandler(handler)
 
 #TODO: The Best Score Of Paralell Words
 PARA_GRAPH_SCORE = 0.00
-PARA_TABLE_SCORE = 0.05
+PARA_TABLE_SCORE = 0.00
 PARA_IMAGE_SOCRE = 0.0
 DESC_SENT_SCORE = 0.0
 DESC_WORD_SCORE = 0.0
+
+CHECK_PARALELL = False
+USE_JUMAN = False
+
 TAGLIST = ImageScore.taglist
 
 def text_normalizer(rawtext):
@@ -157,9 +164,22 @@ def scoring_clueword(text):
     """By ScorgingClass, scoring to text:unicode"""
     anslist = []
     #sum score
-    for clueword in ScoringClass.get_clueword().items():
-        if clueword[0] in text:
-            anslist.append(clueword)
+    if USE_JUMAN:
+        juman = Juman()
+        try:
+            noflag = text.split(u"\n",1)[1]
+        except IndexError as e:
+            print(text)
+            raise
+        result = juman.analysis(noflag)
+        for morph in result.mrph_list():
+            for clueword in ScoringClass.get_regs():
+                for matchobj in clueword[0].finditer(morph.midasi):
+                    anslist.append((clueword[1],ScoringClass.get_clueword()[clueword[1]]))
+    else:
+        for clueword in ScoringClass.get_regs():
+            for matchobj in clueword[0].finditer(text):
+                anslist.append((clueword[1],ScoringClass.get_clueword()[clueword[1]]))
     return anslist
 
 def has_description(childs,word):
@@ -193,8 +213,7 @@ def sectionscoring(sections,filename=None):
                       (u" in "+filename) if filename != None else u"")
     )
     allpara = {}
-    renum = re.compile(ur"\d",flags=re.U|re.I)
-    redot = re.compile(ur"・|●|〇|＊",flags=re.U|re.I)
+    renum = re.compile(ur"\p{N}",flags=re.U|re.I)
     for section in sections.childs:
         logger.debug(u"in section:%2d/%2d%s"\
                     %(sections.childs.index(section)+1,len(sections.childs),
@@ -210,12 +229,17 @@ def sectionscoring(sections,filename=None):
 
         #Section Paralells
         numnum = 0
-        dotnum = 0
+        markf = {}
         for sentence in section.childs:
             if renum.match(sentence.text):
                 numnum += 1
-            elif redot.match(sentence.text):
-                dotnum += 1
+            else:
+                if len(sentence.text) >= 1:
+                    if sentence.text[0] in markf:
+                        markf[sentence.text[0]] += 1
+                    else:
+                        markf[sentence.text[0]] = 1
+        dotnum = max(markf.values()) if len(markf) != 0 else 0
         if len(sections.childs) <= dotnum*2 or numnum*2:
             #paralell scores
             section.scores[ImageScore.TABLE] += PARA_TABLE_SCORE*(dotnum+numnum)
@@ -229,7 +253,7 @@ def sectionscoring(sections,filename=None):
                     clueword_score[1].dict[key]\
                     /(1.0 if (key == ImageScore.IMAGE) else 1.0)
 
-        if True:
+        if CHECK_PARALELL:
             for sentence in sentences:
                 #*has Paralell?
                 paras = get_paralell(sentence)

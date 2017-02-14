@@ -1,0 +1,67 @@
+﻿﻿﻿in all, check is 205 / 757
+﻿in all, check is 197 / 713
+﻿in all, check is 197 / 713 = 0.000000
+﻿in all, check is 197 / 713 = 0.276297
+﻿in all, check is 197 / 713 = 27.6%
+﻿in all, check is 205 / 757 = 27.1%
+﻿in all, check is 205 / 757 = 27.1%
+﻿in all, check is 511 / 890 = 57.4%
+﻿in all, check is 323 / 890 = 36.3%
+﻿in all, a,b,c,d = 188,175,189,323
+﻿in all, a,b,c,d = 0,0,377,498
+﻿in all, a,b,c,d = 105,72,272,426
+#limit == 0.05
+﻿in all, a,b,c,d = 188,175,189,323
+      precision = 0.630859
+         recall = 0.648594
+         fvalue = 0.639604
+#limit == 0.01
+﻿in all, a,b,c,d = 105,72,272,426
+      precision = 0.610315
+         recall = 0.855422
+         fvalue = 0.712375
+#limit == 0.005
+﻿in all, a,b,c,d = 81,52,296,446
+      precision = 0.601078
+         recall = 0.895582
+         fvalue = 0.719355
+#limit == 0.0
+﻿﻿in all, a,b,c,d = 81,52,296,446
+      precision = 0.601078
+         recall = 0.895582
+         fvalue = 0.719355
+# use juman parse
+﻿in all, a,b,c,d = 221,241,155,257
+      precision = 0.623786
+         recall = 0.516064
+         fvalue = 0.564835
+# use juman midasi
+﻿in all, a,b,c,d = 212,231,164,267
+      precision = 0.619490
+         recall = 0.536145
+         fvalue = 0.574812
+# dict = 1_20,21_40
+﻿in all, a,b,c,d = 186,193,190,305
+      precision = 0.616162
+         recall = 0.612450
+         fvalue = 0.614300
+# without juman
+﻿in all, a,b,c,d = 59,24,317,474
+      precision = 0.599241
+         recall = 0.951807
+         fvalue = 0.735454
+# limit == 0.05
+﻿in all, a,b,c,d = 135,102,241,396
+      precision = 0.621664
+         recall = 0.795181
+         fvalue = 0.697797
+# limit == 0.01
+﻿in all, a,b,c,d = 74,34,302,464
+      precision = 0.605744
+         recall = 0.931727
+         fvalue = 0.734177
+# PARA_TABLE_SCORE = 0.05
+﻿in all, a,b,c,d = 63,31,313,467
+      precision = 0.598718
+         recall = 0.937751
+         fvalue = 0.730829
