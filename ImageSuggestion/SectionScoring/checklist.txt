@@ -254,3 +254,15 @@ in docs\1_20\, check is 53 / 201
 ﻿in newdicts, a,b,c,d = 16,3,360,495
 ﻿in newdicts, a,b,c,d = 25,8,351,490
 ﻿in newdicts, a,b,c,d = 223,262,153,236
+﻿in newdicts, a,b,c,d = 357,473,19,25
+﻿in newdicts, a,b,c,d = 345,458,31,40
+﻿in newdicts, a,b,c,d = 137,116,239,382
+﻿in newdicts, a,b,c,d = 137,116,239,382
+﻿in newdicts, a,b,c,d = 55,23,321,475
+﻿in newdicts, a,b,c,d = 54,20,322,478
+﻿in newdicts, a,b,c,d = 62,26,314,472
+﻿in newdicts, a,b,c,d = 125,107,251,391
+﻿in newdicts, a,b,c,d = 125,107,251,391
+﻿in newdicts, a,b,c,d = 123,92,253,406
+﻿in newdicts, a,b,c,d = 319,420,57,78
+﻿in newdicts, a,b,c,d = 117,83,259,415

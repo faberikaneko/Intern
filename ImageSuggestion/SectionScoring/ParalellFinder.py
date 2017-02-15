@@ -27,10 +27,7 @@ def select_dependency_structure(line):
     """係り受け構造を抽出します
     """
 
-    # KNP
-    #knp = KNP(option = u"-tab")
-    #global knp
-    #if knp == None:
+    # KNP\
     knp = KNP(option = '-tab -anaphora')
 
     # 解析
@@ -44,6 +41,7 @@ def select_dependency_structure(line):
         mini = MiniBunsetsu(id,norm)
         mini.tag = mini.fstring_to_tag(bnst.fstring)
         mini.tag[u"depend"] = unicode(bnst.dpndtype)
+        mini.morphs = bnst.mrph_list().mrph_list()
         miniList[id] = mini
 
     for bnst in bnst_list:

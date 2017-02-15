@@ -1,3 +1,5 @@
 ﻿dicts\1_20_all_new.txt
 dicts\21_40_all_new.txt
 dicts\41_60_all_new.txt
+dicts\61_80_all_new.txt
+dicts\81_100_all_new.txt

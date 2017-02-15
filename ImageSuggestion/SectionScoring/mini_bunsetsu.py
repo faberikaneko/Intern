@@ -14,6 +14,7 @@ class MiniBunsetsu:
         self.parent = parent
         self.childList = []
         self.tag = {}
+        self.morphs = []
     def isparalell(self):
         if self.tag.get(u"depend") == (u"P" or u"A"):
             return self.tag.get(u"体言")

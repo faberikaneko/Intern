@@ -149,3 +149,52 @@
          recall = 0.473896
          fvalue = 0.532131
 # type ignore, limit == 0.05, dict = 1_20,21_40,41_60
+﻿in all, a,b,c,d = 137,116,239,382
+      precision = 0.615137
+         recall = 0.767068
+         fvalue = 0.682752
+# type ignore, limit == 0.05, dict = 1_20,21_40,41_60
+﻿in all, a,b,c,d = 137,116,239,382
+      precision = 0.615137
+         recall = 0.767068
+         fvalue = 0.682752
+# type ignore, limit == 0.01, dict = 1_20,21_40,41_60
+﻿in all, a,b,c,d = 55,23,321,475
+      precision = 0.596734
+         recall = 0.953815
+         fvalue = 0.734158
+# type ignore, limit == 0.01, dict = 1_20,21_40,41_60,SECTION_PARELEL = 0.01
+﻿in all, a,b,c,d = 54,20,322,478
+      precision = 0.597500
+         recall = 0.959839
+         fvalue = 0.736518
+# type ignore, limit == 0.01, dict = 1_20,21_40,41_60
+﻿in all, a,b,c,d = 55,23,321,475
+      precision = 0.596734
+         recall = 0.953815
+         fvalue = 0.734158
+# type ignore, limit == 0.01, dict = 1_20,21_40,41_60,61_80
+﻿in all, a,b,c,d = 62,26,314,472
+      precision = 0.600509
+         recall = 0.947791
+         fvalue = 0.735202
+# type ignore, limit == 0.05, dict = 1_20,21_40,41_60,61_80
+﻿in all, a,b,c,d = 125,107,251,391
+      precision = 0.609034
+         recall = 0.785141
+         fvalue = 0.685965
+# type ignore, limit == 0.01, dict = 1_20,21_40,41_60,61_80,SECTION_PARELEL = 0.01
+﻿in all, a,b,c,d = 125,107,251,391
+      precision = 0.609034
+         recall = 0.785141
+         fvalue = 0.685965
+# type ignore, limit == 0.01, dict = 1_20,21_40,41_60,61_80,SECTION_PARELEL = 0.01
+﻿in all, a,b,c,d = 123,92,253,406
+      precision = 0.616085
+         recall = 0.815261
+         fvalue = 0.701815
+# type ignore, limit == 0.01, dict = 1_20,21_40,41_60,61_80,SECTION_PARELEL = 0.01
+﻿in all, a,b,c,d = 117,83,259,415
+      precision = 0.615727
+         recall = 0.833333
+         fvalue = 0.708191

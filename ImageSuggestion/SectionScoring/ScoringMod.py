@@ -69,4 +69,24 @@ class ScoringClass:
 
 #てすとプログラム
 if __name__ == "__main__":
-    pass
+    d = ScoringClass.get_clueword()
+    with codecs.open("dictdata.txt","w",encoding='utf-8-sig') as file:
+        file.write(u'{\n\t')
+        for i,item in enumerate(d.items()):
+            if i != 0:
+                file.write(u'\n\t')
+            file.write(u'u\''+item[0]+u'\':[')
+            for j,tag in enumerate(ImageScore.taglist):
+                if j != 0:
+                    file.write(u',')
+                file.write(unicode(item[1][tag]))
+            file.write(u'],')
+        file.write(u'\n}')
+
+    with codecs.open('dictdata.txt','r',encoding='utf-8-sig') as file:
+        dd = eval(file.read())
+        a = [0.,0.,0.,0.]
+        for val in dd.values():
+            for i in range(4):
+                a[i] += val[i]
+        print(a)
