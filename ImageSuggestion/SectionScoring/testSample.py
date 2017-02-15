@@ -19,7 +19,7 @@ logger.setLevel(DEBUG)
 logger.addHandler(handler)
 
 global SCORE_LIMIT
-SCORE_LIMIT = 0.0
+SCORE_LIMIT = 0.05
 IGNORE_TYPE = True
 
 def testscoring(inputfilename,outputfilename,answer):

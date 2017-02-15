@@ -134,3 +134,18 @@
          recall = 0.979920
          fvalue = 0.737160
 # type ignore, limit == 0.0, dict = 1_20,21_40,41_60
+﻿in all, a,b,c,d = 16,3,360,495
+      precision = 0.578947
+         recall = 0.993976
+         fvalue = 0.731707
+# type ignore, limit == 0.0, dict = 1_20,21_40,41_60(refresh)
+﻿in all, a,b,c,d = 25,8,351,490
+      precision = 0.582640
+         recall = 0.983936
+         fvalue = 0.731889
+# type ignore, limit == 0.1, dict = 1_20,21_40,41_60
+﻿in all, a,b,c,d = 223,262,153,236
+      precision = 0.606684
+         recall = 0.473896
+         fvalue = 0.532131
+# type ignore, limit == 0.05, dict = 1_20,21_40,41_60

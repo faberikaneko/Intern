@@ -181,6 +181,9 @@ def scoring_clueword(text):
                 if morph.genkei == clueword[0]:
                     anslist.append(clueword)
                     break
+            else:
+                continue
+            break
     else:
         for clueword in d:
             if clueword[0] in text:
