@@ -27,13 +27,13 @@ logger.addHandler(handler)
 
 #TODO: The Best Score Of Paralell Words
 PARA_GRAPH_SCORE = 0.00
-PARA_TABLE_SCORE = 0.01
+PARA_TABLE_SCORE = 0.00
 PARA_IMAGE_SOCRE = 0.0
 DESC_SENT_SCORE = 0.0
 DESC_WORD_SCORE = 0.0
 
 CHECK_PARALELL = False
-USE_JUMAN = False
+USE_JUMAN = True
 
 TAGLIST = ImageScore.taglist
 
@@ -166,20 +166,25 @@ def scoring_clueword(text):
     #sum score
     if USE_JUMAN:
         juman = Juman()
+        d = ScoringClass.get_clueword()
         try:
             noflag = text.split(u"\n",1)[1]
         except IndexError as e:
             print(text)
             raise
-        result = juman.analysis(noflag)
-        for morph in result.mrph_list():
-            for clueword in ScoringClass.get_regs():
-                for matchobj in clueword[0].finditer(morph.midasi):
-                    anslist.append((clueword[1],ScoringClass.get_clueword()[clueword[1]]))
+        morphlist = []
+        for line in noflag.split():
+            result = juman.analysis(line.strip())
+            morphlist.extend(result.mrph_list())
+        for clueword in d.items():
+            for morph in morphlist:
+                if morph.genkei == clueword[0]:
+                    anslist.append(clueword)
+                    break
     else:
-        for clueword in ScoringClass.get_regs():
-            for matchobj in clueword[0].finditer(text):
-                anslist.append((clueword[1],ScoringClass.get_clueword()[clueword[1]]))
+        for clueword in d:
+            if clueword[0] in text:
+                anslist.append(clueword)
     return anslist
 
 def has_description(childs,word):
@@ -214,10 +219,13 @@ def sectionscoring(sections,filename=None):
     )
     allpara = {}
     renum = re.compile(ur"\p{N}",flags=re.U|re.I)
+    sectionlength = len(sections.childs)
     for section in sections.childs:
-        logger.debug(u"in section:%2d/%2d%s"\
-                    %(sections.childs.index(section)+1,len(sections.childs),
-                      ((u" in "+filename) if (filename != None) else u"")))
+        logmessage = u"in section:%2d/%2d"%\
+            (sections.childs.index(section)+1,sectionlength)
+        if filename:
+            logmessage += u" in "+filename
+        logger.debug(logmessage)
         #Section(sptext?unicode):list(sptext?unicode)
         sentences = split_sentences(section)
         section.childs = sentences
@@ -242,7 +250,8 @@ def sectionscoring(sections,filename=None):
         dotnum = max(markf.values()) if len(markf) != 0 else 0
         if dotnum >= 3 or numnum >= 2:
             #paralell scores
-            section.scores[ImageScore.TABLE] += PARA_TABLE_SCORE*(dotnum+numnum)
+            secparascore = PARA_TABLE_SCORE*(dotnum+numnum)
+            section.scores[ImageScore.TABLE] += secparascore
         
         #*has ClueWord and/or keyExp?
         clueword_scores = scoring_clueword(section.text)
@@ -348,16 +357,16 @@ def filescoring(fromfilename,tofilename):
 
 if __name__==u"__main__":
     MAXTHREAD = 8
-    p = Pool(MAXTHREAD)
+    #p = Pool(MAXTHREAD)
     for dir in os.listdir(u"datas"):
         if not u"-answer" in dir:
             filename,exe = os.path.splitext(dir)
             inputfilename = os.path.join(ur"datas\\",filename+exe)
             outputfilename = os.path.join(ur"datas\\",filename+u"-answer"+exe)
-            p.apply_async(func=filescoring,
-                          args=(inputfilename,outputfilename),
-            )
+            #p.apply_async(func=filescoring,
+            #              args=(inputfilename,outputfilename),
+            #)
             #section_scoring(inputfilename,outputfilename)
-    p.close()
-    p.join()
-    #section_scoring(u"sample.txt",u"sample-ans.txt")
+    #p.close()
+    #p.join()
+    filescoring(u"sample.txt",u"sample-ans.txt")

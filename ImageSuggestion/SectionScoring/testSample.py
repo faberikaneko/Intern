@@ -19,7 +19,8 @@ logger.setLevel(DEBUG)
 logger.addHandler(handler)
 
 global SCORE_LIMIT
-SCORE_LIMIT = 0.01
+SCORE_LIMIT = 0.0
+IGNORE_TYPE = True
 
 def testscoring(inputfilename,outputfilename,answer):
     sections = readsections(inputfilename)
@@ -69,8 +70,12 @@ def testscoring(inputfilename,outputfilename,answer):
                         outfile.write(u"BAD, pattern C\n")
                         c += 1
                     else:
-                        outfile.write(u"good, pattern D\n")
-                        d += 1
+                        if IGNORE_TYPE or teacherscore[sortscore[0][0]] == 1:
+                            outfile.write(u"good, pattern D\n")
+                            d += 1
+                        else:
+                            outfile.write(u"type missmatch C\n")
+                            c += 1
     outfile.write(u"\n\na,b,c,d = %d,%d,%d,%d\n"%(a,b,c,d))
     precision = (float(d)/(c+d)) if c+d != 0 else 0
     recall = (float(d)/(b+d)) if b+d != 0 else 0

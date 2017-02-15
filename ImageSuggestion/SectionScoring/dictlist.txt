@@ -1,2 +1,3 @@
-﻿dicts\1_20_all.txt
-dicts\21_40_all.txt
+﻿dicts\1_20_all_new.txt
+dicts\21_40_all_new.txt
+dicts\41_60_all_new.txt

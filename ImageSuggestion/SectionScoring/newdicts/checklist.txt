@@ -65,15 +65,72 @@
       precision = 0.598718
          recall = 0.937751
          fvalue = 0.730829
-﻿in all, a,b,c,d = 74,34,302,464
-      precision = 0.605744
-         recall = 0.931727
-         fvalue = 0.734177
 ﻿in all, a,b,c,d = 73,31,303,467
       precision = 0.606494
          recall = 0.937751
          fvalue = 0.736593
-﻿in all, a,b,c,d = 73,31,303,467
-      precision = 0.606494
-         recall = 0.937751
-         fvalue = 0.736593
+# PARA_TABLE_SCORE = 0.0
+# new dict (for juman genkei)
+﻿in all, a,b,c,d = 37,12,339,486
+      precision = 0.589091
+         recall = 0.975904
+         fvalue = 0.734694
+# limit == 0.0
+﻿in all, a,b,c,d = 24,3,352,495
+      precision = 0.584416
+         recall = 0.993976
+         fvalue = 0.736059
+# with Juman
+﻿in all, a,b,c,d = 120,140,256,358
+      precision = 0.583062
+         recall = 0.718876
+         fvalue = 0.643885
+﻿in all, a,b,c,d = 103,128,273,370
+      precision = 0.575428
+         recall = 0.742972
+         fvalue = 0.648554
+﻿in all, a,b,c,d = 110,133,266,365
+      precision = 0.578447
+         recall = 0.732932
+         fvalue = 0.646590
+﻿in all, a,b,c,d = 114,136,262,362
+      precision = 0.580128
+         recall = 0.726908
+         fvalue = 0.645276
+﻿in all, a,b,c,d = 114,136,262,362
+      precision = 0.580128
+         recall = 0.726908
+         fvalue = 0.645276
+﻿in all, a,b,c,d = 114,136,262,362
+      precision = 0.580128
+         recall = 0.726908
+         fvalue = 0.645276
+﻿in all, a,b,c,d = 22,2,354,496
+      precision = 0.583529
+         recall = 0.995984
+         fvalue = 0.735905
+﻿in all, a,b,c,d = 22,2,725,125
+      precision = 0.147059
+         recall = 0.984252
+         fvalue = 0.255885
+#
+﻿in all, a,b,c,d = 38,10,613,213
+      precision = 0.257869
+         recall = 0.955157
+         fvalue = 0.406101
+# one hit only
+﻿in all, a,b,c,d = 38,10,618,208
+      precision = 0.251816
+         recall = 0.954128
+         fvalue = 0.398467
+# type ignore, limit == 0.1
+﻿in all, a,b,c,d = 233,276,143,222
+      precision = 0.608219
+         recall = 0.445783
+         fvalue = 0.514484
+# type ignore, limit == 0.0
+﻿in all, a,b,c,d = 38,10,338,488
+      precision = 0.590799
+         recall = 0.979920
+         fvalue = 0.737160
+# type ignore, limit == 0.0, dict = 1_20,21_40,41_60

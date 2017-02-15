@@ -1,7 +1,4 @@
 ﻿# -*- encoding:utf-8-sig -*-
-
-from __future__ import unicode_literals
-
 import sys
 from os import listdir
 from codecs import open
