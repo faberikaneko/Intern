@@ -1,4 +1,4 @@
-﻿# -*- encoding:utf-8-sig -*-
+﻿# -*- encoding:utf-8 -*-
 import sys
 from os import listdir
 from codecs import open

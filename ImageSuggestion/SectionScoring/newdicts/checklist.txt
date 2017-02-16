@@ -198,3 +198,8 @@
       precision = 0.615727
          recall = 0.833333
          fvalue = 0.708191
+# type ignore, limit == 0.01, dict = 1_100,SECTION_PARELEL = 0.01
+﻿in all, a,b,c,d = 90,44,286,454
+      precision = 0.613514
+         recall = 0.911647
+         fvalue = 0.733441
