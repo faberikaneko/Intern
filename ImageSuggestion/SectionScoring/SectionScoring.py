@@ -11,6 +11,7 @@ import threading
 from multiprocessing import Pool
 
 from pyknp import Juman
+import zenhan
 
 from imagescore import ImageScore
 from ScoringMod import ScoringClass
@@ -27,10 +28,10 @@ logger.addHandler(handler)
 
 #TODO: The Best Score Of Paralell Words
 SCORE={
-    'PARA_SENTENCE':0.02,
-    'PARA_GRAPH':0.00,
+    'PARA_SENTENCE':0.05,
+    'PARA_GRAPH':0.01,
     'PARA_TABLE':0.01,
-    'PARA_IMAGE':0.0,
+    'PARA_IMAGE':0.01,
     'DESC_SENT':0.0,
     'DESC_WORD':0.0,
 }
@@ -50,7 +51,7 @@ def text_normalizer(rawtext):
     # -> ！”＃＄％＆’＝～｜？＿‐￥・／；：＋＊
     replace_halfres = [
         #http
-        (ur"https?://[\w/:%#\$&\?\(\)~\.=\+\-]+",u"(URLS)"),
+        (ur"https?://[\w/:%#\$&\?\(\)~\.=\+\-]+",u"（URLS）"),
         #return
         (ur"\r\n|\r|\n",u"\n"),
         #piriod and comma
@@ -90,10 +91,12 @@ def text_normalizer(rawtext):
         #blank
         (ur"\p{Zs}",u""),
     ]
+
     for replace_halfre in replace_halfres:
         fromre = replace_halfre[0]
         tore = replace_halfre[1]
         normalized_text = re.sub(fromre,tore,normalized_text)
+    normalized_text = zenhan.h2z(normalized_text)
 
     #encode escape
     try:
@@ -167,13 +170,15 @@ def scoring_clueword(section):
     d = ScoringClass.get_clueword()
     morphlist = set()
     for sentence in section.childs:
-        for mini in sentence.childs:
-            morphlist = morphlist | set(mini.morphs)
+        morphlist |= set(map(lambda m:m.genkei,sentence.morphs))
     for morph in morphlist:
         for clueword in d.items():
-            if morph.genkei == clueword[0]:
+            if morph == clueword[0]:
                 anslist.append(clueword)
                 break
+    for i in xrange(len(anslist)):
+        if anslist[i] in anslist[i+1:]:
+            raise Exception()
     return anslist
 
 def has_description(childs,word):
@@ -186,7 +191,7 @@ def has_description(childs,word):
 def get_section_paralells(section):
     numnum = 0
     markf = {}
-    renum = re.compile(ur"\p{N}",flags=re.U|re.I)
+    renum = re.compile(ur"\p{N}+\.|\(\p{N}+\)",flags=re.U|re.I)
     for sentence in section.childs:
         if renum.match(sentence.text):
             numnum += 1
@@ -252,38 +257,50 @@ def sectionscoring(sections,filename=None):
         #Section Paralells
         get_section_paralells(section)
 
-        for sentence in sentences:
-            #*has Paralell?
-            paras = get_paralell(sentence)
-            if len(paras) > 0:
-                section.para_words.extend(paras)
-                wordset = reduce(lambda a,b:a+b,[b[0].keys() for b in paras])
-                for word in wordset:
-                    if word.word in allpara:
-                        allpara[word.word].append(section)
-                    else:
-                        allpara[word.word] = [section]
-                for para in paras:
-                    #is about numerical? sentential? or example?
-                    desc_bunsetsus = reduce(lambda a,b:a+b,para[0].values())
-                    if not len(desc_bunsetsus) > 0:
-                        section.scores[ImageScore.IMAGE] += SCORE['PARA_IMAGE']*len(para[0])
-                    else:
-                        if is_numerical(para):
-                            section.scores[ImageScore.GRAPH] += SCORE['PARA_GRAPH']*len(para[0])
-                        else:
-                            section.scores[ImageScore.TABLE] += SCORE['PARA_TABLE']*len(para[0])
+        hasscore = reduce(lambda a,b:a+b,SCORE.values()) > 0
 
-            #*is Description about paralell word?
-            for para in allpara:
-                if has_description(sentence.childs,para)\
-                        or re.match(para,sentence.childs[0].word if len(sentence.childs) > 0 else u""):
-                    section.descriptions.append((para,sentence))
-                    section.scores[ImageScore.TABLE] += SCORE['DESC_SENT']
-                    for sec in allpara[para]:
-                        if not sec == section:
-                            sec.descriptions.append((para,sentence))
-                            sec.scores[ImageScore.TABLE] += SCORE['DESC_WORD']
+        for sentence in sentences:
+            if hasscore:
+                #*has Paralell?
+                sentence.morphs = []
+                paras = get_paralell(sentence)
+                if len(paras) > 0:
+                    section.para_words.extend(paras)
+                    wordset = reduce(lambda a,b:a+b,[b[0].keys() for b in paras])
+                    for word in wordset:
+                        if word.word in allpara:
+                            allpara[word.word].append(section)
+                        else:
+                            allpara[word.word] = [section]
+                    for para in paras:
+                        #is about numerical? sentential? or example?
+                        desc_bunsetsus = reduce(lambda a,b:a+b,para[0].values())
+                        if not len(desc_bunsetsus) > 0:
+                            section.scores[ImageScore.IMAGE] += SCORE['PARA_IMAGE']*len(para[0])
+                        else:
+                            if is_numerical(para):
+                                section.scores[ImageScore.GRAPH] += SCORE['PARA_GRAPH']*len(para[0])
+                            else:
+                                section.scores[ImageScore.TABLE] += SCORE['PARA_TABLE']*len(para[0])
+
+                #*is Description about paralell word?
+                for para in allpara:
+                    if has_description(sentence.childs,para)\
+                            or re.match(para,sentence.childs[0].word if len(sentence.childs) > 0 else u""):
+                        section.descriptions.append((para,sentence))
+                        section.scores[ImageScore.TABLE] += SCORE['DESC_SENT']
+                        for sec in allpara[para]:
+                            if not sec == section:
+                                sec.descriptions.append((para,sentence))
+                                sec.scores[ImageScore.TABLE] += SCORE['DESC_WORD']
+                for mini in sentence.childs:
+                    sentence.morphs.extend(mini.morphs)
+            else:
+                #no paralell score
+                juman = Juman()
+                result = juman.analysis(sentence.text)
+                sentence.morphs = result.mrph_list()
+
         
         #*has ClueWord and/or keyExp?
         clueword_scores = scoring_clueword(section)

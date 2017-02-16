@@ -22,6 +22,20 @@ global SCORE_LIMIT
 SCORE_LIMIT = 0.05
 IGNORE_TYPE = True
 
+def writefile(section,type):
+    abcddir = u'abcd\\'
+    filename = os.path.join(abcddir,type+u'.txt')
+    if not os.path.exists(abcddir):
+        os.mkdir(abcddir)
+    with codecs.open(filename,mode='a',encoding='utf-8-sig') as file:
+        file.write(section.text+u'\n')
+        file.write(u"clueword:\n")
+        if len(section.cluewords) > 0:
+            file.write(u", ".join(section.cluewords)+u"\n")
+        for key in ImageScore.taglist:
+            file.write(key+u" : "+unicode(section.scores.get(key))+u"\n")
+        file.write(u'\n')
+
 def testscoring(inputfilename,outputfilename,answer):
     sections = readsections(inputfilename)
     anssections = sectionscoring(sections,inputfilename)
@@ -62,20 +76,25 @@ def testscoring(inputfilename,outputfilename,answer):
                     if count == 0:#A:nono
                         outfile.write(u"no, pattern A\n")
                         a += 1
+                        writefile(section,u'A')
                     else:
                         outfile.write(u"BAD, pattern B\n")
                         b += 1
+                        writefile(section,u'B')
                 else:
                     if count == 0:
                         outfile.write(u"BAD, pattern C\n")
                         c += 1
+                        writefile(section,u'C')
                     else:
                         if IGNORE_TYPE or teacherscore[sortscore[0][0]] == 1:
                             outfile.write(u"good, pattern D\n")
                             d += 1
+                            writefile(section,u'D')
                         else:
                             outfile.write(u"type missmatch C\n")
                             c += 1
+                            writefile(section,u'C')
     outfile.write(u"\n\na,b,c,d = %d,%d,%d,%d\n"%(a,b,c,d))
     precision = (float(d)/(c+d)) if c+d != 0 else 0
     recall = (float(d)/(b+d)) if b+d != 0 else 0
