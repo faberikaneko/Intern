@@ -23,13 +23,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="count_checkdata.py" />
-    <Compile Include="covariance_checker.py">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="imagescore.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="katachi_diviner.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="mini_bunsetsu.py" />
@@ -38,6 +32,9 @@
     <Compile Include="SectionScoring.py" />
     <Compile Include="sptext.py" />
     <Compile Include="testSample.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="tfscorer.py">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

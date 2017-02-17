@@ -13,40 +13,53 @@ dirnames = [
 ]
 
 def count_checkdata(dirname,outputfilename):
-    a,b,c,d = 0,0,0,0
-    ma = re.compile(u"a,b,c,d = (?P<a>.*),(?P<b>.*),(?P<c>.*),(?P<d>.*)\n")
+    types = [
+        u'True-Negative',
+        u'False-Negative',
+        u'False-Positive',
+        u'True-Positive'
+    ]
+    typecount = dict.fromkeys(types,0)
+    res = []
+    for type_ in types:
+        res.append(re.compile(type_+u':(.*)'))
     for dir in os.listdir(dirname):
         if u"-checker" in dir:
-            with codecs.open(dirname+u"\\"+dir,mode=u"r",encoding=u"utf-8-sig") as file:
-                matchobj = ma.match(file.readlines()[-4])
-                a += int(matchobj.group(u"a"))
-                b += int(matchobj.group(u"b"))
-                c += int(matchobj.group(u"c"))
-                d += int(matchobj.group(u"d"))
-    with codecs.open(outputfilename,"a","utf-8-sig") as file:
-        file.write(u"in "+dirname+u", a,b,c,d = %d,%d,%d,%d\n"%(a,b,c,d))
-    return a,b,c,d
+            with codecs.open(dirname+u"\\"+dir,u"r",encoding=u"utf-8-sig") as file:
+                text = file.read()
+                for typere,type_ in zip(res,types):
+                    typecount[type_] += float(typere.search(text).group(1))
+    return typecount
 
 if __name__ == "__main__":
     point = 0
     alls = 0
     argv = sys.argv
-    outdirname = u"no_hiragana_dicts_0.0005_with_paraSentence"
+    outdirname = u"lineword_dicts_0.0005"
     if not os.path.exists(outdirname):
         os.mkdir(outdirname)
     for dirname in dirnames:
         #with codecs.open(u"dictlist.txt",u"w","utf-8-sig") as file:
         #    file.write(u"\n".join([l[1] for l in dirnames if l is not dirname]))
         test_samples(dirname[0],outdirname)
-    a,b,c,d = count_checkdata(outdirname,u"checklist.txt")
+        pass
+    typecount = count_checkdata(outdirname,u"checklist.txt")
     with codecs.open(outdirname+"\\checklist.txt","a","utf-8-sig") as file:
-        file.write(u"in all, a,b,c,d = %d,%d,%d,%d\n"%(a,b,c,d))
-        precision = (float(d)/(c+d))if c+d != 0 else 0.0
-        recall = (float(d)/(b+d))if b+d != 0 else 0.0
-        if (precision + recall) != 0:
-            fvalue = 2.0*precision*recall/(precision+recall)
+        file.write(u"in all:\n")
+        for type_,count in typecount.iteritems():
+            file.write(type_+u' : '+unicode(count)+u'\n')
+        if typecount[u'True-Positive'] == 0:
+            precision = 0
         else:
-            fvalue = 0.0
+            precision = typecount[u'True-Positive'] / (typecount[u'True-Positive']+typecount[u'False-Positive'])
+        if typecount[u'True-Positive'] + typecount[u'False-Negative'] == 0:
+            recall = 0
+        else:
+            recall = typecount[u'True-Positive'] / (typecount[u'True-Positive']+typecount[u'False-Negative'])
+        if precision + recall == 0:
+            fvalue = 0
+        else:
+            fvalue = (2.0*precision*recall) / (precision+recall)
         file.write(u"      precision = %f\n"%(precision))
         file.write(u"         recall = %f\n"%(recall))
         file.write(u"         fvalue = %f\n"%(fvalue))

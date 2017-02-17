@@ -1,0 +1,24 @@
+﻿in all:
+False-Negative : 14
+True-Positive : 486
+True-Negative : 33
+False-Positive : 345
+      precision = 0.000000
+         recall = 0.000000
+         fvalue = 0.000000
+﻿in all:
+False-Negative : 14.0
+True-Positive : 486.0
+True-Negative : 33.0
+False-Positive : 345.0
+      precision = 0.584838
+         recall = 0.972000
+         fvalue = 0.730278
+﻿in all:
+False-Negative : 418.0
+True-Positive : 82.0
+True-Negative : 320.0
+False-Positive : 58.0
+      precision = 0.585714
+         recall = 0.164000
+         fvalue = 0.256250

@@ -288,3 +288,4 @@ in docs\1_20\, check is 53 / 201
 ﻿in no_hiragana_dicts_0.0005, a,b,c,d = 251,308,127,192
 ﻿in no_hiragana_dicts_0.0005_with_paraSentence, a,b,c,d = 251,308,127,192
 ﻿in no_hiragana_dicts_0.0005_with_paraSentence, a,b,c,d = 250,306,128,194
+﻿in lineword_dicts_0.0005, a,b,c,d = 33,14,345,486

@@ -1,6 +1,7 @@
 ﻿# -*- encoding:utf-8 -*-
 
-from SectionScoring import filescoring,readsections,sectionscoring,writescore
+from SectionScoring import filescoring,readsections,sectionscoring
+from SectionScoring import writesection,writescore
 from Queue import Queue
 from threading import Thread
 import os
@@ -28,32 +29,29 @@ def writefile(section,type):
     if not os.path.exists(abcddir):
         os.mkdir(abcddir)
     with codecs.open(filename,mode='a',encoding='utf-8-sig') as file:
-        file.write(section.text+u'\n')
-        file.write(u"clueword:\n")
-        if len(section.cluewords) > 0:
-            file.write(u", ".join(section.cluewords)+u"\n")
-        for key in ImageScore.taglist:
-            file.write(key+u" : "+unicode(section.scores.get(key))+u"\n")
-        file.write(u'\n')
+        file.write(writesection(section)+u'\n')
 
-def testscoring(inputfilename,outputfilename,answer):
+def testscoring(inputfilename,outputfilename):
+    typemessage={
+        u'TN':u'True-Negative',
+        u'FN':u'False-Negative',
+        u'FP':u'False-Positive',
+        u'TP':u'True-Positive'
+    }
     sections = readsections(inputfilename)
     anssections = sectionscoring(sections,inputfilename)
-    writescore(sections,answer)
     sorted_section = sorted(anssections.childs,key=lambda section:section.score,reverse=True)
     flags = re.compile(ur"Ｆｌａｇ：：(?<image>.)(?<table>.)(?<graph>.)(?<flow>.)")
     outfile = codecs.open(outputfilename,mode="w",encoding="utf-8-sig")
-    a,b,c,d = 0,0,0,0
+    typecount = dict.fromkeys([u'TN',u'FN',u'FP',u'TP'],0)
     startflag = True
-    ignorecount = 0
+    ignorecount = 0.0
     for section in sorted_section:
         if startflag:
             startflag = False
         else:
-            outfile.write(u"\n")
-        outfile.write(section.text+u"\n")
-        for key in ImageScore.taglist:
-            outfile.write(key+u" : "+unicode(section.scores.get(key))+u"\n")
+            outfile.write(u"\n\n")
+        outfile.write(writesection(section))
         if not len(section.childs) > 0:
             outfile.write(u"wrong file\n")
             pass
@@ -74,33 +72,36 @@ def testscoring(inputfilename,outputfilename,answer):
                 global SCORE_LIMIT
                 if section.score <= SCORE_LIMIT:
                     if count == 0:#A:nono
-                        outfile.write(u"no, pattern A\n")
-                        a += 1
-                        writefile(section,u'A')
+                        type_ = u'TN'
                     else:
-                        outfile.write(u"BAD, pattern B\n")
-                        b += 1
-                        writefile(section,u'B')
+                        type_ = u'FN'
                 else:
                     if count == 0:
-                        outfile.write(u"BAD, pattern C\n")
-                        c += 1
-                        writefile(section,u'C')
+                        type_ = u'FP'
                     else:
                         if IGNORE_TYPE or teacherscore[sortscore[0][0]] == 1:
-                            outfile.write(u"good, pattern D\n")
-                            d += 1
-                            writefile(section,u'D')
+                            type_ = u'TP'
                         else:
-                            outfile.write(u"type missmatch C\n")
-                            c += 1
-                            writefile(section,u'C')
-    outfile.write(u"\n\na,b,c,d = %d,%d,%d,%d\n"%(a,b,c,d))
-    precision = (float(d)/(c+d)) if c+d != 0 else 0
-    recall = (float(d)/(b+d)) if b+d != 0 else 0
+                            type_ = u'FP'
+                outfile.write(typemessage[type_])
+                typecount[type_] += 1.0
+    outfile.write(u'\n\n')
+    for key,value in typecount.iteritems():
+        outfile.write(u'{:s}:{:d}\n'.format(typemessage[key],int(value)))
+    if typecount[u'TP'] == 0:
+        precision = 0
+    else:
+        precision = typecount[u'TP'] / (typecount[u'TP']+typecount[u'FP'])
+    if typecount[u'TP'] == 0:
+        recall = 0
+    else:
+        recall = typecount[u'TP'] / (typecount[u'TP']+typecount[u'FN'])
+    if precision + recall == 0:
+        fvalue = 0
+    else:
+        fvalue = (2.0*precision*recall)/(precision+recall)
     outfile.write(u"precision = %f\n"%(precision))
     outfile.write(u"recall = %f\n"%(recall))
-    fvalue = (2.0*precision*recall/(precision+recall)) if precision+recall != 0 else 0
     outfile.write(u"fvalue = %f"%(fvalue))
     outfile.close()
     logger.debug(u"finish %s"%(inputfilename))
@@ -109,7 +110,7 @@ def worker():
     while True:
         t = q.get()
         try:
-            testscoring(t[0],t[1],t[2])
+            testscoring(t[0],t[1])
         except Exception as e:
             with codecs.open(u"error.txt",u"a",u"utf-8-sig") as file:
                 file.write(u"in %s,\n"%t[0])
@@ -131,8 +132,8 @@ def test_samples(dirname,outdirname):
             filename,exe = os.path.splitext(dir)
             inputfilename = os.path.join(dirname,filename+exe)
             outputfilename = os.path.join(outdirname,filename+u"-checker"+exe)
-            answer = os.path.join(outdirname,filename+u"-answer"+exe)
-            q.put((inputfilename,outputfilename,answer))
+            #answer = os.path.join(outdirname,filename+u"-answer"+exe)
+            q.put((inputfilename,outputfilename))
             #testscoring(inputfilename,outputfilename,answer)
     q.join()
     #testscoring(ur"docs\\1_20.txt",u"anss\\1_20_check.txt",u"anss\\1_20_answer.txt")
