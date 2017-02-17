@@ -1,0 +1,5 @@
+﻿# no_shijigo_limit:0.001
+in all, a,b,c,d = 322,409,56,91
+      precision = 0.619048
+         recall = 0.182000
+         fvalue = 0.281298

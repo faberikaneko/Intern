@@ -234,3 +234,12 @@
          recall = 0.779116
          fvalue = 0.687334
 # type ignore, limit == 0.01, dict = 1_100,Parallel = 0.01,Sent_Para = 0.05
+﻿in all, a,b,c,d = 378,500,0,0
+      precision = 0.000000
+         recall = 0.000000
+         fvalue = 0.000000
+#div section length limit == 0.001
+﻿in all, a,b,c,d = 334,426,44,74
+      precision = 0.627119
+         recall = 0.148000
+         fvalue = 0.239482

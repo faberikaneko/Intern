@@ -1,4 +1,4 @@
-﻿# -*- encoding:utf-8-sig -*-
+﻿# -*- encoding:utf-8 -*-
 
 from SectionScoring import filescoring,readsections,sectionscoring,writescore
 from Queue import Queue
@@ -19,7 +19,7 @@ logger.setLevel(DEBUG)
 logger.addHandler(handler)
 
 global SCORE_LIMIT
-SCORE_LIMIT = 0.05
+SCORE_LIMIT = 0.0005
 IGNORE_TYPE = True
 
 def writefile(section,type):
@@ -41,7 +41,7 @@ def testscoring(inputfilename,outputfilename,answer):
     anssections = sectionscoring(sections,inputfilename)
     writescore(sections,answer)
     sorted_section = sorted(anssections.childs,key=lambda section:section.score,reverse=True)
-    flags = re.compile(ur"Flag：：(?<image>\d)(?<table>\d)(?<graph>\d)(?<flow>\d)")
+    flags = re.compile(ur"Ｆｌａｇ：：(?<image>.)(?<table>.)(?<graph>.)(?<flow>.)")
     outfile = codecs.open(outputfilename,mode="w",encoding="utf-8-sig")
     a,b,c,d = 0,0,0,0
     startflag = True

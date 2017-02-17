@@ -1,0 +1,5 @@
+﻿# no_hiragana_no_limit
+in all, a,b,c,d = 32,13,346,487
+      precision = 0.584634
+         recall = 0.974000
+         fvalue = 0.730683

@@ -31,7 +31,9 @@ if __name__ == "__main__":
     point = 0
     alls = 0
     argv = sys.argv
-    outdirname = u"newdicts"
+    outdirname = u"no_hiragana_dicts_0.0005_with_paraSentence"
+    if not os.path.exists(outdirname):
+        os.mkdir(outdirname)
     for dirname in dirnames:
         #with codecs.open(u"dictlist.txt",u"w","utf-8-sig") as file:
         #    file.write(u"\n".join([l[1] for l in dirnames if l is not dirname]))

@@ -275,3 +275,16 @@ in docs\1_20\, check is 53 / 201
 ﻿in newdicts, a,b,c,d = 22,4,354,494
 ﻿in newdicts, a,b,c,d = 53,25,323,473
 ﻿in newdicts, a,b,c,d = 133,110,243,388
+﻿in newdicts, a,b,c,d = 0,0,0,0
+﻿in newdicts, a,b,c,d = 378,500,0,0
+﻿in newdicts, a,b,c,d = 334,426,44,74
+﻿in 216dicts, a,b,c,d = 322,409,56,91
+﻿in no_hiragana_dicts, a,b,c,d = 342,445,36,55
+﻿in no_hiragana_dicts_no_limit, a,b,c,d = 32,13,346,487
+﻿in no_shijigo_dicts_no_limit, a,b,c,d = 12,1,366,499
+﻿in no_shijigo_dicts_0.0005, a,b,c,d = 167,190,211,310
+﻿in no_hiragana_dicts_0.0005, a,b,c,d = 251,308,127,192
+﻿in no_hiragana_dicts_0.0005, a,b,c,d = 251,308,127,192
+﻿in no_hiragana_dicts_0.0005, a,b,c,d = 251,308,127,192
+﻿in no_hiragana_dicts_0.0005_with_paraSentence, a,b,c,d = 251,308,127,192
+﻿in no_hiragana_dicts_0.0005_with_paraSentence, a,b,c,d = 250,306,128,194

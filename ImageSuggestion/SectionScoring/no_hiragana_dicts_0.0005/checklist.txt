@@ -1,0 +1,12 @@
+﻿in all, a,b,c,d = 251,308,127,192
+      precision = 0.601881
+         recall = 0.384000
+         fvalue = 0.468864
+﻿in all, a,b,c,d = 251,308,127,192
+      precision = 0.601881
+         recall = 0.384000
+         fvalue = 0.468864
+﻿in all, a,b,c,d = 251,308,127,192
+      precision = 0.601881
+         recall = 0.384000
+         fvalue = 0.468864
