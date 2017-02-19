@@ -1,5 +1,5 @@
-﻿dicts\1_20_new_tf.txt
-dicts\21_40_new_tf.txt
-dicts\41_60_new_tf.txt
-dicts\61_80_new_tf.txt
-dicts\81_100_new_tf.txt
+﻿dicts\1_20_new3_tf.txt
+dicts\21_40_new3_tf.txt
+dicts\41_60_new3_tf.txt
+dicts\61_80_new3_tf.txt
+dicts\81_100_new3_tf.txt
