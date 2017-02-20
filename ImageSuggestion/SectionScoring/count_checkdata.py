@@ -35,7 +35,7 @@ if __name__ == "__main__":
     point = 0
     alls = 0
     argv = sys.argv
-    outdirname = u"new3_tf_cutoff"
+    outdirname = u"new3_tf_cutoff_0.0002"
     if not os.path.exists(outdirname):
         os.mkdir(outdirname)
     for dirname in dirnames:

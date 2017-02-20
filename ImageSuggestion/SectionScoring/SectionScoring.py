@@ -256,6 +256,7 @@ def sectionscoring(sections,filename=None):
         #scoring
         section.scores = dict.fromkeys(TAGLIST,0.0) #score[tagname] -> score
 
+        #CutOff
         if len(section.childs) <= SECTION_CUTOFF:
             section.cutoff = True
             continue
