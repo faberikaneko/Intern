@@ -1,0 +1,26 @@
+﻿Section:5
+	Ｆｌａｇ：：００００
+	おっとそんなＭＩＮＩも今はＢＭＷではないですか。
+	笑
+Score:0.0
+EACH_TAG_SCORE:
+	image:0.0
+	table:0.0
+	graph:0.0
+	flow:0.0
+PARA:
+Clueword:
+
+﻿Section:3
+	Ｆｌａｇ：：００００
+	なんですか？これ。
+	堂々巡りですやん。
+Score:0.0
+EACH_TAG_SCORE:
+	image:0.0
+	table:0.0
+	graph:0.0
+	flow:0.0
+PARA:
+Clueword:
+
