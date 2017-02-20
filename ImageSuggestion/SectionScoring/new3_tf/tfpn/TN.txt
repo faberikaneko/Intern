@@ -1,0 +1,147 @@
+﻿Section:3
+	Ｆｌａｇ：：００００
+	熨斗の意味
+Score:0.0
+EACH_TAG_SCORE:
+	image:0.0
+	table:0.0
+	graph:0.0
+	flow:0.0
+PARA:
+Clueword:
+
+﻿Section:11
+	Ｆｌａｇ：：００００
+	■結納品と「のし」
+Score:0.0
+EACH_TAG_SCORE:
+	image:0.0
+	table:0.0
+	graph:0.0
+	flow:0.0
+PARA:
+Clueword:
+
+﻿Section:5
+	Ｆｌａｇ：：００００
+	おっとそんなＭＩＮＩも今はＢＭＷではないですか。
+	笑
+Score:0.0
+EACH_TAG_SCORE:
+	image:0.0
+	table:0.0
+	graph:0.0
+	flow:0.0
+PARA:
+Clueword:
+
+﻿Section:5
+	Ｆｌａｇ：：００００
+	更に詳しく！対策も知ろう！
+Score:0.0
+EACH_TAG_SCORE:
+	image:0.0
+	table:0.0
+	graph:0.0
+	flow:0.0
+PARA:
+Clueword:
+
+﻿Section:1
+	Ｆｌａｇ：：００００
+	倦怠期の乗り越え方
+Score:0.0
+EACH_TAG_SCORE:
+	image:0.0
+	table:0.0
+	graph:0.0
+	flow:0.0
+PARA:
+Clueword:
+
+﻿Section:4
+	Ｆｌａｇ：：００００
+	・アミノペニシリン
+Score:0.0
+EACH_TAG_SCORE:
+	image:0.0
+	table:0.0
+	graph:0.0
+	flow:0.0
+PARA:
+Clueword:
+
+﻿Section:6
+	Ｆｌａｇ：：００００
+	・抗緑膿菌ペニシリン
+Score:0.0
+EACH_TAG_SCORE:
+	image:0.0
+	table:0.0
+	graph:0.0
+	flow:0.0
+PARA:
+Clueword:
+
+﻿Section:1
+	Ｆｌａｇ：：００００
+	ストリートファッションとは
+Score:0.0
+EACH_TAG_SCORE:
+	image:0.0
+	table:0.0
+	graph:0.0
+	flow:0.0
+PARA:
+Clueword:
+
+﻿Section:7
+	Ｆｌａｇ：：００００
+	還暦祝いにどれくらい予算が必要ですか？
+Score:0.0
+EACH_TAG_SCORE:
+	image:0.0
+	table:0.0
+	graph:0.0
+	flow:0.0
+PARA:
+Clueword:
+
+﻿Section:1
+	Ｆｌａｇ：：００００
+	スーツの色と柄について
+Score:0.0
+EACH_TAG_SCORE:
+	image:0.0
+	table:0.0
+	graph:0.0
+	flow:0.0
+PARA:
+Clueword:
+
+﻿Section:5
+	Ｆｌａｇ：：００００
+	タスクバーの通知
+	タスクバーの通知
+Score:0.0
+EACH_TAG_SCORE:
+	image:0.0
+	table:0.0
+	graph:0.0
+	flow:0.0
+PARA:
+Clueword:
+
+﻿Section:31
+	Ｆｌａｇ：：００００
+	ドライバソフトの更新はデバイスマネージャーで行う
+	ドライバソフトの更新はデバイスマネージャーで行う
+Score:0.0
+EACH_TAG_SCORE:
+	image:0.0
+	table:0.0
+	graph:0.0
+	flow:0.0
+PARA:
+Clueword:
+
