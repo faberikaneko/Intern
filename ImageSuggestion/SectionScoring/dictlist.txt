@@ -1,5 +1,1 @@
-﻿dicts\1_20_lineword_no_hira.txt
-dicts\21_40_lineword_no_hira.txt
-dicts\41_60_lineword_no_hira.txt
-dicts\61_80_lineword_no_hira.txt
-dicts\81_100_lineword_no_hira.txt
+﻿dicts\hikaku.txt

@@ -192,6 +192,7 @@ def get_section_paralells(section):
     numnum = 0
     markf = {}
     renum = re.compile(ur"\p{N}+\.|\(\p{N}+\)",flags=re.U|re.I)
+    #marknum = re.compile(ur'\s',flags=re.U|re.I)
     for sentence in section.childs:
         if renum.match(sentence.text):
             numnum += 1
@@ -343,7 +344,10 @@ def writesection(section):
     d = ScoringClass.get_clueword()
     for clueword in section.cluewords:
         outstr += u'\t' + clueword
-        outstr += u':[' + ','.join(map('{:1.4f}'.format,d[clueword].dict.values()))+u']\n'
+        cluewordlist = []
+        for tag in TAGLIST:
+            cluewordlist.append(d[clueword].dict.get(tag))
+        outstr += u':[' + ','.join(map('{:1.4f}'.format,cluewordlist))+u']\n'
     return outstr
 
 def writescore(sections,filename):
