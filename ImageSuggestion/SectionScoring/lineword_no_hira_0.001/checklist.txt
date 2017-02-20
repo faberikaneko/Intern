@@ -1,0 +1,8 @@
+﻿in all:
+False-Negative : 495.0
+True-Positive : 5.0
+True-Negative : 369.0
+False-Positive : 9.0
+      precision = 0.357143
+         recall = 0.010000
+         fvalue = 0.019455
