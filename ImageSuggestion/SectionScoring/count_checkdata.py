@@ -35,7 +35,7 @@ if __name__ == "__main__":
     point = 0
     alls = 0
     argv = sys.argv
-    outdirname = u"only_hikaku"
+    outdirname = u"only_shashin"
     if not os.path.exists(outdirname):
         os.mkdir(outdirname)
     for dirname in dirnames:

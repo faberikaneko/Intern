@@ -1,1 +1,5 @@
-﻿dicts\hikaku.txt
+﻿dicts\1_20_lineWord_no_shiji.txt
+dicts\21_40_lineWord_no_shiji.txt
+dicts\41_60_lineWord_no_shiji.txt
+dicts\61_80_lineWord_no_shiji.txt
+dicts\81_100_lineWord_no_shiji.txt
