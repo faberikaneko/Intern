@@ -23,8 +23,8 @@ global SCORE_LIMIT
 SCORE_LIMIT = 0.0005
 IGNORE_TYPE = True
 
-def writefile(section,type):
-    abcddir = u'abcd\\'
+def writefile(section,type,dirname=u'abcd\\'):
+    abcddir = dirname
     filename = os.path.join(abcddir,type+u'.txt')
     if not os.path.exists(abcddir):
         os.mkdir(abcddir)
@@ -38,6 +38,7 @@ def testscoring(inputfilename,outputfilename):
         u'FP':u'False-Positive',
         u'TP':u'True-Positive'
     }
+    dirname = outputfilename.rsplit(u'\\',maxsplit=1)[0]+u'\\'
     sections = readsections(inputfilename)
     anssections = sectionscoring(sections,inputfilename)
     sorted_section = sorted(anssections.childs,key=lambda section:section.score,reverse=True)
@@ -85,6 +86,7 @@ def testscoring(inputfilename,outputfilename):
                             type_ = u'FP'
                 outfile.write(typemessage[type_])
                 typecount[type_] += 1.0
+                writefile(section,type_,dirname+'tfpn\\')
     outfile.write(u'\n\n')
     for key,value in typecount.iteritems():
         outfile.write(u'{:s}:{:d}\n'.format(typemessage[key],int(value)))
@@ -119,7 +121,6 @@ def worker():
         finally:
             q.task_done()
 
-
 MAXTHREAD = 4
 q = Queue(MAXTHREAD)
 def test_samples(dirname,outdirname):
@@ -128,7 +129,7 @@ def test_samples(dirname,outdirname):
         t.daemon = True
         t.start()
     for dir in os.listdir(dirname):
-        if not (u"-answer" in dir or u"-checker" in dir):
+        if not u"-checker" in dir:
             filename,exe = os.path.splitext(dir)
             inputfilename = os.path.join(dirname,filename+exe)
             outputfilename = os.path.join(outdirname,filename+u"-checker"+exe)

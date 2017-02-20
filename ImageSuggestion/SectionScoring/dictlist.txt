@@ -1,5 +1,5 @@
-﻿dicts\1_20_all_new.txt_new2.txt_new3.txt_new4.txt_new5.txt
-dicts\21_40_all_new.txt_new2.txt_new3.txt_new4.txt_new5.txt
-dicts\41_60_all_new.txt_new2.txt_new3.txt_new4.txt_new5.txt
-dicts\61_80_all_new.txt_new2.txt_new3.txt_new4.txt_new5.txt
-dicts\81_100_all_new.txt_new2.txt_new3.txt_new4.txt_new5.txt
+﻿dicts\1_20_lineword.txt
+dicts\21_40_lineword.txt
+dicts\41_60_lineword.txt
+dicts\61_80_lineword.txt
+dicts\81_100_lineword.txt
