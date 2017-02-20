@@ -113,3 +113,7 @@ descriptor 'format' requires a 'unicode' object but received a 'float'﻿in docs
 ﻿in docs\1_20\12.txt,
 ﻿in docs\1_20\11.txt,
 ﻿in docs\1_20\10.txt,
+﻿in docs\1_20\1.txt,
+rsplit() takes no keyword arguments﻿in docs\1_20\10.txt,
+rsplit() takes no keyword arguments﻿in docs\1_20\12.txt,
+rsplit() takes no keyword arguments

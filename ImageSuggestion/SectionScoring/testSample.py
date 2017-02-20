@@ -38,7 +38,7 @@ def testscoring(inputfilename,outputfilename):
         u'FP':u'False-Positive',
         u'TP':u'True-Positive'
     }
-    dirname = outputfilename.rsplit(u'\\',maxsplit=1)[0]+u'\\'
+    dirname = outputfilename.rsplit(u'\\',1)[0]+u'\\'
     sections = readsections(inputfilename)
     anssections = sectionscoring(sections,inputfilename)
     sorted_section = sorted(anssections.childs,key=lambda section:section.score,reverse=True)

@@ -1,5 +1,5 @@
-﻿dicts\1_20_lineword.txt
-dicts\21_40_lineword.txt
-dicts\41_60_lineword.txt
-dicts\61_80_lineword.txt
-dicts\81_100_lineword.txt
+﻿dicts\1_20_lineword_no_shiji.txt
+dicts\21_40_lineword_no_shiji.txt
+dicts\41_60_lineword_no_shiji.txt
+dicts\61_80_lineword_no_shiji.txt
+dicts\81_100_lineword_no_shiji.txt
