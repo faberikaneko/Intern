@@ -36,6 +36,8 @@ SCORE={
     'DESC_WORD':0.0,
 }
 
+SECTION_CUTOFF = 3
+
 TAGLIST = ImageScore.taglist
 
 def text_normalizer(rawtext):
@@ -254,6 +256,10 @@ def sectionscoring(sections,filename=None):
         #scoring
         section.scores = dict.fromkeys(TAGLIST,0.0) #score[tagname] -> score
 
+        if len(section.childs) <= SECTION_CUTOFF:
+            section.cutoff = True
+            continue
+
         #Section Paralells
         get_section_paralells(section)
 
@@ -333,6 +339,9 @@ def writesection(section):
     outstr += u'Section:'+unicode(section.No)+u'\n'
     for sentence in section.childs:
         outstr += u'\t' + sentence.text+u'\n'
+    if hasattr(section,u'cutoff'):
+        outstr += u'CUTOFF SECTION:'
+        return outstr
     outstr += u'Score:'+unicode(section.score)+u'\n'
     outstr += u'EACH_TAG_SCORE:\n'
     for tag in TAGLIST:

@@ -116,4 +116,16 @@ descriptor 'format' requires a 'unicode' object but received a 'float'﻿in docs
 ﻿in docs\1_20\1.txt,
 rsplit() takes no keyword arguments﻿in docs\1_20\10.txt,
 rsplit() takes no keyword arguments﻿in docs\1_20\12.txt,
-rsplit() takes no keyword arguments
+rsplit() takes no keyword arguments﻿in docs\1_20\12.txt,
+'SpText' object has no attribute 'child'﻿in docs\1_20\11.txt,
+'SpText' object has no attribute 'child'﻿in docs\1_20\1.txt,
+'SpText' object has no attribute 'child'﻿in docs\1_20\10.txt,
+'SpText' object has no attribute 'child'﻿in docs\1_20\12.txt,
+'SpText' object has no attribute 'scores'﻿in docs\1_20\1.txt,
+'SpText' object has no attribute 'scores'﻿in docs\1_20\10.txt,
+'SpText' object has no attribute 'scores'﻿in docs\1_20\11.txt,
+'SpText' object has no attribute 'scores'﻿in docs\1_20\12.txt,
+CO﻿in docs\1_20\11.txt,
+CO﻿in docs\1_20\10.txt,
+CO﻿in docs\1_20\1.txt,
+CO

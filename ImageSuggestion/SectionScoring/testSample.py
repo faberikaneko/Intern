@@ -36,7 +36,8 @@ def testscoring(inputfilename,outputfilename):
         u'TN':u'True-Negative',
         u'FN':u'False-Negative',
         u'FP':u'False-Positive',
-        u'TP':u'True-Positive'
+        u'TP':u'True-Positive',
+        u'CO':u'Too Short'
     }
     dirname = outputfilename.rsplit(u'\\',1)[0]+u'\\'
     sections = readsections(inputfilename)
@@ -44,7 +45,7 @@ def testscoring(inputfilename,outputfilename):
     sorted_section = sorted(anssections.childs,key=lambda section:section.score,reverse=True)
     flags = re.compile(ur"Ｆｌａｇ：：(?<image>.)(?<table>.)(?<graph>.)(?<flow>.)")
     outfile = codecs.open(outputfilename,mode="w",encoding="utf-8-sig")
-    typecount = dict.fromkeys([u'TN',u'FN',u'FP',u'TP'],0)
+    typecount = dict.fromkeys([u'TN',u'FN',u'FP',u'TP',u'CO'],0)
     startflag = True
     ignorecount = 0.0
     for section in sorted_section:
@@ -71,7 +72,9 @@ def testscoring(inputfilename,outputfilename):
                         count+=1
                 sortscore = sorted(section.scores.items(),key=lambda s:s[1],reverse=True)
                 global SCORE_LIMIT
-                if section.score <= SCORE_LIMIT:
+                if hasattr(section,u'cutoff'):
+                    type_ = u'CO'
+                elif section.score <= SCORE_LIMIT:
                     if count == 0:#A:nono
                         type_ = u'TN'
                     else:
