@@ -1,4 +1,5 @@
-﻿in all:
+﻿#limit == 0.001
+in all:
 False-Negative : 391.0
 True-Positive : 26.0
 True-Negative : 262.0
@@ -6,3 +7,12 @@ False-Positive : 13.0
       precision = 0.666667
          recall = 0.062350
          fvalue = 0.114035
+# limit == 0.0005
+﻿in all:
+False-Negative : 276.0
+True-Positive : 141.0
+True-Negative : 187.0
+False-Positive : 88.0
+      precision = 0.615721
+         recall = 0.338129
+         fvalue = 0.436533

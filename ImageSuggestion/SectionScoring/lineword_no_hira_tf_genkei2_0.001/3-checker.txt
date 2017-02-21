@@ -33,7 +33,7 @@ Clueword:
 	日々:[0.0001,0.0001,0.0000,0.0000]
 	経済:[0.0000,0.0000,0.0000,0.0000]
 	日経:[0.0000,0.0002,0.0000,0.0000]
-True-Negative
+False-Positive
 
 Section:4
 	Ｆｌａｇ：：００１０
@@ -65,7 +65,7 @@ Clueword:
 	投資:[0.0021,0.0002,0.0008,0.0000]
 	損失:[0.0000,0.0000,0.0000,0.0000]
 	株式:[0.0001,0.0006,0.0000,0.0000]
-False-Negative
+True-Positive
 
 Section:19
 	Ｆｌａｇ：：００１０
@@ -135,7 +135,7 @@ Clueword:
 	経験:[0.0006,0.0000,0.0000,0.0049]
 	払う:[0.0000,0.0000,0.0000,0.0000]
 	時点:[0.0000,0.0000,0.0130,0.0000]
-False-Negative
+True-Positive
 
 Section:14
 	Ｆｌａｇ：：０１００
@@ -728,11 +728,11 @@ Section:18
 	上記の事例５では「経営不安がささやかれていたシャープ株の空売りで、１月余りの間に１８００万円を溶かした」とありました。
 CUTOFF SECTION:Too Short
 
-True-Negative:5
-False-Positive:0
+True-Negative:4
+False-Positive:1
 Too Short:4
-True-Positive:0
-False-Negative:10
-precision = 0.000000
-recall = 0.000000
-fvalue = 0.000000
+True-Positive:2
+False-Negative:8
+precision = 0.666667
+recall = 0.200000
+fvalue = 0.307692

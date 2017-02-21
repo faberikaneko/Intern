@@ -61,7 +61,7 @@ Clueword:
 	代謝:[0.0000,0.0000,0.0000,0.0000]
 	全体:[0.0007,0.0002,0.0000,0.0000]
 	アップ:[0.0006,0.0007,0.0000,0.0000]
-False-Negative
+True-Positive
 
 Section:3
 	Ｆｌａｇ：：０００１
@@ -132,8 +132,8 @@ CUTOFF SECTION:Too Short
 True-Negative:0
 False-Positive:0
 Too Short:2
-True-Positive:0
-False-Negative:2
-precision = 0.000000
-recall = 0.000000
-fvalue = 0.000000
+True-Positive:1
+False-Negative:1
+precision = 1.000000
+recall = 0.500000
+fvalue = 0.666667

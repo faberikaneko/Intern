@@ -25,7 +25,7 @@ Clueword:
 	一番:[0.0006,0.0019,0.0121,0.0000]
 	ラーメン:[0.0000,0.0000,0.0000,0.0000]
 	でも:[0.0000,0.0000,0.0000,0.0000]
-False-Negative
+True-Positive
 
 Section:18
 	Ｆｌａｇ：：００００
@@ -51,7 +51,7 @@ Clueword:
 	リスク:[0.0000,0.0000,0.0000,0.0000]
 	比較的:[0.0000,0.0000,0.0068,0.0000]
 	カンタンだ:[0.0000,0.0000,0.0000,0.0000]
-True-Negative
+False-Positive
 
 Section:22
 	Ｆｌａｇ：：１０００
@@ -771,11 +771,11 @@ Section:16
 	おれはなにをいってるんだ
 CUTOFF SECTION:Too Short
 
-True-Negative:7
-False-Positive:0
+True-Negative:6
+False-Positive:1
 Too Short:7
-True-Positive:0
-False-Negative:9
-precision = 0.000000
-recall = 0.000000
-fvalue = 0.000000
+True-Positive:1
+False-Negative:8
+precision = 0.500000
+recall = 0.111111
+fvalue = 0.181818

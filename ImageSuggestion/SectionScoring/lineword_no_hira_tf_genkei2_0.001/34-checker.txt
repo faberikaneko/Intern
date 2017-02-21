@@ -78,7 +78,7 @@ Clueword:
 	改善:[0.0002,0.0017,0.0000,0.0000]
 	会社:[0.0000,0.0009,0.0000,0.0000]
 	新規だ:[0.0000,0.0000,0.0000,0.0000]
-True-Negative
+False-Positive
 
 Section:7
 	Ｆｌａｇ：：００００
@@ -160,7 +160,7 @@ Clueword:
 	理解:[0.0005,0.0002,0.0000,0.0000]
 	思う:[0.0005,0.0001,0.0010,0.0000]
 	経験:[0.0006,0.0000,0.0000,0.0049]
-True-Negative
+False-Positive
 
 Section:4
 	Ｆｌａｇ：：１０００
@@ -202,7 +202,7 @@ Clueword:
 	通常:[0.0003,0.0003,0.0000,0.0000]
 	ようだ:[0.0074,0.0000,0.0000,0.0000]
 	動く:[0.0010,0.0009,0.0013,0.0000]
-False-Negative
+True-Positive
 
 Section:8
 	Ｆｌａｇ：：００１０
@@ -436,11 +436,11 @@ Section:6
 	「担当するクライアントの社長からは、忙しいのに利益率が下がっているという愚痴も聞きます。現場工事から申請業務まで、外注をフル活用しながら分業体制を作っていくしか道はないのですが、専門領域に特化した会社が多数間に入るため、外注費用も上がる一方だそうです」
 CUTOFF SECTION:Too Short
 
-True-Negative:4
-False-Positive:0
+True-Negative:2
+False-Positive:2
 Too Short:2
-True-Positive:0
-False-Negative:3
-precision = 0.000000
-recall = 0.000000
-fvalue = 0.000000
+True-Positive:1
+False-Negative:2
+precision = 0.333333
+recall = 0.333333
+fvalue = 0.333333

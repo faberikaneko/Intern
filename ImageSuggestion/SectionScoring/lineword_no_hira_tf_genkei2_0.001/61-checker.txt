@@ -49,7 +49,7 @@ Clueword:
 	長い:[0.0029,0.0007,0.0018,0.0000]
 	自動:[0.0001,0.0001,0.0000,0.0000]
 	的だ:[0.0000,0.0022,0.0000,0.0000]
-False-Negative
+True-Positive
 
 Section:4
 	Ｆｌａｇ：：００００
@@ -94,7 +94,7 @@ Clueword:
 	厳しい:[0.0000,0.0000,0.0000,0.0000]
 	授業:[0.0000,0.0000,0.0000,0.0000]
 	ようだ:[0.0074,0.0000,0.0000,0.0000]
-True-Negative
+False-Positive
 
 Section:11
 	Ｆｌａｇ：：０１００
@@ -152,7 +152,7 @@ Clueword:
 	逆だ:[0.0002,0.0043,0.0000,0.0000]
 	経験:[0.0006,0.0000,0.0000,0.0049]
 	傾向:[0.0010,0.0018,0.0404,0.0000]
-False-Negative
+True-Positive
 
 Section:7
 	Ｆｌａｇ：：０１００
@@ -241,7 +241,7 @@ Clueword:
 	難しい:[0.0007,0.0006,0.0000,0.0000]
 	でも:[0.0000,0.0000,0.0000,0.0000]
 	得意だ:[0.0004,0.0000,0.0000,0.0000]
-False-Negative
+True-Positive
 
 Section:6
 	Ｆｌａｇ：：００００
@@ -313,7 +313,7 @@ Clueword:
 	一般に:[0.0000,0.0000,0.0000,0.0000]
 	逆だ:[0.0002,0.0043,0.0000,0.0000]
 	ほう:[0.0018,0.0000,0.0000,0.0000]
-True-Negative
+False-Positive
 
 Section:13
 	Ｆｌａｇ：：０１００
@@ -381,7 +381,7 @@ Clueword:
 	妨げる:[0.0000,0.0000,0.0000,0.0000]
 	向上:[0.0000,0.0003,0.0117,0.0000]
 	得意だ:[0.0004,0.0000,0.0000,0.0000]
-False-Negative
+True-Positive
 
 Section:12
 	Ｆｌａｇ：：００００
@@ -1042,11 +1042,11 @@ Section:10
 	具体的には受けた授業の３倍程度の時間をとり、予習、復習（簡単なまとめ学習）、類似問題演習を行う必要があります。
 CUTOFF SECTION:Too Short
 
-True-Negative:6
-False-Positive:0
+True-Negative:4
+False-Positive:2
 Too Short:3
-True-Positive:0
-False-Negative:7
-precision = 0.000000
-recall = 0.000000
-fvalue = 0.000000
+True-Positive:4
+False-Negative:3
+precision = 0.666667
+recall = 0.571429
+fvalue = 0.615385

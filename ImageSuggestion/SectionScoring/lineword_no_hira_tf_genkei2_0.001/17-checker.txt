@@ -31,7 +31,7 @@ Clueword:
 	現在:[0.0010,0.0009,0.0000,0.0000]
 	知る:[0.0000,0.0009,0.0000,0.0011]
 	前回:[0.0000,0.0008,0.0019,0.0000]
-True-Negative
+False-Positive
 
 Section:3
 	Ｆｌａｇ：：００００
@@ -61,7 +61,7 @@ Clueword:
 	問題:[0.0014,0.0013,0.0000,0.0000]
 	出来る:[0.0001,0.0006,0.0005,0.0000]
 	難しい:[0.0007,0.0006,0.0000,0.0000]
-True-Negative
+False-Positive
 
 Section:11
 	Ｆｌａｇ：：０１００
@@ -105,7 +105,7 @@ Clueword:
 	発生:[0.0010,0.0011,0.0073,0.0021]
 	でも:[0.0000,0.0000,0.0000,0.0000]
 	違う:[0.0029,0.0249,0.0022,0.0000]
-False-Negative
+True-Positive
 
 Section:9
 	Ｆｌａｇ：：１０００
@@ -150,7 +150,7 @@ Clueword:
 	使う:[0.0047,0.0030,0.0009,0.0000]
 	回転:[0.0000,0.0000,0.0000,0.0000]
 	違う:[0.0029,0.0249,0.0022,0.0000]
-False-Negative
+True-Positive
 
 Section:10
 	Ｆｌａｇ：：００００
@@ -473,11 +473,11 @@ Section:5
 	笑
 CUTOFF SECTION:Too Short
 
-True-Negative:6
-False-Positive:0
+True-Negative:4
+False-Positive:2
 Too Short:1
-True-Positive:0
-False-Negative:5
-precision = 0.000000
-recall = 0.000000
-fvalue = 0.000000
+True-Positive:2
+False-Negative:3
+precision = 0.500000
+recall = 0.400000
+fvalue = 0.444444

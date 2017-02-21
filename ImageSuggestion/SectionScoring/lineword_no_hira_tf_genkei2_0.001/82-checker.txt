@@ -32,7 +32,7 @@ Clueword:
 	回答:[0.0036,0.0039,0.0219,0.0083]
 	ページ:[0.0013,0.0008,0.0000,0.0016]
 	表示:[0.0125,0.0007,0.0000,0.0000]
-True-Negative
+False-Positive
 
 Section:1
 	Ｆｌａｇ：：０１００
@@ -71,7 +71,7 @@ Clueword:
 	送る:[0.0001,0.0000,0.0000,0.0000]
 	願う:[0.0000,0.0000,0.0000,0.0000]
 	ページ:[0.0013,0.0008,0.0000,0.0016]
-False-Negative
+True-Positive
 
 Section:5
 	Ｆｌａｇ：：００００
@@ -112,11 +112,11 @@ Section:4
 	アンケートへの回答が終わったら、送信ボタンをクリックしてください。
 CUTOFF SECTION:Too Short
 
-True-Negative:2
-False-Positive:0
+True-Negative:1
+False-Positive:1
 Too Short:2
-True-Positive:0
-False-Negative:1
-precision = 0.000000
-recall = 0.000000
-fvalue = 0.000000
+True-Positive:1
+False-Negative:0
+precision = 0.500000
+recall = 1.000000
+fvalue = 0.666667

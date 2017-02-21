@@ -57,7 +57,7 @@ Clueword:
 	発生:[0.0010,0.0011,0.0073,0.0021]
 	内容:[0.0012,0.0042,0.0000,0.0017]
 	経験:[0.0006,0.0000,0.0000,0.0049]
-False-Negative
+True-Positive
 
 Section:5
 	Ｆｌａｇ：：００００
@@ -88,7 +88,7 @@ Clueword:
 	注意:[0.0018,0.0014,0.0007,0.0000]
 	内容:[0.0012,0.0042,0.0000,0.0017]
 	ほう:[0.0018,0.0000,0.0000,0.0000]
-True-Negative
+False-Positive
 
 Section:4
 	Ｆｌａｇ：：０１００
@@ -210,11 +210,11 @@ Section:2
 	内容は変数などの命名規則、禁止事項（例えばｇｏｔｏ文はダメとか）、コメントの付け方とか、いろいろプロジェクトの特性やその会社の文化などで変わります。
 CUTOFF SECTION:Too Short
 
-True-Negative:1
-False-Positive:0
+True-Negative:0
+False-Positive:1
 Too Short:2
-True-Positive:0
-False-Negative:2
-precision = 0.000000
-recall = 0.000000
-fvalue = 0.000000
+True-Positive:1
+False-Negative:1
+precision = 0.500000
+recall = 0.500000
+fvalue = 0.500000

@@ -22,7 +22,7 @@ Clueword:
 	可能だ:[0.0011,0.0015,0.0014,0.0000]
 	上手い:[0.0000,0.0000,0.0008,0.0000]
 	ターゲット:[0.0008,0.0002,0.0000,0.0000]
-False-Negative
+True-Positive
 
 Section:13
 	Ｆｌａｇ：：０１００
@@ -57,7 +57,7 @@ Clueword:
 	買い手:[0.0003,0.0000,0.0000,0.0000]
 	逆だ:[0.0002,0.0043,0.0000,0.0000]
 	上がる:[0.0007,0.0003,0.0000,0.0000]
-False-Negative
+True-Positive
 
 Section:6
 	Ｆｌａｇ：：００１０
@@ -82,7 +82,7 @@ Clueword:
 	当初:[0.0000,0.0007,0.0017,0.0000]
 	固定:[0.0000,0.0000,0.0000,0.0000]
 	比較:[0.0002,0.0066,0.0235,0.0000]
-False-Negative
+True-Positive
 
 Section:30
 	Ｆｌａｇ：：０１１１
@@ -161,7 +161,7 @@ Clueword:
 	情勢:[0.0000,0.0000,0.0000,0.0000]
 	不安だ:[0.0001,0.0000,0.0013,0.0000]
 	時点:[0.0000,0.0000,0.0130,0.0000]
-False-Negative
+True-Positive
 
 Section:31
 	Ｆｌａｇ：：１０１０
@@ -224,7 +224,7 @@ Clueword:
 	時点:[0.0000,0.0000,0.0130,0.0000]
 	固定:[0.0000,0.0000,0.0000,0.0000]
 	住宅:[0.0000,0.0000,0.0000,0.0000]
-False-Negative
+True-Positive
 
 Section:20
 	Ｆｌａｇ：：００００
@@ -288,7 +288,7 @@ Clueword:
 	影響:[0.0006,0.0007,0.0000,0.0000]
 	発生:[0.0010,0.0011,0.0073,0.0021]
 	緩和:[0.0000,0.0000,0.0000,0.0000]
-True-Negative
+False-Positive
 
 Section:10
 	Ｆｌａｇ：：００１０
@@ -1142,11 +1142,11 @@ Section:32
 	ただし、あくまでも予測ですので、景気が好転するようなニュース情報は逐一チェックして、速やかに対応することが必要になります。
 CUTOFF SECTION:Too Short
 
-True-Negative:9
-False-Positive:0
+True-Negative:8
+False-Positive:1
 Too Short:9
-True-Positive:0
-False-Negative:13
-precision = 0.000000
-recall = 0.000000
-fvalue = 0.000000
+True-Positive:5
+False-Negative:8
+precision = 0.833333
+recall = 0.384615
+fvalue = 0.526316

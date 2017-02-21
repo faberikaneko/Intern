@@ -24,7 +24,7 @@ Clueword:
 	食べ物:[0.0000,0.0000,0.0000,0.0000]
 	防止:[0.0000,0.0000,0.0000,0.0000]
 	飲む:[0.0000,0.0007,0.0000,0.0000]
-True-Negative
+False-Positive
 
 Section:9
 	Ｆｌａｇ：：０１００
@@ -74,7 +74,7 @@ Clueword:
 	ほう:[0.0018,0.0000,0.0000,0.0000]
 	不純だ:[0.0000,0.0000,0.0000,0.0000]
 	作業:[0.0002,0.0000,0.0000,0.0000]
-False-Negative
+True-Positive
 
 Section:1
 	Ｆｌａｇ：：０１００
@@ -106,7 +106,7 @@ Clueword:
 	種類:[0.0009,0.0410,0.0023,0.0000]
 	性質:[0.0000,0.0000,0.0000,0.0000]
 	防止:[0.0000,0.0000,0.0000,0.0000]
-False-Negative
+True-Positive
 
 Section:8
 	Ｆｌａｇ：：０１１０
@@ -320,11 +320,11 @@ Section:11
 	また、お酒を吟味することに加えて、食べ物、ドリンク、予防薬で対策をするとさらに二日酔いになりにくくなります。
 CUTOFF SECTION:Too Short
 
-True-Negative:3
-False-Positive:0
+True-Negative:2
+False-Positive:1
 Too Short:3
-True-Positive:0
-False-Negative:5
-precision = 0.000000
-recall = 0.000000
-fvalue = 0.000000
+True-Positive:2
+False-Negative:3
+precision = 0.666667
+recall = 0.400000
+fvalue = 0.500000

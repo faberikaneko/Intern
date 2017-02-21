@@ -22,7 +22,7 @@ Clueword:
 	する:[0.0012,0.0000,0.0000,0.0000]
 	種類:[0.0009,0.0410,0.0023,0.0000]
 	ようだ:[0.0074,0.0000,0.0000,0.0000]
-False-Negative
+True-Positive
 
 Section:5
 	Ｆｌａｇ：：１０００
@@ -259,8 +259,8 @@ CUTOFF SECTION:Too Short
 True-Negative:1
 False-Positive:0
 Too Short:4
-True-Positive:0
-False-Negative:5
-precision = 0.000000
-recall = 0.000000
-fvalue = 0.000000
+True-Positive:1
+False-Negative:4
+precision = 1.000000
+recall = 0.200000
+fvalue = 0.333333

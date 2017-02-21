@@ -43,7 +43,7 @@ Clueword:
 	高い:[0.0014,0.0015,0.0321,0.0000]
 	参照:[0.0001,0.0000,0.0000,0.0000]
 	使う:[0.0047,0.0030,0.0009,0.0000]
-True-Negative
+False-Positive
 
 Section:6
 	Ｆｌａｇ：：００００
@@ -102,7 +102,7 @@ Clueword:
 	使う:[0.0047,0.0030,0.0009,0.0000]
 	違う:[0.0029,0.0249,0.0022,0.0000]
 	大手:[0.0003,0.0000,0.0000,0.0000]
-True-Negative
+False-Positive
 
 Section:7
 	Ｆｌａｇ：：０１００
@@ -906,8 +906,8 @@ Section:16
 	魅力あるサービスがなかった：年会費無料で充分
 CUTOFF SECTION:Too Short
 
-True-Negative:4
-False-Positive:0
+True-Negative:2
+False-Positive:2
 Too Short:5
 True-Positive:0
 False-Negative:8

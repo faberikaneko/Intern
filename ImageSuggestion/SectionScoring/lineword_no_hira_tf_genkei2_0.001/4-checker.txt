@@ -78,7 +78,7 @@ Clueword:
 	軽い:[0.0000,0.0003,0.0000,0.0000]
 	ケース:[0.0006,0.0107,0.0000,0.0000]
 	地域:[0.0000,0.0000,0.0000,0.0000]
-False-Negative
+True-Positive
 
 Section:11
 	Ｆｌａｇ：：１１００
@@ -142,7 +142,7 @@ Clueword:
 	ほう:[0.0018,0.0000,0.0000,0.0000]
 	抑える:[0.0013,0.0010,0.0000,0.0027]
 	空気:[0.0000,0.0003,0.0000,0.0000]
-False-Negative
+True-Positive
 
 Section:2
 	Ｆｌａｇ：：０１００
@@ -190,7 +190,7 @@ Clueword:
 	食欲:[0.0000,0.0000,0.0000,0.0000]
 	炎症:[0.0004,0.0004,0.0000,0.0000]
 	原因:[0.0031,0.0038,0.0008,0.0017]
-False-Negative
+True-Positive
 
 Section:5
 	Ｆｌａｇ：：０１００
@@ -227,7 +227,7 @@ Clueword:
 	出る:[0.0011,0.0012,0.0015,0.0000]
 	以上:[0.0007,0.0009,0.0000,0.0000]
 	急激だ:[0.0000,0.0000,0.0000,0.0000]
-False-Negative
+True-Positive
 
 Section:4
 	Ｆｌａｇ：：００１０
@@ -420,8 +420,8 @@ CUTOFF SECTION:Too Short
 True-Negative:0
 False-Positive:0
 Too Short:4
-True-Positive:1
-False-Negative:8
+True-Positive:5
+False-Negative:4
 precision = 1.000000
-recall = 0.111111
-fvalue = 0.200000
+recall = 0.555556
+fvalue = 0.714286

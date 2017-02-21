@@ -70,7 +70,7 @@ Clueword:
 	でも:[0.0000,0.0000,0.0000,0.0000]
 	基準:[0.0000,0.0000,0.0000,0.0000]
 	違う:[0.0029,0.0249,0.0022,0.0000]
-True-Negative
+False-Positive
 
 Section:8
 	Ｆｌａｇ：：００００
@@ -104,7 +104,7 @@ Clueword:
 	ようだ:[0.0074,0.0000,0.0000,0.0000]
 	アップ:[0.0006,0.0007,0.0000,0.0000]
 	から:[0.0009,0.0000,0.0000,0.0001]
-True-Negative
+False-Positive
 
 Section:3
 	Ｆｌａｇ：：００００
@@ -275,11 +275,11 @@ Section:4
 	准看護師はクリニックや診療所が必要としている
 CUTOFF SECTION:Too Short
 
-True-Negative:3
-False-Positive:0
+True-Negative:1
+False-Positive:2
 Too Short:1
 True-Positive:1
 False-Negative:4
-precision = 1.000000
+precision = 0.333333
 recall = 0.200000
-fvalue = 0.333333
+fvalue = 0.250000

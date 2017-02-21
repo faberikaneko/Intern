@@ -30,7 +30,7 @@ Clueword:
 	デニム:[0.0003,0.0000,0.0000,0.0000]
 	ギャップ:[0.0004,0.0000,0.0000,0.0000]
 	上がる:[0.0007,0.0003,0.0000,0.0000]
-True-Negative
+False-Positive
 
 Section:1
 	Ｆｌａｇ：：００１０
@@ -238,8 +238,8 @@ Section:9
 	という女性に「メガネ萌え」しちゃう男性も！？いつもと違う雰囲気に「特別感」を感じてドキドキしちゃうそうですよ。
 CUTOFF SECTION:Too Short
 
-True-Negative:4
-False-Positive:0
+True-Negative:3
+False-Positive:1
 Too Short:4
 True-Positive:0
 False-Negative:2

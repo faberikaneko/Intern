@@ -28,7 +28,7 @@ Clueword:
 	ようだ:[0.0074,0.0000,0.0000,0.0000]
 	違う:[0.0029,0.0249,0.0022,0.0000]
 	空間:[0.0000,0.0000,0.0000,0.0000]
-True-Negative
+False-Positive
 
 Section:4
 	Ｆｌａｇ：：１１００
@@ -419,8 +419,8 @@ Section:6
 	比較映像を見る前のパネルディスカッションにおいて『シドニアの騎士』の石丸健二プロデューサーが語っていたことですが、今までは選べる色域に限界があったため、これまで選択的に切り捨てられてた細かい部分が表現できるようになったそうです。
 CUTOFF SECTION:Too Short
 
-True-Negative:4
-False-Positive:0
+True-Negative:3
+False-Positive:1
 Too Short:1
 True-Positive:0
 False-Negative:5

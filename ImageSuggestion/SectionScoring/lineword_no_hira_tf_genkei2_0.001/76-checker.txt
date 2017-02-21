@@ -58,7 +58,7 @@ Clueword:
 	一種:[0.0000,0.0047,0.0000,0.0000]
 	軽い:[0.0000,0.0003,0.0000,0.0000]
 	ハイだ:[0.0000,0.0000,0.0000,0.0000]
-False-Negative
+True-Positive
 
 Section:1
 	Ｆｌａｇ：：００００
@@ -87,7 +87,7 @@ Clueword:
 	思う:[0.0005,0.0001,0.0010,0.0000]
 	種類:[0.0009,0.0410,0.0023,0.0000]
 	基礎:[0.0000,0.0000,0.0000,0.0000]
-True-Negative
+False-Positive
 
 Section:11
 	Ｆｌａｇ：：００００
@@ -896,11 +896,11 @@ Section:13
 	ドイツリートで名高いＤｉｅｔｒｉｃｈＦｉｓｃｈｅｒ−Ｄｉｅｓｋａｕもこの部類。
 CUTOFF SECTION:Too Short
 
-True-Negative:6
-False-Positive:0
+True-Negative:5
+False-Positive:1
 Too Short:3
-True-Positive:1
-False-Negative:8
-precision = 1.000000
-recall = 0.111111
-fvalue = 0.200000
+True-Positive:2
+False-Negative:7
+precision = 0.666667
+recall = 0.222222
+fvalue = 0.333333

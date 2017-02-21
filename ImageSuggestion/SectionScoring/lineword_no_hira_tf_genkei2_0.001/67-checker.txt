@@ -54,7 +54,7 @@ Clueword:
 	思う:[0.0005,0.0001,0.0010,0.0000]
 	小林:[0.0000,0.0000,0.0000,0.0000]
 	使う:[0.0047,0.0030,0.0009,0.0000]
-True-Negative
+False-Positive
 
 Section:2
 	Ｆｌａｇ：：１０００
@@ -197,8 +197,8 @@ Clueword:
 	使う:[0.0047,0.0030,0.0009,0.0000]
 False-Negative
 
-True-Negative:1
-False-Positive:0
+True-Negative:0
+False-Positive:1
 Too Short:0
 True-Positive:0
 False-Negative:1

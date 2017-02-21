@@ -40,7 +40,7 @@ Clueword:
 	共に:[0.0000,0.0000,0.0000,0.0000]
 	左手:[0.0000,0.0000,0.0000,0.0000]
 	急ぐ:[0.0000,0.0000,0.0000,0.0000]
-False-Negative
+True-Positive
 
 Section:14
 	Ｆｌａｇ：：０００１
@@ -77,7 +77,7 @@ Clueword:
 	構える:[0.0000,0.0004,0.0000,0.0000]
 	捕手:[0.0000,0.0000,0.0000,0.0000]
 	左手:[0.0000,0.0000,0.0000,0.0000]
-False-Negative
+True-Positive
 
 Section:1
 	Ｆｌａｇ：：１０００
@@ -121,7 +121,7 @@ Clueword:
 	逆だ:[0.0002,0.0043,0.0000,0.0000]
 	ポーズ:[0.0000,0.0000,0.0000,0.0000]
 	違う:[0.0029,0.0249,0.0022,0.0000]
-False-Negative
+True-Positive
 
 Section:23
 	Ｆｌａｇ：：１０００
@@ -160,7 +160,7 @@ Clueword:
 	シグナル:[0.0000,0.0000,0.0000,0.0000]
 	投球:[0.0000,0.0000,0.0000,0.0000]
 	ワン:[0.0004,0.0000,0.0000,0.0000]
-False-Negative
+True-Positive
 
 Section:18
 	Ｆｌａｇ：：１００１
@@ -1097,8 +1097,8 @@ CUTOFF SECTION:Too Short
 True-Negative:2
 False-Positive:0
 Too Short:1
-True-Positive:0
-False-Negative:22
-precision = 0.000000
-recall = 0.000000
-fvalue = 0.000000
+True-Positive:4
+False-Negative:18
+precision = 1.000000
+recall = 0.181818
+fvalue = 0.307692

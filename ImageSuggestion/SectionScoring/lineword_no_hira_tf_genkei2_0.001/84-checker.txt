@@ -181,7 +181,7 @@ Clueword:
 	序列:[0.0000,0.0004,0.0000,0.0000]
 	順番:[0.0000,0.0003,0.0000,0.0000]
 	顧客:[0.0000,0.0005,0.0000,0.0000]
-False-Negative
+True-Positive
 
 Section:9
 	Ｆｌａｇ：：００００
@@ -217,7 +217,7 @@ Clueword:
 	ポイント:[0.0006,0.0012,0.0000,0.0000]
 	詳細だ:[0.0002,0.0022,0.0000,0.0048]
 	ほど:[0.0031,0.0000,0.0036,0.0000]
-True-Negative
+False-Positive
 
 Section:15
 	Ｆｌａｇ：：００００
@@ -289,7 +289,7 @@ Clueword:
 	発生:[0.0010,0.0011,0.0073,0.0021]
 	内容:[0.0012,0.0042,0.0000,0.0017]
 	関する:[0.0001,0.0000,0.0000,0.0000]
-True-Negative
+False-Positive
 
 Section:5
 	Ｆｌａｇ：：００００
@@ -312,7 +312,7 @@ Clueword:
 	説明:[0.0004,0.0004,0.0000,0.0000]
 	構成:[0.0047,0.0008,0.0000,0.0000]
 	内容:[0.0012,0.0042,0.0000,0.0017]
-True-Negative
+False-Positive
 
 Section:17
 	Ｆｌａｇ：：００００
@@ -364,7 +364,7 @@ Clueword:
 	考える:[0.0006,0.0010,0.0018,0.0000]
 	時間:[0.0000,0.0007,0.0037,0.0000]
 	内容:[0.0012,0.0042,0.0000,0.0017]
-True-Negative
+False-Positive
 
 Section:11
 	Ｆｌａｇ：：００００
@@ -451,7 +451,7 @@ Clueword:
 	内容:[0.0012,0.0042,0.0000,0.0017]
 	要旨:[0.0000,0.0010,0.0000,0.0000]
 	違う:[0.0029,0.0249,0.0022,0.0000]
-True-Negative
+False-Positive
 
 Section:19
 	Ｆｌａｇ：：００００
@@ -881,11 +881,11 @@ Section:7
 	【詳細内容の構成】
 CUTOFF SECTION:Too Short
 
-True-Negative:8
-False-Positive:0
+True-Negative:3
+False-Positive:5
 Too Short:4
-True-Positive:3
-False-Negative:4
-precision = 1.000000
-recall = 0.428571
-fvalue = 0.600000
+True-Positive:4
+False-Negative:3
+precision = 0.444444
+recall = 0.571429
+fvalue = 0.500000

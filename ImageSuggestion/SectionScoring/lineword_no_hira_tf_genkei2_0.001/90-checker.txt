@@ -64,7 +64,7 @@ Clueword:
 	上司:[0.0000,0.0014,0.0000,0.0000]
 	旅行:[0.0000,0.0002,0.0008,0.0000]
 	ようだ:[0.0074,0.0000,0.0000,0.0000]
-True-Negative
+False-Positive
 
 Section:3
 	Ｆｌａｇ：：００００
@@ -121,7 +121,7 @@ Clueword:
 	家族:[0.0007,0.0023,0.0000,0.0000]
 	思う:[0.0005,0.0001,0.0010,0.0000]
 	でも:[0.0000,0.0000,0.0000,0.0000]
-True-Negative
+False-Positive
 
 Section:8
 	Ｆｌａｇ：：０１１０
@@ -668,8 +668,8 @@ Section:7
 	還暦祝いにどれくらい予算が必要ですか？
 CUTOFF SECTION:Too Short
 
-True-Negative:5
-False-Positive:1
+True-Negative:3
+False-Positive:3
 Too Short:2
 True-Positive:0
 False-Negative:5

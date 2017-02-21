@@ -65,7 +65,7 @@ Clueword:
 	関する:[0.0001,0.0000,0.0000,0.0000]
 	使う:[0.0047,0.0030,0.0009,0.0000]
 	基準:[0.0000,0.0000,0.0000,0.0000]
-False-Negative
+True-Positive
 
 Section:1
 	Ｆｌａｇ：：００００
@@ -106,7 +106,7 @@ Clueword:
 	聞く:[0.0002,0.0006,0.0000,0.0080]
 	担当:[0.0000,0.0009,0.0000,0.0000]
 	問題:[0.0014,0.0013,0.0000,0.0000]
-True-Negative
+False-Positive
 
 Section:3
 	Ｆｌａｇ：：００００
@@ -184,11 +184,11 @@ Clueword:
 	ペン:[0.0002,0.0002,0.0000,0.0000]
 True-Negative
 
-True-Negative:2
-False-Positive:0
+True-Negative:1
+False-Positive:1
 Too Short:0
-True-Positive:0
-False-Negative:1
-precision = 0.000000
-recall = 0.000000
-fvalue = 0.000000
+True-Positive:1
+False-Negative:0
+precision = 0.500000
+recall = 1.000000
+fvalue = 0.666667

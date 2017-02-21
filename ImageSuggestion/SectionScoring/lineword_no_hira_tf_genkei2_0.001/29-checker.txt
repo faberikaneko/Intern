@@ -44,7 +44,7 @@ Clueword:
 	仕様:[0.0000,0.0003,0.0000,0.0000]
 	始める:[0.0004,0.0008,0.0000,0.0000]
 	ケース:[0.0006,0.0107,0.0000,0.0000]
-True-Negative
+False-Positive
 
 Section:15
 	Ｆｌａｇ：：００００
@@ -75,7 +75,7 @@ Clueword:
 	思う:[0.0005,0.0001,0.0010,0.0000]
 	使う:[0.0047,0.0030,0.0009,0.0000]
 	から:[0.0009,0.0000,0.0000,0.0001]
-True-Negative
+False-Positive
 
 Section:24
 	Ｆｌａｇ：：０１００
@@ -132,7 +132,7 @@ Clueword:
 	コード:[0.0008,0.0000,0.0000,0.0000]
 	思う:[0.0005,0.0001,0.0010,0.0000]
 	使う:[0.0047,0.0030,0.0009,0.0000]
-False-Negative
+True-Positive
 
 Section:23
 	Ｆｌａｇ：：００００
@@ -172,7 +172,7 @@ Clueword:
 	一番:[0.0006,0.0019,0.0121,0.0000]
 	実は:[0.0003,0.0001,0.0000,0.0000]
 	生きる:[0.0000,0.0000,0.0000,0.0000]
-True-Negative
+False-Positive
 
 Section:4
 	Ｆｌａｇ：：０１００
@@ -248,7 +248,7 @@ Clueword:
 	長所:[0.0000,0.0047,0.0000,0.0000]
 	名前:[0.0015,0.0009,0.0000,0.0037]
 	から:[0.0009,0.0000,0.0000,0.0001]
-False-Negative
+True-Positive
 
 Section:3
 	Ｆｌａｇ：：００００
@@ -285,7 +285,7 @@ Clueword:
 	問題:[0.0014,0.0013,0.0000,0.0000]
 	的だ:[0.0000,0.0022,0.0000,0.0000]
 	使う:[0.0047,0.0030,0.0009,0.0000]
-True-Negative
+False-Positive
 
 Section:7
 	Ｆｌａｇ：：００００
@@ -1367,11 +1367,11 @@ Section:2
 	２０１１年１月度のＴＩＯＢＥのランキング上位１０言語を基本とし、そこから７位のＶＢを排除して１１位のＪａｖａＳｃｒｉｐｔを格上げしています。
 CUTOFF SECTION:Too Short
 
-True-Negative:13
-False-Positive:0
+True-Negative:9
+False-Positive:4
 Too Short:1
-True-Positive:0
-False-Negative:11
-precision = 0.000000
-recall = 0.000000
-fvalue = 0.000000
+True-Positive:2
+False-Negative:9
+precision = 0.333333
+recall = 0.181818
+fvalue = 0.235294

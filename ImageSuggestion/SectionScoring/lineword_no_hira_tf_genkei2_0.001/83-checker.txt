@@ -384,7 +384,7 @@ Clueword:
 	一挙両得:[0.0004,0.0004,0.0000,0.0000]
 	的だ:[0.0000,0.0022,0.0000,0.0000]
 	選択:[0.0016,0.0020,0.0000,0.0044]
-False-Negative
+True-Positive
 
 Section:1
 	Ｆｌａｇ：：００００
@@ -429,7 +429,7 @@ Clueword:
 	全体:[0.0007,0.0002,0.0000,0.0000]
 	ポイント:[0.0006,0.0012,0.0000,0.0000]
 	決定:[0.0000,0.0000,0.0000,0.0000]
-True-Negative
+False-Positive
 
 Section:13
 	Ｆｌａｇ：：０１００
@@ -493,7 +493,7 @@ Clueword:
 	ケース:[0.0006,0.0107,0.0000,0.0000]
 	使う:[0.0047,0.0030,0.0009,0.0000]
 	向上:[0.0000,0.0003,0.0117,0.0000]
-False-Negative
+True-Positive
 
 Section:17
 	Ｆｌａｇ：：１０００
@@ -573,7 +573,7 @@ Clueword:
 	見比べる:[0.0041,0.0000,0.0000,0.0000]
 	順だ:[0.0002,0.0008,0.0000,0.0335]
 	違う:[0.0029,0.0249,0.0022,0.0000]
-False-Negative
+True-Positive
 
 Section:10
 	Ｆｌａｇ：：００００
@@ -605,7 +605,7 @@ Clueword:
 	選択:[0.0016,0.0020,0.0000,0.0044]
 	単一だ:[0.0010,0.0014,0.0000,0.0000]
 	次回:[0.0003,0.0003,0.0000,0.0000]
-True-Negative
+False-Positive
 
 Section:11
 	Ｆｌａｇ：：０１００
@@ -679,7 +679,7 @@ Clueword:
 	選択:[0.0016,0.0020,0.0000,0.0044]
 	把握:[0.0001,0.0002,0.0000,0.0000]
 	顧客:[0.0000,0.0005,0.0000,0.0000]
-False-Negative
+True-Positive
 
 Section:2
 	Ｆｌａｇ：：１０００
@@ -708,11 +708,11 @@ Section:15
 	本アンケートの具体的な回答の方法を説明します。
 CUTOFF SECTION:Too Short
 
-True-Negative:2
-False-Positive:3
+True-Negative:0
+False-Positive:5
 Too Short:5
-True-Positive:4
-False-Negative:4
-precision = 0.571429
-recall = 0.500000
-fvalue = 0.533333
+True-Positive:8
+False-Negative:0
+precision = 0.615385
+recall = 1.000000
+fvalue = 0.761905

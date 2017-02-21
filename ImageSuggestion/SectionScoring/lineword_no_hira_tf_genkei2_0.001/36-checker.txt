@@ -71,7 +71,7 @@ Clueword:
 	被害:[0.0000,0.0000,0.0000,0.0000]
 	発生:[0.0010,0.0011,0.0073,0.0021]
 	ようだ:[0.0074,0.0000,0.0000,0.0000]
-False-Negative
+True-Positive
 
 Section:6
 	Ｆｌａｇ：：０１００
@@ -113,7 +113,7 @@ Clueword:
 	全体:[0.0007,0.0002,0.0000,0.0000]
 	使う:[0.0047,0.0030,0.0009,0.0000]
 	人体:[0.0000,0.0000,0.0000,0.0000]
-False-Negative
+True-Positive
 
 Section:5
 	Ｆｌａｇ：：００００
@@ -277,8 +277,8 @@ False-Negative
 True-Negative:1
 False-Positive:0
 Too Short:0
-True-Positive:1
-False-Negative:4
+True-Positive:3
+False-Negative:2
 precision = 1.000000
-recall = 0.200000
-fvalue = 0.333333
+recall = 0.600000
+fvalue = 0.750000

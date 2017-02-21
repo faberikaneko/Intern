@@ -69,7 +69,7 @@ Clueword:
 	パーマ:[0.0000,0.0000,0.0000,0.0000]
 	軽い:[0.0000,0.0003,0.0000,0.0000]
 	サイド:[0.0000,0.0000,0.0000,0.0000]
-False-Negative
+True-Positive
 
 Section:6
 	Ｆｌａｇ：：１００１
@@ -140,7 +140,7 @@ Clueword:
 	行く:[0.0000,0.0000,0.0000,0.0000]
 	クリーム:[0.0000,0.0000,0.0000,0.0000]
 	渡る:[0.0000,0.0000,0.0000,0.0000]
-False-Negative
+True-Positive
 
 Section:5
 	Ｆｌａｇ：：１００１
@@ -429,8 +429,8 @@ CUTOFF SECTION:Too Short
 True-Negative:1
 False-Positive:0
 Too Short:1
-True-Positive:0
-False-Negative:6
-precision = 0.000000
-recall = 0.000000
-fvalue = 0.000000
+True-Positive:2
+False-Negative:4
+precision = 1.000000
+recall = 0.333333
+fvalue = 0.500000

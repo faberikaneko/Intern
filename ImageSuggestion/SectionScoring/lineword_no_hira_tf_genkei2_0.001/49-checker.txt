@@ -52,7 +52,7 @@ Clueword:
 	大豆:[0.0000,0.0000,0.0000,0.0000]
 	クセ:[0.0000,0.0000,0.0000,0.0000]
 	使う:[0.0047,0.0030,0.0009,0.0000]
-False-Negative
+True-Positive
 
 Section:11
 	Ｆｌａｇ：：０１００
@@ -90,7 +90,7 @@ Clueword:
 	ノネナール:[0.0000,0.0000,0.0000,0.0000]
 	的だ:[0.0000,0.0022,0.0000,0.0000]
 	加熱:[0.0000,0.0003,0.0000,0.0000]
-False-Negative
+True-Positive
 
 Section:13
 	Ｆｌａｇ：：００００
@@ -125,7 +125,7 @@ Clueword:
 	でも:[0.0000,0.0000,0.0000,0.0000]
 	食用:[0.0000,0.0000,0.0000,0.0000]
 	使う:[0.0047,0.0030,0.0009,0.0000]
-True-Negative
+False-Positive
 
 Section:5
 	Ｆｌａｇ：：１０００
@@ -467,11 +467,11 @@ Section:1
 	みなさんは料理に油を使うとき、どんな油を使いますか？
 CUTOFF SECTION:Too Short
 
-True-Negative:3
-False-Positive:0
+True-Negative:2
+False-Positive:1
 Too Short:1
-True-Positive:0
-False-Negative:9
-precision = 0.000000
-recall = 0.000000
-fvalue = 0.000000
+True-Positive:2
+False-Negative:7
+precision = 0.666667
+recall = 0.222222
+fvalue = 0.333333

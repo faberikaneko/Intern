@@ -85,7 +85,7 @@ Clueword:
 	抑える:[0.0013,0.0010,0.0000,0.0027]
 	吸着:[0.0000,0.0000,0.0000,0.0000]
 	ゲル:[0.0000,0.0000,0.0000,0.0000]
-False-Negative
+True-Positive
 
 Section:3
 	Ｆｌａｇ：：０１００
@@ -115,7 +115,7 @@ Clueword:
 	種類:[0.0009,0.0410,0.0023,0.0000]
 	中性:[0.0000,0.0000,0.0000,0.0000]
 	繊維:[0.0000,0.0022,0.0000,0.0000]
-False-Negative
+True-Positive
 
 Section:1
 	Ｆｌａｇ：：００００
@@ -341,8 +341,8 @@ CUTOFF SECTION:Too Short
 True-Negative:1
 False-Positive:0
 Too Short:3
-True-Positive:1
-False-Negative:5
+True-Positive:3
+False-Negative:3
 precision = 1.000000
-recall = 0.166667
-fvalue = 0.285714
+recall = 0.500000
+fvalue = 0.666667

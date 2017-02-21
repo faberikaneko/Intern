@@ -38,7 +38,7 @@ Clueword:
 	的だ:[0.0000,0.0022,0.0000,0.0000]
 	購入:[0.0007,0.0000,0.0000,0.0031]
 	農業:[0.0000,0.0000,0.0000,0.0000]
-True-Negative
+False-Positive
 
 Section:3
 	Ｆｌａｇ：：１１０１
@@ -250,8 +250,8 @@ Clueword:
 	地域:[0.0000,0.0000,0.0000,0.0000]
 False-Negative
 
-True-Negative:1
-False-Positive:0
+True-Negative:0
+False-Positive:1
 Too Short:0
 True-Positive:0
 False-Negative:2

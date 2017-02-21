@@ -48,7 +48,7 @@ Clueword:
 	ようだ:[0.0074,0.0000,0.0000,0.0000]
 	サイト:[0.0003,0.0014,0.0000,0.0000]
 	巡回:[0.0004,0.0000,0.0000,0.0000]
-False-Negative
+True-Positive
 
 Section:12
 	Ｆｌａｇ：：００００
@@ -118,7 +118,7 @@ Clueword:
 	ケース:[0.0006,0.0107,0.0000,0.0000]
 	使う:[0.0047,0.0030,0.0009,0.0000]
 	パターン:[0.0000,0.0017,0.0005,0.0000]
-True-Negative
+False-Positive
 
 Section:6
 	Ｆｌａｇ：：００００
@@ -199,7 +199,7 @@ Clueword:
 	迷惑:[0.0009,0.0006,0.0000,0.0020]
 	使う:[0.0047,0.0030,0.0009,0.0000]
 	パソコン:[0.0010,0.0011,0.0000,0.0000]
-True-Negative
+False-Positive
 
 Section:9
 	Ｆｌａｇ：：１０００
@@ -666,11 +666,11 @@ Section:5
 	無料でいくつでも取得できる
 CUTOFF SECTION:Too Short
 
-True-Negative:5
-False-Positive:0
+True-Negative:3
+False-Positive:2
 Too Short:2
-True-Positive:0
-False-Negative:5
-precision = 0.000000
-recall = 0.000000
-fvalue = 0.000000
+True-Positive:1
+False-Negative:4
+precision = 0.333333
+recall = 0.200000
+fvalue = 0.250000

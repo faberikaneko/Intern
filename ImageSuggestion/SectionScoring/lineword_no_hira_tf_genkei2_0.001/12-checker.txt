@@ -39,7 +39,7 @@ Clueword:
 	楽曲:[0.0000,0.0000,0.0000,0.0000]
 	特別だ:[0.0007,0.0003,0.0000,0.0000]
 	かける:[0.0000,0.0000,0.0000,0.0000]
-False-Negative
+True-Positive
 
 Section:1
 	Ｆｌａｇ：：００００
@@ -49,8 +49,8 @@ CUTOFF SECTION:Too Short
 True-Negative:0
 False-Positive:0
 Too Short:1
-True-Positive:0
-False-Negative:1
-precision = 0.000000
-recall = 0.000000
-fvalue = 0.000000
+True-Positive:1
+False-Negative:0
+precision = 1.000000
+recall = 1.000000
+fvalue = 1.000000

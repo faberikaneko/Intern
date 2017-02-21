@@ -52,7 +52,7 @@ Clueword:
 	変わる:[0.0006,0.0012,0.0024,0.0013]
 	経験:[0.0006,0.0000,0.0000,0.0049]
 	得意だ:[0.0004,0.0000,0.0000,0.0000]
-False-Negative
+True-Positive
 
 Section:13
 	Ｆｌａｇ：：００１０
@@ -129,7 +129,7 @@ Clueword:
 	でも:[0.0000,0.0000,0.0000,0.0000]
 	難しい:[0.0007,0.0006,0.0000,0.0000]
 	原因:[0.0031,0.0038,0.0008,0.0017]
-False-Negative
+True-Positive
 
 Section:5
 	Ｆｌａｇ：：１０００
@@ -175,7 +175,7 @@ Clueword:
 	決定:[0.0000,0.0000,0.0000,0.0000]
 	人間:[0.0000,0.0001,0.0000,0.0000]
 	複雑だ:[0.0047,0.0004,0.0000,0.0000]
-False-Negative
+True-Positive
 
 Section:9
 	Ｆｌａｇ：：１０００
@@ -575,8 +575,8 @@ CUTOFF SECTION:Too Short
 True-Negative:3
 False-Positive:0
 Too Short:4
-True-Positive:0
-False-Negative:7
-precision = 0.000000
-recall = 0.000000
-fvalue = 0.000000
+True-Positive:3
+False-Negative:4
+precision = 1.000000
+recall = 0.428571
+fvalue = 0.600000

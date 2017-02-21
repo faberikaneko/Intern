@@ -40,7 +40,7 @@ Clueword:
 	アメリカ:[0.0000,0.0000,0.0009,0.0000]
 	的だ:[0.0000,0.0022,0.0000,0.0000]
 	アフリカ:[0.0000,0.0000,0.0000,0.0000]
-False-Negative
+True-Positive
 
 Section:19
 	Ｆｌａｇ：：００００
@@ -94,7 +94,7 @@ Clueword:
 	全体:[0.0007,0.0002,0.0000,0.0000]
 	アップ:[0.0006,0.0007,0.0000,0.0000]
 	バランス:[0.0041,0.0015,0.0131,0.0023]
-True-Negative
+False-Positive
 
 Section:9
 	Ｆｌａｇ：：１０００
@@ -759,11 +759,11 @@ Section:17
 	ボーダーのマフラーと黒のコートを合わせた着こなし画像
 CUTOFF SECTION:Too Short
 
-True-Negative:5
-False-Positive:0
+True-Negative:4
+False-Positive:1
 Too Short:5
-True-Positive:0
-False-Negative:10
-precision = 0.000000
-recall = 0.000000
-fvalue = 0.000000
+True-Positive:1
+False-Negative:9
+precision = 0.500000
+recall = 0.100000
+fvalue = 0.166667

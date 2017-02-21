@@ -235,7 +235,7 @@ Clueword:
 	パソコン:[0.0010,0.0011,0.0000,0.0000]
 	難しい:[0.0007,0.0006,0.0000,0.0000]
 	原因:[0.0031,0.0038,0.0008,0.0017]
-False-Negative
+True-Positive
 
 Section:2
 	Ｆｌａｇ：：１０００
@@ -275,7 +275,7 @@ Clueword:
 	起動:[0.0009,0.0007,0.0000,0.0000]
 	途中:[0.0006,0.0002,0.0000,0.0000]
 	でも:[0.0000,0.0000,0.0000,0.0000]
-False-Negative
+True-Positive
 
 Section:15
 	Ｆｌａｇ：：１１００
@@ -312,7 +312,7 @@ Clueword:
 	供給:[0.0000,0.0000,0.0000,0.0000]
 	パソコン:[0.0010,0.0011,0.0000,0.0000]
 	原因:[0.0031,0.0038,0.0008,0.0017]
-False-Negative
+True-Positive
 
 Section:13
 	Ｆｌａｇ：：１１００
@@ -386,7 +386,7 @@ Clueword:
 	知らせる:[0.0009,0.0003,0.0000,0.0000]
 	ハード:[0.0003,0.0003,0.0000,0.0000]
 	パソコン:[0.0010,0.0011,0.0000,0.0000]
-False-Negative
+True-Positive
 
 Section:19
 	Ｆｌａｇ：：０１００
@@ -445,7 +445,7 @@ Clueword:
 	意識:[0.0001,0.0001,0.0000,0.0000]
 	ハード:[0.0003,0.0003,0.0000,0.0000]
 	パソコン:[0.0010,0.0011,0.0000,0.0000]
-False-Negative
+True-Positive
 
 Section:3
 	Ｆｌａｇ：：００００
@@ -509,7 +509,7 @@ Clueword:
 	反応:[0.0007,0.0000,0.0000,0.0040]
 	パソコン:[0.0010,0.0011,0.0000,0.0000]
 	原因:[0.0031,0.0038,0.0008,0.0017]
-True-Negative
+False-Positive
 
 Section:7
 	Ｆｌａｇ：：００００
@@ -1389,11 +1389,11 @@ Section:31
 	ドライバソフトの更新はデバイスマネージャーで行う
 CUTOFF SECTION:Too Short
 
-True-Negative:7
-False-Positive:3
+True-Negative:6
+False-Positive:4
 Too Short:14
-True-Positive:2
-False-Negative:7
-precision = 0.400000
-recall = 0.222222
-fvalue = 0.285714
+True-Positive:7
+False-Negative:2
+precision = 0.636364
+recall = 0.777778
+fvalue = 0.700000

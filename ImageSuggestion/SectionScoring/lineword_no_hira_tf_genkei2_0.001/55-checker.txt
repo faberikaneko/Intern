@@ -34,7 +34,7 @@ Clueword:
 	銀閣寺:[0.0000,0.0000,0.0000,0.0000]
 	簡単だ:[0.0000,0.0005,0.0000,0.0000]
 	関する:[0.0001,0.0000,0.0000,0.0000]
-True-Negative
+False-Positive
 
 Section:3
 	Ｆｌａｇ：：０１００
@@ -212,8 +212,8 @@ Section:6
 	今の山状になったのは江戸時代後期とされています。
 CUTOFF SECTION:Too Short
 
-True-Negative:2
-False-Positive:0
+True-Negative:1
+False-Positive:1
 Too Short:2
 True-Positive:0
 False-Negative:2

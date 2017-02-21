@@ -90,7 +90,7 @@ Clueword:
 	漏らす:[0.0004,0.0000,0.0000,0.0000]
 	違う:[0.0029,0.0249,0.0022,0.0000]
 	把握:[0.0001,0.0002,0.0000,0.0000]
-False-Negative
+True-Positive
 
 Section:2
 	Ｆｌａｇ：：００００
@@ -186,13 +186,13 @@ Clueword:
 	先輩:[0.0000,0.0002,0.0000,0.0000]
 	内容:[0.0012,0.0042,0.0000,0.0017]
 	日時:[0.0008,0.0003,0.0000,0.0000]
-True-Negative
+False-Positive
 
-True-Negative:1
-False-Positive:0
+True-Negative:0
+False-Positive:1
 Too Short:0
-True-Positive:0
-False-Negative:1
-precision = 0.000000
-recall = 0.000000
-fvalue = 0.000000
+True-Positive:1
+False-Negative:0
+precision = 0.500000
+recall = 1.000000
+fvalue = 0.666667

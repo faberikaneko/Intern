@@ -21,7 +21,7 @@ Clueword:
 	抗生物質:[0.0000,0.0000,0.0000,0.0000]
 	発見:[0.0000,0.0002,0.0000,0.0000]
 	的だ:[0.0000,0.0022,0.0000,0.0000]
-True-Negative
+False-Positive
 
 Section:9
 	Ｆｌａｇ：：００１０
@@ -72,7 +72,7 @@ Clueword:
 	高い:[0.0014,0.0015,0.0321,0.0000]
 	時間:[0.0000,0.0007,0.0037,0.0000]
 	通常:[0.0003,0.0003,0.0000,0.0000]
-False-Negative
+True-Positive
 
 Section:10
 	Ｆｌａｇ：：００００
@@ -128,7 +128,7 @@ Clueword:
 	対する:[0.0000,0.0007,0.0000,0.0000]
 	変える:[0.0001,0.0002,0.0006,0.0000]
 	から:[0.0009,0.0000,0.0000,0.0001]
-True-Negative
+False-Positive
 
 Section:11
 	Ｆｌａｇ：：０００１
@@ -602,11 +602,11 @@ Section:8
 	ペニシリン系抗生物質の性質
 CUTOFF SECTION:Too Short
 
-True-Negative:3
-False-Positive:0
+True-Negative:1
+False-Positive:2
 Too Short:3
-True-Positive:0
-False-Negative:8
-precision = 0.000000
-recall = 0.000000
-fvalue = 0.000000
+True-Positive:1
+False-Negative:7
+precision = 0.333333
+recall = 0.125000
+fvalue = 0.181818

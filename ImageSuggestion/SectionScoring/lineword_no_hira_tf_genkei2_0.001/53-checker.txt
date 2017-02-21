@@ -46,7 +46,7 @@ Clueword:
 	地面:[0.0004,0.0000,0.0000,0.0000]
 	撮影:[0.0000,0.0000,0.0000,0.0000]
 	シーン:[0.0037,0.0039,0.0000,0.0000]
-False-Negative
+True-Positive
 
 Section:5
 	Ｆｌａｇ：：１０００
@@ -425,8 +425,8 @@ CUTOFF SECTION:Too Short
 True-Negative:0
 False-Positive:0
 Too Short:1
-True-Positive:0
-False-Negative:6
-precision = 0.000000
-recall = 0.000000
-fvalue = 0.000000
+True-Positive:1
+False-Negative:5
+precision = 1.000000
+recall = 0.166667
+fvalue = 0.285714
