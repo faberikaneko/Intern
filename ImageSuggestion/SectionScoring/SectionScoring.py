@@ -53,43 +53,11 @@ def text_normalizer(rawtext):
     # -> ！”＃＄％＆’＝～｜？＿‐￥・／；：＋＊
     replace_halfres = [
         #http
-        (ur"https?://[\w/:%#\$&\?\(\)~\.=\+\-]+",u"（URLS）"),
+        (ur"https?://[\w/:%#\$&\?\(\)~\.=\+\-]+",u"（ＵＲＬ）"),
         #return
         (ur"\r\n|\r|\n",u"\n"),
-        #piriod and comma
-        (ur"(?:(?<!\d)|\A)\.(?!\d)",u"．"),
+        #comma
         (ur",",u""),
-        #bracket
-        (ur"<",u"＜"),
-        (ur">",u"＞"),
-        (ur"{",u"｛"),
-        (ur"}",u"｝"),
-        (ur"\[",u"［"),
-        (ur"\]",u"］"),
-        (ur"\(",u"（"),
-        (ur"\)",u"）"),
-        #other marks
-        (ur"!",u"！"),
-        (ur"#",u"＃"),
-        (ur"%",u"％"),
-        (ur"'",u"’"),
-        (ur"=",u"＝"),
-        (ur"~",u"～"),
-        (ur"_",u"＿"),
-        (ur"-|–",u"－"),
-        (ur"/",u"／"),
-        (ur";",u"；"),
-        (ur":",u"："),
-        (u'•|·|･','・'),
-        #special marks
-        (ur"\"",u"”"),
-        (ur"\|",u"｜"),
-        (ur"\?",u"？"),
-        (ur"\$",u"＄"),
-        (ur"\+",u"＋"),
-        (ur"\*",u"＊"),
-        (ur"\^",u"＾"),
-        (ur"\\",u"￥"),
         #blank
         (ur"\p{Zs}",u""),
     ]
@@ -356,6 +324,7 @@ def writesection(section):
         outstr += u'\t' + clueword
         cluewordlist = []
         for tag in TAGLIST:
+            #sort
             cluewordlist.append(d[clueword].dict.get(tag))
         outstr += u':[' + ','.join(map('{:1.4f}'.format,cluewordlist))+u']\n'
     return outstr
