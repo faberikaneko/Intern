@@ -1,1 +1,1 @@
-﻿dicts\1_100__all_new5_tf_genkei.txt
+﻿dicts\1_100__lineWord_tf_genkei.txt

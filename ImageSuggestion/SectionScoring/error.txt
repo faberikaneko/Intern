@@ -128,4 +128,7 @@ rsplit() takes no keyword arguments﻿in docs\1_20\12.txt,
 CO﻿in docs\1_20\11.txt,
 CO﻿in docs\1_20\10.txt,
 CO﻿in docs\1_20\1.txt,
-CO
+CO﻿in docs\1_20\1.txt,
+﻿in docs\1_20\11.txt,
+﻿in docs\1_20\10.txt,
+﻿in docs\1_20\12.txt,
