@@ -1,1 +1,1 @@
-﻿dicts\1_100__lineWord_tf_genkei2.txt
+﻿dicts\1_100__lineWord_no_hira_tf_genkei2.txt
