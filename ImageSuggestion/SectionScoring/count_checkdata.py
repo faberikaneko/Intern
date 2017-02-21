@@ -35,7 +35,7 @@ if __name__ == "__main__":
     point = 0
     alls = 0
     argv = sys.argv
-    outdirname = u"lineword_tf_genkei_0.0"
+    outdirname = u"lineword_tf_genkei_0.001"
     if not os.path.exists(outdirname):
         os.mkdir(outdirname)
     for dirname in dirnames:

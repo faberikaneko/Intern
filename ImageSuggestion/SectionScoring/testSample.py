@@ -20,7 +20,7 @@ logger.setLevel(DEBUG)
 logger.addHandler(handler)
 
 global SCORE_LIMIT
-SCORE_LIMIT = 0.0
+SCORE_LIMIT = 0.001
 IGNORE_TYPE = True
 
 def writefile(section,type,dirname=u'abcd\\'):
