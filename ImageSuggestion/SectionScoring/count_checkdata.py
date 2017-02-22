@@ -69,5 +69,5 @@ if __name__ == "__main__":
     ]
     for outdirname in outdirnames:
         with open(u'dictlist.txt','w') as file:
-            file.write(u'dicts\\'+outdirname+'_'+str(SCORE_LIMIT))
-        main(outdirname[:-4])
+            file.write(u'dicts\\'+outdirname)
+        main(outdirname[:-4]+'_'+str(SCORE_LIMIT))
