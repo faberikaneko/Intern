@@ -2,7 +2,7 @@ import sys
 import os
 import codecs
 import regex as re
-from testSample import test_samples
+from testSample import test_samples,SCORE_LIMIT
 
 dirnames = [
     (u"docs\\1_20\\",u"dicts\\1_20_all.txt"),
@@ -31,11 +31,10 @@ def count_checkdata(dirname,outputfilename):
                     typecount[type_] += float(typere.search(text).group(1))
     return typecount
 
-if __name__ == "__main__":
+def main(outdirname):
     point = 0
     alls = 0
     argv = sys.argv
-    outdirname = u"lineword_no_hira_tf_genkei2_0.001"
     if not os.path.exists(outdirname):
         os.mkdir(outdirname)
     for dirname in dirnames:
@@ -63,3 +62,12 @@ if __name__ == "__main__":
         file.write(u"      precision = %f\n"%(precision))
         file.write(u"         recall = %f\n"%(recall))
         file.write(u"         fvalue = %f\n"%(fvalue))
+
+if __name__ == "__main__":
+    outdirnames = [
+        u'1_100__lineWord_no_hira_tf_genkei_syutsugen.txt'
+    ]
+    for outdirname in outdirnames:
+        with open(u'dictlist.txt','w') as file:
+            file.write(u'dicts\\'+outdirname+'_'+str(SCORE_LIMIT))
+        main(outdirname[:-4])

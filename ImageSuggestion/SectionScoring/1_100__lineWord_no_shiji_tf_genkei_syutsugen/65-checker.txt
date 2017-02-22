@@ -1,0 +1,30 @@
+﻿Section:1
+	Ｆｌａｇ：：００００
+	倦怠期の乗り越え方
+CUTOFF SECTION:Too Short
+
+Section:2
+	Ｆｌａｇ：：００１０
+	倦怠期というのは、相手の良い部分だけをみていたラブラブ期間を経て、
+	大好きだった相手に飽きが出始めた時期です。
+CUTOFF SECTION:Too Short
+
+Section:3
+	Ｆｌａｇ：：００００
+	どんなに理想的な相手でも、お姫様だ王子様だと思っていた相手でも、
+CUTOFF SECTION:Too Short
+
+Section:4
+	Ｆｌａｇ：：１０００
+	しかし、自分をウジウジと落ちこませたり、パニックにさせたり、生きているのをつらくさせるようなコンプレックスや悩みは、すぐにでも頭から消しさりたいものです。
+	余計な悩みにまどわされなければ、以下のようなことができるようになります。
+CUTOFF SECTION:Too Short
+
+True-Negative:0
+False-Positive:0
+Too Short:4
+True-Positive:0
+False-Negative:0
+precision = 0.000000
+recall = 0.000000
+fvalue = 0.000000
